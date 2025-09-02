@@ -100,7 +100,7 @@ export default function ExperiencePage() {
         {/* Experience Timeline */}
         <div className="max-w-5xl mx-auto">
           <div className="space-y-12">
-            {resumeData.experience.map((experience, index) => (
+            {resumeData!.experience.map((experience, index) => (
               <Card
                 key={index}
                 className="overflow-hidden hover:shadow-xl transition-all duration-300 group"
