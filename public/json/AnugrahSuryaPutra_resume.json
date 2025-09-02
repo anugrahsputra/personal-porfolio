@@ -1,0 +1,124 @@
+{
+  "name": "Anugrah Surya Putra",
+  "location": "Jakarta, Indonesia",
+  "phone": "+6283812134055",
+  "email": "anugrahsputra@gmail.com",
+  "linkedin": "https://linkedin.com/in/anugrahsputra",
+  "portfolio": "https://anugrahsputra.webflow.io/",
+  "summary": "Passionate Mobile Engineer with 2+ years of experience developing cross-platform applications using Flutter and Kotlin Multiplatform. Specialized in crafting clean, maintainable code and collaborating in Agile teams to deliver seamless user experiences. Strong foundation in clean architecture, API integration, and performance tuning.",
+  "experience": [
+    {
+      "company": "PT. Bangun Rancang Indonesia Kita (BRIK)",
+      "location": "South Jakarta, Indonesia",
+      "position": "Mobile Engineer",
+      "period": "Aug 2025 - Present",
+      "responsibilities": [
+        "Maintained and enhanced the BRIK Hub mobile app, an internal cross-platform application supporting company-wide business operations, developed using Flutter.",
+        "Collaborated closely with product managers, UI/UX designers, backend developers, and QA engineers to define requirements and deliver incremental feature updates.",
+        "Diagnosed and resolved software issues to improve application stability, responsiveness, and overall user experience.",
+        "Refactored parts of the existing codebase to improve code readability, maintainability, and alignment with clean architecture principles.",
+        "Implemented minor features and functional enhancements while ensuring seamless integration with existing systems and backend services.",
+        "Monitored app performance and analyzed user behavior using existing Firebase analytics, crash reporting, and performance monitoring tools.",
+        "Designed, built, and optimized a CI/CD pipeline to automate APK builds, testing, and release processes, improving development efficiency.",
+        "Managed app deployment by publishing updated builds to the Google Play Store and distributing internal testing versions via App Center."
+      ]
+    },
+    {
+      "company": "PT. Semesta Arus Teknologi",
+      "location": "South Jakarta, Indonesia",
+      "position": "Mobile Engineer",
+      "period": "Jun 2024 - Jul 2025",
+      "responsibilities": [
+        "Developed cross-platform mobile applications using Flutter and Kotlin Multiplatform (KMP) for iOS and Android.",
+        "Participated in full-cycle development from design to deployment, aligned with SDLC principles.",
+        "Engineered scalable and maintainable application architectures by applying clean architecture principles.",
+        "Collaborated with backend teams to integrate RESTful APIs and ensure system stability.",
+        "Diagnosed and resolved critical bugs and performance issues, reducing crash rates and improving stability.",
+        "Implemented and integrated new features into existing applications, enhancing user experience.",
+        "Contributed to technical documentation for development handoff and future maintenance."
+      ]
+    },
+    {
+      "company": "PT. Inovasi Karya Mahendra (INKARA)",
+      "location": "Bandung, Indonesia",
+      "position": "Mobile Developer Apprenticeship",
+      "period": "Mar 2023 - May 2023",
+      "responsibilities": [
+        "Developed app prototype 'Kantin Virtual' for the Faculty of Engineering at Universitas Pasundan.",
+        "Designed and implemented user interface using Flutter Framework.",
+        "Completed the project independently within a three-month apprenticeship."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cosmic App KIOSK Touchscreen",
+      "location": "South Jakarta, Indonesia",
+      "company": "PT. Semesta Arus Teknologi",
+      "period": "Oct 2024 - Feb 2025",
+      "description": [
+        "Enhanced and maintained a KIOSK touchscreen application for the Bureau of Publishing (DPR RI).",
+        "Refactored the codebase to improve readability, maintainability, and code quality.",
+        "Implemented a device power scheduling feature using Android's AlarmManager.",
+        "Developed an auto-return mechanism that resets WebView to the base URL after inactivity.",
+        "Integrated WebSocket functionality for real-time action triggering.",
+        "Implemented a heartbeat mechanism to signal application status to the server."
+      ]
+    },
+    {
+      "name": "Quraani - Quran Mobile App",
+      "location": "Lebak, Indonesia",
+      "company": "Personal Project",
+      "period": "Apr 2024 - May 2024",
+      "description": [
+        "Developed a lightweight, user-friendly Quran app for Android using Flutter.",
+        "Focused on providing a clean interface for optimal reading experience.",
+        "Integrated features such as bookmarks, search, and sharing verses to social media."
+      ]
+    },
+    {
+      "name": "E-Market Mobile Applications",
+      "location": "Bandung, Indonesia",
+      "company": "Academic Project",
+      "period": "Dec 2022 - Jun 2023",
+      "description": [
+        "Conducted system analysis and user requirements gathering.",
+        "Designed and developed dual-sided e-marketplace apps ('E-Market Seller' and 'E-Market Buyer').",
+        "Utilized Firebase for backend integration and data storage.",
+        "Integrated Google Maps API for user location services.",
+        "Performed blackbox testing with 100% pass rate for Seller app and 95% for Buyer app.",
+        "Presented project results at thesis defense and received a score of 4.00 (Grade A)."
+      ]
+    }
+  ],
+  "education": {
+    "institution": "Universitas Pasundan",
+    "location": "Kota Bandung, Indonesia",
+    "degree": "Bachelor of Engineering",
+    "graduation_date": "Jul 2023"
+  },
+  "skills": {
+    "technologies": [
+      "Android",
+      "Kotlin",
+      "Compose Multiplatform",
+      "Dart",
+      "Flutter",
+      "Firebase",
+      "REST API",
+      "Git"
+    ],
+    "tools": ["Android Studio", "Figma", "VS Code", "Neovim"],
+    "soft_skills": [
+      "Problem Solving",
+      "Adaptability",
+      "Communication",
+      "Third-party API Integration",
+      "Performance Optimization"
+    ],
+    "languages": [
+      "English (Professional Working Proficiency)",
+      "Bahasa Indonesia (Native)"
+    ]
+  }
+}

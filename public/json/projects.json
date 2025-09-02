@@ -1,0 +1,113 @@
+{
+  "projects": [
+    {
+      "title": "Cosmic App KIOSK Touchscreen",
+      "description": "Enhanced and maintained a KIOSK touchscreen application for the Bureau of Publishing (DPR RI). Refactored the codebase to improve readability, maintainability, and code quality. Implemented device power scheduling feature using Android's AlarmManager and auto-return mechanism that resets WebView to the base URL after inactivity.",
+      "techStacks": [
+        "Android",
+        "Kotlin",
+        "WebView",
+        "AlarmManager",
+        "WebSocket"
+      ],
+      "liveDemo": "",
+      "github": "https://github.com/anugrahsputra/cosmic-kiosk",
+      "isLive": false,
+      "isNDA": true,
+      "isFeatured": true,
+      "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=450&fit=crop&crop=center",
+      "company": "PT. Semesta Arus Teknologi",
+      "period": "Oct 2024 - Feb 2025",
+      "location": "South Jakarta, Indonesia"
+    },
+    {
+      "title": "Quraani - Quran Mobile App",
+      "description": "Simple and easy-to-use Quran app for Android built with Flutter. It is a project that aims to provide a clean and simple interface for reading the Quran. The app is designed to be fast, lightweight, and easy to use. Quraani is a mobile application built with Flutter that allows users to conveniently access and interact with the Quran while on the go.",
+      "techStacks": [
+        "Flutter",
+        "Dio",
+        "Bloc State Management",
+        "SQLite",
+        "Shared Preferences",
+        "RxDart"
+      ],
+      "liveDemo": "https://github.com/anugrahsputra/qurani-app/releases",
+      "github": "https://github.com/anugrahsputra/quraani",
+      "isLive": true,
+      "isNDA": false,
+      "isFeatured": true,
+      "image": "https://raw.githubusercontent.com/anugrahsputra/qurani-app/main/shots/Frame%201.png",
+      "company": "Personal Project",
+      "period": "Apr 2024 - May 2024",
+      "location": "Lebak, Indonesia"
+    },
+    {
+      "title": "E-Market Seller Mobile Applications",
+      "description": "E-Market Seller mobile application is designed for sellers who want to sell their products online, specifically catering to the needs of UMKM (Micro, Small, and Medium Enterprises) located in Kecamatan Malingping.",
+      "techStacks": [
+        "Flutter",
+        "Dart",
+        "Firebase",
+        "Google Maps API",
+        "Cloud Firestore",
+        "Firebase Storage",
+        "Firebase Cloud Messenger",
+        "Local Notifications"
+      ],
+      "liveDemo": "",
+      "github": "https://github.com/anugrahsputra/e-market-app",
+      "isLive": false,
+      "isNDA": false,
+      "isFeatured": false,
+      "image": "https://private-user-images.githubusercontent.com/71306482/260298198-e9a17337-d66a-465c-8f94-acaaa1d9394c.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY4MjAyNTAsIm5iZiI6MTc1NjgxOTk1MCwicGF0aCI6Ii83MTMwNjQ4Mi8yNjAyOTgxOTgtZTlhMTczMzctZDY2YS00NjVjLThmOTQtYWNhYWExZDkzOTRjLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTAyVDEzMzIzMFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFjMWU4NGQyNmEzNWQ5ZDMwZWRlMzFmNjhhNjI0OTk3ZTFkMTZkNGY1MTg2MTBjOTdiMmMzYzJkMjljOTY1ZDcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.xAn2VQlZ4KS6pPaI-fiwzY4gZu5iVPtyumMlSn4-uaU",
+      "company": "Academic Project",
+      "period": "Dec 2022 - Jun 2023",
+      "location": "Bandung, Indonesia"
+    },
+    {
+      "title": "E-Market Buyer Mobile Applications",
+      "description": "E-Market Buyer mobile application aims to provide a convenient platform for buyers in Kecamatan Malingping to browse and purchase products online. By focusing on this specific user group, the application takes into account the unique preferences and requirements of buyers in Kecamatan Malingping, offering tailored features and functionalities to enhance their shopping experience.",
+      "techStacks": [
+        "Flutter",
+        "Dart",
+        "Firebase",
+        "Google Maps API",
+        "Cloud Firestore",
+        "Firebase Storage",
+        "Firebase Cloud Messenger",
+        "Local Notifications",
+        "Alarm Manager",
+        "sqflite"
+      ],
+      "liveDemo": "",
+      "github": "https://github.com/anugrahsputra/e-market-app",
+      "isLive": false,
+      "isNDA": false,
+      "isFeatured": false,
+      "image": "https://private-user-images.githubusercontent.com/71306482/260299298-9e868995-9b48-4819-a1df-befc67e338e3.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY4MjA2MjIsIm5iZiI6MTc1NjgyMDMyMiwicGF0aCI6Ii83MTMwNjQ4Mi8yNjAyOTkyOTgtOWU4Njg5OTUtOWI0OC00ODE5LWExZGYtYmVmYzY3ZTMzOGUzLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTAyVDEzMzg0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTVjY2ZjZDFjOTYwNTdlNWJmZmMxMTg1YjAwN2U4NzQ5Y2MwMmI1OWJjMzFlMWNlZDI2ODM1MTZlMjUwOTg1OGEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.3fi6qloCtMHZB_NArgy6g4r9PMH6AJ7Lpzr2G0btqBA",
+      "company": "Academic Project",
+      "period": "Dec 2022 - Jun 2023",
+      "location": "Bandung, Indonesia"
+    },
+    {
+      "title": "Get Wallpaper",
+      "description": "Get Wallpaper is a mobile application built using Flutter. It allows users to browse, download, and set wallpapers from the internet. The application fetches wallpaper data from an external API and displays it in a user-friendly interface.",
+      "techStacks": [
+        "Flutter",
+        "Pexels API",
+        "Bloc State Management",
+        "Dio Client",
+        "Async Wallpaper"
+      ],
+      "liveDemo": "https://weather-app-demo.web.app",
+      "github": "https://github.com/anugrahsputra/get_wallpaper.git",
+      "isLive": true,
+      "isNDA": false,
+      "isFeatured": false,
+      "image": "https://raw.githubusercontent.com/anugrahsputra/get_wallpaper/refs/heads/main/screenshot/Frame%207.png",
+      "company": "Personal Project",
+      "period": "Dec 2023 - Feb 2024",
+      "location": "Jakarta, Indonesia"
+    }
+  ]
+}
