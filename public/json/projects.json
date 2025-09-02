@@ -55,11 +55,11 @@
         "Local Notifications"
       ],
       "liveDemo": "",
-      "github": "https://github.com/anugrahsputra/e-market-app",
+      "github": "https://github.com/anugrahsputra/emarket-seller.git",
       "isLive": false,
       "isNDA": false,
       "isFeatured": false,
-      "image": "https://private-user-images.githubusercontent.com/71306482/260298198-e9a17337-d66a-465c-8f94-acaaa1d9394c.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY4MjAyNTAsIm5iZiI6MTc1NjgxOTk1MCwicGF0aCI6Ii83MTMwNjQ4Mi8yNjAyOTgxOTgtZTlhMTczMzctZDY2YS00NjVjLThmOTQtYWNhYWExZDkzOTRjLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTAyVDEzMzIzMFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFjMWU4NGQyNmEzNWQ5ZDMwZWRlMzFmNjhhNjI0OTk3ZTFkMTZkNGY1MTg2MTBjOTdiMmMzYzJkMjljOTY1ZDcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.xAn2VQlZ4KS6pPaI-fiwzY4gZu5iVPtyumMlSn4-uaU",
+      "image": "https://raw.githubusercontent.com/anugrahsputra/emarket-seller/refs/heads/main/shots-seller.png",
       "company": "Academic Project",
       "period": "Dec 2022 - Jun 2023",
       "location": "Bandung, Indonesia"
@@ -80,11 +80,11 @@
         "sqflite"
       ],
       "liveDemo": "",
-      "github": "https://github.com/anugrahsputra/e-market-app",
+      "github": "https://github.com/anugrahsputra/emarket-buyer.git",
       "isLive": false,
       "isNDA": false,
       "isFeatured": false,
-      "image": "https://private-user-images.githubusercontent.com/71306482/260299298-9e868995-9b48-4819-a1df-befc67e338e3.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY4MjA2MjIsIm5iZiI6MTc1NjgyMDMyMiwicGF0aCI6Ii83MTMwNjQ4Mi8yNjAyOTkyOTgtOWU4Njg5OTUtOWI0OC00ODE5LWExZGYtYmVmYzY3ZTMzOGUzLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTAyVDEzMzg0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTVjY2ZjZDFjOTYwNTdlNWJmZmMxMTg1YjAwN2U4NzQ5Y2MwMmI1OWJjMzFlMWNlZDI2ODM1MTZlMjUwOTg1OGEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.3fi6qloCtMHZB_NArgy6g4r9PMH6AJ7Lpzr2G0btqBA",
+      "image": "https://raw.githubusercontent.com/anugrahsputra/emarket-buyer/refs/heads/main/assets/screenshot/shots.png",
       "company": "Academic Project",
       "period": "Dec 2022 - Jun 2023",
       "location": "Bandung, Indonesia"
