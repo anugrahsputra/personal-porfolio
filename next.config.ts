@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
         hostname: "source.unsplash.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "pub.dev",
+        pathname: "/**",
+      },
     ],
   },
 };

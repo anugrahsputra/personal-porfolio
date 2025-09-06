@@ -1,6 +1,20 @@
 {
   "projects": [
     {
+      "title": "Change Project Name",
+      "description": "A powerful CLI tool to rename Flutter/Dart projects and automatically update all package references, and imports.",
+      "techStacks": ["Dart", "CLI", "Flutter"],
+      "liveDemo": "https://pub.dev/packages/change_project_name",
+      "github": "https://github.com/anugrahsputra/change_project_name",
+      "isLive": true,
+      "isNDA": false,
+      "isFeatured": true,
+      "image": "https://pub.dev/static/hash-e4t06sub/img/pub-dev-icon-cover-image.png",
+      "company": "Personal Project",
+      "period": "Sep 2025",
+      "location": "South Jakarta, Indonesia"
+    },
+    {
       "title": "Cosmic App KIOSK Touchscreen",
       "description": "Enhanced and maintained a KIOSK touchscreen application for the Bureau of Publishing (DPR RI). Refactored the codebase to improve readability, maintainability, and code quality. Implemented device power scheduling feature using Android's AlarmManager and auto-return mechanism that resets WebView to the base URL after inactivity.",
       "techStacks": [
