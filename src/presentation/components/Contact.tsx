@@ -3,6 +3,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
+import { sendMail } from "@/lib/actions";
+
+import { Loader2 } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 interface ResumeData {
   name: string;
@@ -21,6 +25,8 @@ const Contact = () => {
     subject: "",
     message: ""
   });
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   useEffect(() => {
     const fetchResumeData = async () => {
@@ -43,12 +49,19 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setLoading(true);
+    setAlert(null);
+    const { name, email, subject, message } = formData;
+    const result = await sendMail(name, email, subject, message);
+    setLoading(false);
+    if (result.success) {
+      setAlert({ type: "success", message: "Email sent successfully!" });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } else {
+      setAlert({ type: "error", message: "Failed to send email." });
+    }
   };
 
   if (!resumeData) {
@@ -133,6 +146,12 @@ const Contact = () => {
             <h3 className="text-2xl font-semibold text-foreground mb-6">
               Send a Message
             </h3>
+            {alert && (
+              <Alert variant={alert.type === "success" ? "default" : "destructive"}>
+                <AlertTitle>{alert.type === "success" ? "Success!" : "Error!"}</AlertTitle>
+                <AlertDescription>{alert.message}</AlertDescription>
+              </Alert>
+            )}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -199,8 +218,8 @@ const Contact = () => {
                 />
               </div>
               
-              <Button type="submit" size="lg" className="w-full">
-                Send Message
+              <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Send Message"}
               </Button>
             </form>
           </div>
@@ -245,3 +264,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
