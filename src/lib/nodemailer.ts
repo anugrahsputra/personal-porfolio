@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
-const EMAIL_USER = process.env.NEXT_PUBLIC_EMAIL;
-const EMAIL_PASS = process.env.NEXT_PUBLIC_PASS;
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
 
 if (!EMAIL_USER || !EMAIL_PASS) {
   throw new Error("Email credentials are not set in environment variables.");

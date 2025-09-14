@@ -10,8 +10,8 @@ export async function sendMail(
 ) {
   try {
     await transporter.sendMail({
-      from: process.env.NEXT_PUBLIC_EMAIL,
-      to: process.env.NEXT_PUBLIC_EMAIL,
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
       replyTo: email,
       subject: `New message from ${name} ${email} - ${subject}`,
       text: message,
