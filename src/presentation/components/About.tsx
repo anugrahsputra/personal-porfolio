@@ -22,11 +22,11 @@ const About = () => {
   useEffect(() => {
     const fetchResumeData = async () => {
       try {
-        const response = await fetch('/json/AnugrahSuryaPutra_resume.json');
+        const response = await fetch("/json/AnugrahSuryaPutra_resume.json");
         const data = await response.json();
         setResumeData(data);
       } catch (error) {
-        console.error('Error fetching resume data:', error);
+        console.error("Error fetching resume data:", error);
       }
     };
 
@@ -75,9 +75,9 @@ const About = () => {
               {resumeData.summary}
             </p>
             <p className="text-foreground/70 leading-relaxed">
-              When I&apos;m not coding, you can find me exploring new mobile technologies, 
-              contributing to open-source projects, or sharing knowledge with 
-              the developer community.
+              When I&apos;m not coding, you can find me exploring new mobile
+              technologies, contributing to open-source projects, or sharing
+              knowledge with the developer community.
             </p>
           </div>
 
@@ -86,7 +86,7 @@ const About = () => {
             <h3 className="text-2xl font-semibold text-foreground mb-6">
               Skills & Technologies
             </h3>
-            
+
             {/* Technologies */}
             <div>
               <h4 className="text-lg font-semibold text-foreground mb-3">
