@@ -1,40 +1,87 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "../presentation/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../presentation/components/ui/card";
-import { Badge } from "../presentation/components/ui/badge";
-import { Separator } from "../presentation/components/ui/separator";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../presentation/components/ui/dialog";
+import { useState, useEffect } from "react";
+import { Button } from "./ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Badge } from "./ui/badge";
+import { Separator } from "./ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import Image from "next/image";
 import Link from "next/link";
-import { useRecentProjects } from "../presentation/hooks/useProjects";
-import { Project } from "../domain/entities/Project";
-import React from "react";
+
+interface Project {
+  title: string;
+  description: string;
+  techStacks: string[];
+  liveDemo: string;
+  github: string;
+  isLive: boolean;
+  isNDA: boolean;
+  isFeatured: boolean;
+  image: string;
+  company: string;
+  period: string;
+  location: string;
+}
+
+interface ProjectsData {
+  projects: Project[];
+}
 
 const Projects = () => {
-  const { projects, loading, error } = useRecentProjects(4);
+  const [projectsData, setProjectsData] = useState<ProjectsData | null>(null);
   const [ndaDialogOpen, setNdaDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>({});
+  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(
+    {},
+  );
 
-  const handleButtonClick = (project: Project, buttonType: 'live' | 'github') => {
+  useEffect(() => {
+    const fetchProjectsData = async () => {
+      try {
+        const response = await fetch("/json/projects.json");
+        const data = await response.json();
+        setProjectsData(data);
+      } catch (error) {
+        console.error("Error fetching projects data:", error);
+      }
+    };
+
+    fetchProjectsData();
+  }, []);
+
+  const handleButtonClick = (
+    project: Project,
+    buttonType: "live" | "github",
+  ) => {
     if (project.isNDA) {
       setSelectedProject(project);
       setNdaDialogOpen(true);
     } else {
-      const url = buttonType === 'live' ? project.liveDemo : project.github;
+      const url = buttonType === "live" ? project.liveDemo : project.github;
       if (url) {
-        window.open(url, '_blank');
+        window.open(url, "_blank");
       }
     }
   };
 
   const handleImageError = (projectTitle: string) => {
-    setImageErrors(prev => ({ ...prev, [projectTitle]: true }));
+    setImageErrors((prev) => ({ ...prev, [projectTitle]: true }));
   };
 
-  if (loading) {
+  if (!projectsData) {
     return (
       <section id="projects" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,7 +91,7 @@ const Projects = () => {
             </h2>
             <Separator className="w-24 mx-auto" />
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="animate-pulse">
                 <div className="h-48 bg-muted rounded-t-lg mb-4"></div>
@@ -60,20 +107,48 @@ const Projects = () => {
     );
   }
 
-  if (error) {
-    return (
-      <section id="projects" className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Recent Projects
-            </h2>
-            <p className="text-foreground/60">Error loading projects: {error}</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // Sort projects by date (newest first) and take the first 4
+  const sortedProjects = [...projectsData.projects].sort((a, b) => {
+    // Extract year and month from period string (e.g., "Oct 2024 - Feb 2025" -> 2024)
+    const getYear = (period: string) => {
+      const yearMatch = period.match(/\d{4}/);
+      return yearMatch ? parseInt(yearMatch[0]) : 0;
+    };
+
+    const yearA = getYear(a.period);
+    const yearB = getYear(b.period);
+
+    if (yearA !== yearB) {
+      return yearB - yearA; // Newest year first
+    }
+
+    // If same year, sort by month (approximate)
+    const monthOrder = {
+      Jan: 1,
+      Feb: 2,
+      Mar: 3,
+      Apr: 4,
+      May: 5,
+      Jun: 6,
+      Jul: 7,
+      Aug: 8,
+      Sep: 9,
+      Oct: 10,
+      Nov: 11,
+      Dec: 12,
+    };
+
+    const getMonth = (period: string) => {
+      const monthMatch = period.match(/^[A-Za-z]{3}/);
+      return monthMatch
+        ? monthOrder[monthMatch[0] as keyof typeof monthOrder] || 0
+        : 0;
+    };
+
+    return getMonth(b.period) - getMonth(a.period);
+  });
+
+  const recentProjects = sortedProjects.slice(0, 4);
 
   return (
     <section id="projects" className="py-20 bg-muted/30">
@@ -84,20 +159,34 @@ const Projects = () => {
           </h2>
           <Separator className="w-24 mx-auto" />
           <p className="text-foreground/60 mt-6 max-w-2xl mx-auto">
-            My latest mobile development projects, showcasing recent work and ongoing development 
-            in creating innovative mobile applications and solutions.
+            My latest mobile development projects, showcasing recent work and
+            ongoing development in creating innovative mobile applications and
+            solutions.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+          {recentProjects.map((project, index) => (
+            <Card
+              key={index}
+              className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            >
               <div className="relative">
                 <div className="aspect-video relative overflow-hidden">
                   {imageErrors[project.title] ? (
                     <div className="w-full h-full bg-muted flex items-center justify-center">
-                      <svg className="w-12 h-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      <svg
+                        className="w-12 h-12 text-muted-foreground"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
                       </svg>
                     </div>
                   ) : (
@@ -110,7 +199,7 @@ const Projects = () => {
                     />
                   )}
                 </div>
-                
+
                 {/* Featured Badge */}
                 {project.isFeatured && (
                   <div className="absolute top-2 left-2">
@@ -119,13 +208,11 @@ const Projects = () => {
                     </Badge>
                   </div>
                 )}
-                
+
                 {/* NDA Badge */}
                 {project.isNDA && (
                   <div className="absolute top-2 right-2">
-                    <Badge variant="destructive">
-                      NDA
-                    </Badge>
+                    <Badge variant="destructive">NDA</Badge>
                   </div>
                 )}
               </div>
@@ -166,7 +253,7 @@ const Projects = () => {
                   {project.isLive && (
                     <Button
                       size="sm"
-                      onClick={() => handleButtonClick(project, 'live')}
+                      onClick={() => handleButtonClick(project, "live")}
                       className="flex-1"
                     >
                       Live Demo
@@ -175,7 +262,7 @@ const Projects = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleButtonClick(project, 'github')}
+                    onClick={() => handleButtonClick(project, "github")}
                     className={project.isLive ? "flex-1" : "w-full"}
                   >
                     GitHub
@@ -191,13 +278,18 @@ const Projects = () => {
           <Link href="/projects">
             <Button size="lg" className="group">
               View All Projects
-              <svg 
-                className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" 
-                fill="none" 
-                stroke="currentColor" 
+              <svg
+                className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
               </svg>
             </Button>
           </Link>
@@ -211,17 +303,24 @@ const Projects = () => {
                 <span>🔒 NDA Protected Project</span>
               </DialogTitle>
               <DialogDescription>
-                This project is protected by a Non-Disclosure Agreement (NDA) and cannot be shared publicly.
+                This project is protected by a Non-Disclosure Agreement (NDA)
+                and cannot be shared publicly.
               </DialogDescription>
             </DialogHeader>
             {selectedProject && (
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-semibold text-foreground">{selectedProject.title}</h4>
-                  <p className="text-sm text-foreground/60">{selectedProject.company}</p>
+                  <h4 className="font-semibold text-foreground">
+                    {selectedProject.title}
+                  </h4>
+                  <p className="text-sm text-foreground/60">
+                    {selectedProject.company}
+                  </p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-foreground mb-2">Technologies Used:</h5>
+                  <h5 className="font-medium text-foreground mb-2">
+                    Technologies Used:
+                  </h5>
                   <div className="flex flex-wrap gap-1">
                     {selectedProject.techStacks.map((tech, idx) => (
                       <Badge key={idx} variant="secondary" className="text-xs">
