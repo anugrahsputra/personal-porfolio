@@ -1,24 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "./ui/button";
-import ThemeToggle from "./ThemeToggle";
+// ThemeToggle removed to enforce constant dark mode
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/", section: "#home" },
+    { name: "About", href: "/", section: "#about" },
+    { name: "Experience", href: "/experience", section: null },
+    { name: "Projects", href: "/projects", section: null },
+    { name: "Contact", href: "/", section: "#contact" },
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  const handleNavigation = (item: typeof navItems[0]) => {
+    if (pathname === "/" && item.section) {
+      // On home page, scroll to section
+      const element = document.querySelector(item.section);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // Navigate to page
+      router.push(item.href);
     }
     setIsMenuOpen(false);
   };
@@ -29,7 +38,12 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-xl font-bold text-foreground">Anugrah Surya Putra</h1>
+            <button
+              onClick={() => router.push("/")}
+              className="text-xl font-bold text-foreground hover:text-foreground/80 transition-colors"
+            >
+              Anugrah Surya Putra
+            </button>
           </div>
 
           {/* Desktop Navigation */}
@@ -38,19 +52,17 @@ const Navbar = () => {
               {navItems.map((item) => (
                 <button
                   key={item.name}
-                  onClick={() => scrollToSection(item.href)}
+                  onClick={() => handleNavigation(item)}
                   className="text-foreground/70 hover:text-foreground px-3 py-2 text-sm font-medium transition-colors"
                 >
                   {item.name}
                 </button>
               ))}
             </div>
-            <ThemeToggle />
           </div>
 
           {/* Mobile menu button and theme toggle */}
           <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
             <Button
               variant="ghost"
               size="sm"
@@ -90,7 +102,7 @@ const Navbar = () => {
               {navItems.map((item) => (
                 <button
                   key={item.name}
-                  onClick={() => scrollToSection(item.href)}
+                  onClick={() => handleNavigation(item)}
                   className="text-foreground/70 hover:text-foreground block px-3 py-2 text-base font-medium transition-colors w-full text-left"
                 >
                   {item.name}
