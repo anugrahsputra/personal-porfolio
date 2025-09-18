@@ -17,11 +17,11 @@ const Hero = () => {
   useEffect(() => {
     const fetchResumeData = async () => {
       try {
-        const response = await fetch('/json/AnugrahSuryaPutra_resume.json');
+        const response = await fetch("/json/AnugrahSuryaPutra_resume.json");
         const data = await response.json();
         setResumeData(data);
       } catch (error) {
-        console.error('Error fetching resume data:', error);
+        console.error("Error fetching resume data:", error);
       }
     };
 
@@ -30,14 +30,15 @@ const Hero = () => {
 
   const downloadResume = () => {
     // Google Drive direct download URL
-    const resumeUrl = "https://drive.google.com/uc?export=download&id=1dA3wkubRBOUketeYCpP8PP8_XV0eohLv";
-    
+    const resumeUrl =
+      "https://drive.google.com/uc?export=download&id=1oH0zyDsNy7dkcJx2E7lqKv14IZi3tbG0";
+
     // Create a temporary link element
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = "AnugrahSuryaPutra_MobileDeveloper_Resume.pdf";
     link.target = "_blank";
-    
+
     // Append to body, click, and remove
     document.body.appendChild(link);
     link.click();
@@ -46,11 +47,17 @@ const Hero = () => {
 
   if (!resumeData) {
     return (
-      <section id="home" className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+      <section
+        id="home"
+        className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden"
+      >
         {/* Background Portrait only */}
         <div className="absolute inset-0 z-0">
           {/* Left-aligned portrait */}
-          <div className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[55vw] pointer-events-none z-10 mask-fade-r" aria-hidden>
+          <div
+            className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[55vw] pointer-events-none z-10 mask-fade-r"
+            aria-hidden
+          >
             <Image
               src="/images/photo/photo.png"
               alt="Portrait of Anugrah Surya Putra"
@@ -76,10 +83,16 @@ const Hero = () => {
   }
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+    <section
+      id="home"
+      className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden"
+    >
       {/* Background Portrait only */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[55vw] pointer-events-none z-10 mask-fade-r" aria-hidden>
+        <div
+          className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[55vw] pointer-events-none z-10 mask-fade-r"
+          aria-hidden
+        >
           <Image
             src="/images/photo/photo.png"
             alt="Portrait of Anugrah Surya Putra"
@@ -112,9 +125,9 @@ const Hero = () => {
               size="lg"
               className="group"
               onClick={() => {
-                const element = document.querySelector('#contact');
+                const element = document.querySelector("#contact");
                 if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
+                  element.scrollIntoView({ behavior: "smooth" });
                 }
               }}
             >
@@ -125,7 +138,12 @@ const Hero = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
               </svg>
             </Button>
 
@@ -141,7 +159,12 @@ const Hero = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
               Download Resume
             </Button>

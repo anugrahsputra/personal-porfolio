@@ -13,14 +13,15 @@
       "position": "Mobile Engineer",
       "period": "Aug 2025 - Present",
       "responsibilities": [
-        "Maintained and enhanced the BRIK Hub mobile app, an internal cross-platform application supporting company-wide business operations, developed using Flutter.",
-        "Collaborated closely with product managers, UI/UX designers, backend developers, and QA engineers to define requirements and deliver incremental feature updates.",
-        "Diagnosed and resolved software issues to improve application stability, responsiveness, and overall user experience.",
-        "Refactored parts of the existing codebase to improve code readability, maintainability, and alignment with clean architecture principles.",
-        "Implemented minor features and functional enhancements while ensuring seamless integration with existing systems and backend services.",
-        "Monitored app performance and analyzed user behavior using existing Firebase analytics, crash reporting, and performance monitoring tools.",
-        "Designed, built, and optimized a CI/CD pipeline to automate APK builds, testing, and release processes, improving development efficiency.",
-        "Managed app deployment by publishing updated builds to the Google Play Store and distributing internal testing versions via App Center."
+        "Maintained and enhanced two mobile applications: BRIK Hub (internal cross-platform business operations app) and PaintPro Loyalty (customer-facing loyalty program), both developed using Flutter.",
+        "Collaborated with product managers, UI/UX designers, backend developers, and QA engineers to define requirements and deliver incremental feature updates across both applications.",
+        "Diagnosed and resolved software issues to improve stability, responsiveness, and overall user experience.",
+        "Refactored core modules to improve code readability, maintainability, and compliance with clean architecture principles.",
+        "Implemented customer-facing features in PaintPro Loyalty, such as rewards management and user engagement flows, while ensuring smooth backend integration.",
+        "Enhanced internal workflows in BRIK Hub to support sales operations, order processing, and cross-department usage.",
+        "Monitored app performance and user behavior with Firebase analytics, crash reporting, and performance monitoring tools.",
+        "Designed, built, and optimized a CI/CD pipeline to automate APK builds, testing, and release processes, increasing development efficiency.",
+        "Managed deployments by publishing updated builds to the Google Play Store (PaintPro Loyalty) and distributing internal testing versions via App Center (BRIK Hub)."
       ]
     },
     {
