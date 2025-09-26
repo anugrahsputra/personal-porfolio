@@ -2,12 +2,32 @@ import type { Metadata } from "next";
 import ExperiencePageClient from "./ExperiencePageClient";
 
 export const metadata: Metadata = {
-  title: "Experience - Its Your Boy Putra",
-  description: "A comprehensive overview of my professional journey in mobile development, showcasing my growth, expertise, and contributions across different companies and projects.",
+  title: "Experience - Anugrah Surya Putra",
+  description: "Professional experience as Mobile Engineer at PT. Bangun Rancang Indonesia Kita (BRIK) and PT. Semesta Arus Teknologi. Specialized in Flutter, Kotlin Multiplatform, clean architecture, and CI/CD pipeline development.",
+  keywords: [
+    "mobile engineer experience",
+    "flutter developer",
+    "kotlin multiplatform",
+    "clean architecture",
+    "CI/CD pipeline",
+    "mobile app maintenance",
+    "cross-platform development",
+    "agile development",
+    "firebase analytics",
+    "android development",
+    "mobile performance optimization",
+    "Anugrah Surya Putra experience",
+  ],
   openGraph: {
-    title: "Experience - Its Your Boy Putra",
-    description: "A comprehensive overview of my professional journey in mobile development, showcasing my growth, expertise, and contributions across different companies and projects.",
+    title: "Experience - Anugrah Surya Putra",
+    description: "Professional experience as Mobile Engineer at PT. Bangun Rancang Indonesia Kita (BRIK) and PT. Semesta Arus Teknologi.",
     type: "website",
+    url: "https://itsyourboyputra.vercel.app/experience",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Experience - Anugrah Surya Putra",
+    description: "Professional experience as Mobile Engineer at PT. Bangun Rancang Indonesia Kita (BRIK) and PT. Semesta Arus Teknologi.",
   },
 };
 

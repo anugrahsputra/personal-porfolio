@@ -2,12 +2,32 @@ import type { Metadata } from "next";
 import ProjectsPageClient from "./ProjectsPageClient";
 
 export const metadata: Metadata = {
-  title: "Projects - Its Your Boy Putra",
-  description: "A comprehensive showcase of all my mobile development projects, from professional work to personal applications. Each project represents unique challenges and learning experiences in mobile development.",
+  title: "Projects - Anugrah Surya Putra",
+  description: "Explore my mobile development projects including Cosmic App KIOSK Touchscreen, Quraani Quran Mobile App, and E-Market Mobile Applications. Each project showcases expertise in Flutter, Kotlin Multiplatform, and clean architecture.",
+  keywords: [
+    "mobile projects",
+    "flutter projects",
+    "kotlin multiplatform",
+    "android projects",
+    "mobile app development",
+    "cross-platform apps",
+    "KIOSK application",
+    "Quran mobile app",
+    "e-marketplace app",
+    "firebase integration",
+    "clean architecture",
+    "Anugrah Surya Putra projects",
+  ],
   openGraph: {
-    title: "Projects - Its Your Boy Putra",
-    description: "A comprehensive showcase of all my mobile development projects, from professional work to personal applications. Each project represents unique challenges and learning experiences in mobile development.",
+    title: "Projects - Anugrah Surya Putra",
+    description: "Explore my mobile development projects including Cosmic App KIOSK Touchscreen, Quraani Quran Mobile App, and E-Market Mobile Applications.",
     type: "website",
+    url: "https://itsyourboyputra.vercel.app/projects",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects - Anugrah Surya Putra",
+    description: "Explore my mobile development projects including Cosmic App KIOSK Touchscreen, Quraani Quran Mobile App, and E-Market Mobile Applications.",
   },
 };
 
