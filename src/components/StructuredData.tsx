@@ -110,18 +110,82 @@ const StructuredData = () => {
             "@type": "Person",
             name: data.name,
           },
-          potentialAction: {
-            "@type": "SearchAction",
-            target: {
-              "@type": "EntryPoint",
-              urlTemplate: `https://itsyourboyputra.vercel.app/search?q={search_term_string}`,
+          inLanguage: "en-US",
+          copyrightYear: "2024",
+          copyrightHolder: {
+            "@type": "Person",
+            name: data.name,
+          },
+        };
+
+        // Organization Schema for current workplace
+        const organizationSchema = {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "PT. Bangun Rancang Indonesia Kita (BRIK)",
+          url: "https://brik.co.id",
+          employee: {
+            "@type": "Person",
+            name: data.name,
+            jobTitle: "Mobile Engineer",
+            worksFor: {
+              "@type": "Organization",
+              name: "PT. Bangun Rancang Indonesia Kita (BRIK)",
             },
-            "query-input": "required name=search_term_string",
+          },
+        };
+
+        // Professional Service Schema
+        const serviceSchema = {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: "Mobile App Development Services",
+          provider: {
+            "@type": "Person",
+            name: data.name,
+            jobTitle: "Mobile Engineer",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: data.location,
+              addressCountry: "Indonesia",
+            },
+          },
+          serviceType: "Mobile Application Development",
+          description: "Professional mobile app development services specializing in Flutter and Kotlin Multiplatform cross-platform applications",
+          offers: {
+            "@type": "Offer",
+            description: "Flutter and Kotlin Multiplatform development, clean architecture implementation, CI/CD pipeline setup, mobile app maintenance",
+          },
+          areaServed: {
+            "@type": "Place",
+            name: "Jakarta, Indonesia",
+          },
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Mobile Development Services",
+            itemListElement: [
+              {
+                "@type": "OfferCatalog",
+                name: "Flutter Development",
+              },
+              {
+                "@type": "OfferCatalog",
+                name: "Kotlin Multiplatform Development",
+              },
+              {
+                "@type": "OfferCatalog",
+                name: "Clean Architecture Implementation",
+              },
+              {
+                "@type": "OfferCatalog",
+                name: "CI/CD Pipeline Setup",
+              },
+            ],
           },
         };
 
         // Add schemas to page
-        const schemas = [personSchema, profileSchema, websiteSchema];
+        const schemas = [personSchema, profileSchema, websiteSchema, organizationSchema, serviceSchema];
         
         schemas.forEach((schema, index) => {
           const script = document.createElement("script");

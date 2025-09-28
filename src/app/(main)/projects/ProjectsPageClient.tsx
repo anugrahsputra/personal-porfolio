@@ -22,6 +22,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAllProjects } from "@/hooks/useProjects";
 import { Project } from "@/types/Project";
+import ProjectsStructuredData from "@/components/ProjectsStructuredData";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ProjectsPageClient() {
   const { projectsData, loading, error } = useAllProjects();
@@ -94,8 +96,17 @@ export default function ProjectsPageClient() {
   }
 
   return (
-    <div className="pt-20">
+    <>
+      <ProjectsStructuredData />
+      <div className="pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Breadcrumbs */}
+        <Breadcrumbs
+          items={[
+            { label: "Projects", current: true }
+          ]}
+        />
+        
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
@@ -326,5 +337,6 @@ export default function ProjectsPageClient() {
         </Dialog>
       </div>
     </div>
+    </>
   );
 }
