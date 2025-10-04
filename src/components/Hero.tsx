@@ -10,7 +10,6 @@ interface ResumeData {
   name: string;
   summary: string;
 }
-
 const Hero = () => {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
 
@@ -31,7 +30,7 @@ const Hero = () => {
   const downloadResume = () => {
     // Google Drive direct download URL
     const resumeUrl =
-      "https://drive.google.com/uc?export=download&id=1oH0zyDsNy7dkcJx2E7lqKv14IZi3tbG0";
+      "https://drive.google.com/uc?export=download&id=19kcQTW_9Y8kUbbAB_VccmJSPMVv4XHSb";
 
     // Create a temporary link element
     const link = document.createElement("a");
