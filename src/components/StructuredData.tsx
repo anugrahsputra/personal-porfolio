@@ -84,7 +84,7 @@ const StructuredData = () => {
             name: data.name,
             jobTitle: "Mobile Engineer",
             description: data.summary,
-url: "https://itsyourboiputra.is-a.dev/",
+            url: "https://itsyourboiputra.is-a.dev/",
             email: data.email,
             address: {
               "@type": "PostalAddress",
@@ -93,7 +93,8 @@ url: "https://itsyourboiputra.is-a.dev/",
             },
             sameAs: [data.linkedin],
             knowsAbout: data.skills.technologies,
-url: "https://itsyourboiputra.is-a.dev/",
+          },
+          url: "https://itsyourboiputra.is-a.dev/",
           name: `${data.name} - Mobile Engineer Portfolio`,
           description: data.summary,
         };
