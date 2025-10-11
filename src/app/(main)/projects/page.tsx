@@ -10,13 +10,13 @@ const breadcrumbStructuredData = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://itsyourboyputra.vercel.app/",
+      item: "https://itsyourboiputra.is-a.dev/",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "Projects",
-      item: "https://itsyourboyputra.vercel.app/projects",
+      item: "https://itsyourboiputra.is-a.dev/projects",
     },
   ],
 };
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Mobile Development Projects - Flutter & Kotlin Multiplatform Apps",
     description: "📱 Explore 6+ mobile development projects including Cosmic App KIOSK, Quraani Quran App, Change Project Name CLI tool, and E-Market Applications. Showcasing Flutter, Kotlin Multiplatform, and clean architecture expertise.",
     type: "website",
-    url: "https://itsyourboyputra.vercel.app/projects",
+    url: "https://itsyourboiputra.is-a.dev/projects",
     images: [
       {
         url: "/images/photo/photo.png",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     images: ["/images/photo/photo.png"],
   },
   alternates: {
-    canonical: "https://itsyourboyputra.vercel.app/projects",
+    canonical: "https://itsyourboiputra.is-a.dev/projects",
   },
 };
 

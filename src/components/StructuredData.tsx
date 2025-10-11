@@ -42,7 +42,7 @@ const StructuredData = () => {
           name: data.name,
           jobTitle: "Mobile Engineer",
           description: data.summary,
-          url: "https://itsyourboyputra.vercel.app/",
+          url: "https://itsyourboiputra.is-a.dev/",
           email: data.email,
           address: {
             "@type": "PostalAddress",
@@ -84,7 +84,7 @@ const StructuredData = () => {
             name: data.name,
             jobTitle: "Mobile Engineer",
             description: data.summary,
-            url: "https://itsyourboyputra.vercel.app/",
+url: "https://itsyourboiputra.is-a.dev/",
             email: data.email,
             address: {
               "@type": "PostalAddress",
@@ -93,8 +93,7 @@ const StructuredData = () => {
             },
             sameAs: [data.linkedin],
             knowsAbout: data.skills.technologies,
-          },
-          url: "https://itsyourboyputra.vercel.app/",
+url: "https://itsyourboiputra.is-a.dev/",
           name: `${data.name} - Mobile Engineer Portfolio`,
           description: data.summary,
         };
@@ -104,7 +103,7 @@ const StructuredData = () => {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: `${data.name} - Mobile Engineer Portfolio`,
-          url: "https://itsyourboyputra.vercel.app/",
+          url: "https://itsyourboiputra.is-a.dev/",
           description: data.summary,
           author: {
             "@type": "Person",

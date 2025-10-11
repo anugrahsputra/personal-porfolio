@@ -8,7 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
+    default:
+      "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
     template: "%s | Anugrah Surya Putra - Mobile Engineer",
   },
   description:
@@ -64,8 +65,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://itsyourboyputra.vercel.app/",
-    title: "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
+    url: "https://itsyourboiputra.is-a.dev/",
+    title:
+      "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
     description:
       "🚀 Passionate Mobile Engineer with 2+ years of experience developing cross-platform applications using Flutter and Kotlin Multiplatform. Currently at PT. Bangun Rancang Indonesia Kita (BRIK) - Jakarta, Indonesia. Specialized in clean architecture, CI/CD, and performance optimization.",
     siteName: "Anugrah Surya Putra - Mobile Engineer Portfolio",
@@ -80,17 +82,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
+    title:
+      "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
     description:
       "🚀 Passionate Mobile Engineer with 2+ years of experience developing cross-platform applications using Flutter and Kotlin Multiplatform. Currently at PT. BRIK - Jakarta, Indonesia.",
     images: ["/images/photo/photo.png"],
     creator: "@anugrahsputra",
   },
   verification: {
-    google: "UNzsS_OM9oAp-ntWRGrJXh7XUCQh-hRlSBZkjk3IsyI",
+    google: "VWRpL4QRyqrjCTcPlz0gBRwBExizKCKpuYX5FCZqO0U",
   },
   alternates: {
-    canonical: "https://itsyourboyputra.vercel.app/",
+    canonical: "https://itsyourboiputra.is-a.dev/",
   },
 };
 
@@ -103,26 +106,44 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth dark">
       <head>
         {/* Preload critical resources */}
-        <link rel="preload" href="/images/photo/photo.png" as="image" type="image/png" />
-        <link rel="preload" href="/json/AnugrahSuryaPutra_resume.json" as="fetch" crossOrigin="anonymous" />
-        <link rel="preload" href="/json/projects.json" as="fetch" crossOrigin="anonymous" />
-        
+        <link
+          rel="preload"
+          href="/images/photo/photo.png"
+          as="image"
+          type="image/png"
+        />
+        <link
+          rel="preload"
+          href="/json/AnugrahSuryaPutra_resume.json"
+          as="fetch"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/json/projects.json"
+          as="fetch"
+          crossOrigin="anonymous"
+        />
+
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//raw.githubusercontent.com" />
         <link rel="dns-prefetch" href="//images.unsplash.com" />
         <link rel="dns-prefetch" href="//pub.dev" />
-        
+
         {/* Preconnect for analytics */}
         <link rel="preconnect" href="https://vitals.vercel-analytics.com" />
-        
+
         {/* PWA manifest */}
         <link rel="manifest" href="/manifest.json" />
-        
+
         {/* Apple mobile web app */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <meta name="apple-mobile-web-app-title" content="Anugrah Portfolio" />
-        
+
         {/* Theme color for mobile browsers */}
         <meta name="theme-color" content="#ffffff" />
         <meta name="msapplication-TileColor" content="#000000" />
