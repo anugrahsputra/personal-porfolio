@@ -13,12 +13,12 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", href: "/", section: "#home" },
     { name: "About", href: "/", section: "#about" },
-    { name: "Experience", href: "/experience", section: null },
-    { name: "Projects", href: "/projects", section: null },
+    { name: "Experience", href: "/", section: "#experience" },
+    { name: "Projects", href: "/", section: "#projects" },
     { name: "Contact", href: "/", section: "#contact" },
   ];
 
-  const handleNavigation = (item: typeof navItems[0]) => {
+  const handleNavigation = (item: (typeof navItems)[0]) => {
     if (pathname === "/" && item.section) {
       // On home page, scroll to section
       const element = document.querySelector(item.section);

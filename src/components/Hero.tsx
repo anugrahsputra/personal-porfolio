@@ -48,7 +48,7 @@ const Hero = () => {
     return (
       <section
         id="home"
-        className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden"
+        className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden pt-16 sm:pt-0"
       >
         {/* Background Portrait only */}
         <div className="absolute inset-0 z-0">
@@ -84,12 +84,12 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden pt-16 sm:pt-0"
     >
       {/* Background Portrait only */}
       <div className="absolute inset-0 z-0">
         <div
-          className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[55vw] pointer-events-none z-10 mask-fade-r"
+          className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[50vw] pointer-events-none z-10 mask-fade-r"
           aria-hidden
         >
           <Image
