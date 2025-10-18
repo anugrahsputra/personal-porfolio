@@ -30,7 +30,7 @@ const Hero = () => {
   const downloadResume = () => {
     // Google Drive direct download URL
     const resumeUrl =
-      "https://drive.google.com/uc?export=download&id=19kcQTW_9Y8kUbbAB_VccmJSPMVv4XHSb";
+      "https://drive.google.com/uc?export=download&id=1JJTOB0X1pUyPNJCDEId2WRiBhEzWzKxV";
 
     // Create a temporary link element
     const link = document.createElement("a");
