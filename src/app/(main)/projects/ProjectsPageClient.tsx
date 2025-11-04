@@ -20,10 +20,10 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import Link from "next/link";
-import { useAllProjects } from "@/hooks/useProjects";
-import { Project } from "@/types/Project";
-import ProjectsStructuredData from "@/components/ProjectsStructuredData";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { useAllProjects } from "@/features/projects/hooks/useProjects";
+import { Project } from "@/features/projects/data/domain/Project";
+import ProjectsStructuredData from "@/features/projects/components/ProjectsStructuredData";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 export default function ProjectsPageClient() {
   const { projectsData, loading, error } = useAllProjects();

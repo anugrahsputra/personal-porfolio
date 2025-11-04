@@ -11,8 +11,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { useResumeData } from "@/hooks/useResume";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { useResumeData } from "@/features/resume/hooks/useResume";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 export default function ExperiencePageClient() {
   const { resumeData, loading, error } = useResumeData();
