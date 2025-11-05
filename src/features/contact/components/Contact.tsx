@@ -7,6 +7,7 @@ import { sendMail } from "../data/actions";
 
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { supabase } from "@/lib/supabase";
 
 interface ResumeData {
   name: string;
@@ -31,12 +32,21 @@ const Contact = () => {
     message: string;
   } | null>(null);
 
+
+
   useEffect(() => {
     const fetchResumeData = async () => {
       try {
-        const response = await fetch("/json/AnugrahSuryaPutra_resume.json");
-        const data = await response.json();
-        setResumeData(data);
+        const { data, error } = await supabase
+          .from("resumes")
+          .select("email, location, linkedin")
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        setResumeData(data as ResumeData);
       } catch (error) {
         console.error("Error fetching resume data:", error);
       }

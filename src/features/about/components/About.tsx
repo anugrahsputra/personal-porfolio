@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { supabase } from "@/lib/supabase";
 
 interface Skills {
   technologies: string[];
@@ -22,9 +23,29 @@ const About = () => {
   useEffect(() => {
     const fetchResumeData = async () => {
       try {
-        const response = await fetch("/json/AnugrahSuryaPutra_resume.json");
-        const data = await response.json();
-        setResumeData(data);
+        const { data, error } = await supabase
+          .from("resumes")
+          .select(
+            `
+            *,
+            experience:experiences (*),
+            projects (*),
+            skills (*)
+          `
+          )
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        // The new data structure has skills as an array
+        const transformedData = {
+          ...data,
+          skills: data.skills[0],
+        };
+
+        setResumeData(transformedData);
       } catch (error) {
         console.error("Error fetching resume data:", error);
       }

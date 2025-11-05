@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import Image from "next/image";
 
+import { supabase } from "@/lib/supabase";
+
 interface ResumeData {
   name: string;
   summary: string;
@@ -16,8 +18,15 @@ const Hero = () => {
   useEffect(() => {
     const fetchResumeData = async () => {
       try {
-        const response = await fetch("/json/AnugrahSuryaPutra_resume.json");
-        const data = await response.json();
+        const { data, error } = await supabase
+          .from("resumes")
+          .select("name, summary")
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
         setResumeData(data);
       } catch (error) {
         console.error("Error fetching resume data:", error);
