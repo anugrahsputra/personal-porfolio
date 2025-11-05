@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 interface ResumeData {
   name: string;
@@ -32,39 +33,57 @@ const StructuredData = () => {
   useEffect(() => {
     const fetchResumeData = async () => {
       try {
-        const response = await fetch("/json/AnugrahSuryaPutra_resume.json");
-        const data: ResumeData = await response.json();
+        const { data, error } = await supabase
+          .from("resumes")
+          .select(
+            `
+            *,
+            experience:experiences (*),
+            projects (*),
+            skills (*)
+          `
+          )
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        const transformedData = {
+          ...data,
+          skills: data.skills[0],
+        } as ResumeData;
 
         // Person Schema
         const personSchema = {
           "@context": "https://schema.org",
           "@type": "Person",
-          name: data.name,
+          name: transformedData.name,
           jobTitle: "Mobile Engineer",
-          description: data.summary,
+          description: transformedData.summary,
           url: "https://itsyourboiputra.is-a.dev/",
-          email: data.email,
+          email: transformedData.email,
           address: {
             "@type": "PostalAddress",
-            addressLocality: data.location,
+            addressLocality: transformedData.location,
             addressCountry: "Indonesia",
           },
-          sameAs: [data.linkedin],
-          knowsAbout: data.skills.technologies,
+          sameAs: [transformedData.linkedin],
+          knowsAbout: transformedData.skills.technologies,
           alumniOf: {
             "@type": "EducationalOrganization",
-            name: data.education.institution,
+            name: transformedData.education.institution,
           },
           hasCredential: {
             "@type": "EducationalOccupationalCredential",
-            name: data.education.degree,
+            name: transformedData.education.degree,
             credentialCategory: "degree",
             recognizedBy: {
               "@type": "Organization",
-              name: data.education.institution,
+              name: transformedData.education.institution,
             },
           },
-          worksFor: data.experience.map((exp) => ({
+          worksFor: transformedData.experience.map((exp) => ({
             "@type": "Organization",
             name: exp.company,
             address: {
@@ -81,40 +100,40 @@ const StructuredData = () => {
           "@type": "ProfilePage",
           mainEntity: {
             "@type": "Person",
-            name: data.name,
+            name: transformedData.name,
             jobTitle: "Mobile Engineer",
-            description: data.summary,
+            description: transformedData.summary,
             url: "https://itsyourboiputra.is-a.dev/",
-            email: data.email,
+            email: transformedData.email,
             address: {
               "@type": "PostalAddress",
-              addressLocality: data.location,
+              addressLocality: transformedData.location,
               addressCountry: "Indonesia",
             },
-            sameAs: [data.linkedin],
-            knowsAbout: data.skills.technologies,
+            sameAs: [transformedData.linkedin],
+            knowsAbout: transformedData.skills.technologies,
           },
           url: "https://itsyourboiputra.is-a.dev/",
-          name: `${data.name} - Mobile Engineer Portfolio`,
-          description: data.summary,
+          name: `${transformedData.name} - Mobile Engineer Portfolio`,
+          description: transformedData.summary,
         };
 
         // Website Schema
         const websiteSchema = {
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: `${data.name} - Mobile Engineer Portfolio`,
+          name: `${transformedData.name} - Mobile Engineer Portfolio`,
           url: "https://itsyourboiputra.is-a.dev/",
-          description: data.summary,
+          description: transformedData.summary,
           author: {
             "@type": "Person",
-            name: data.name,
+            name: transformedData.name,
           },
           inLanguage: "en-US",
           copyrightYear: "2024",
           copyrightHolder: {
             "@type": "Person",
-            name: data.name,
+            name: transformedData.name,
           },
         };
 
@@ -126,7 +145,7 @@ const StructuredData = () => {
           url: "https://brik.co.id",
           employee: {
             "@type": "Person",
-            name: data.name,
+            name: transformedData.name,
             jobTitle: "Mobile Engineer",
             worksFor: {
               "@type": "Organization",
@@ -142,11 +161,11 @@ const StructuredData = () => {
           name: "Mobile App Development Services",
           provider: {
             "@type": "Person",
-            name: data.name,
+            name: transformedData.name,
             jobTitle: "Mobile Engineer",
             address: {
               "@type": "PostalAddress",
-              addressLocality: data.location,
+              addressLocality: transformedData.location,
               addressCountry: "Indonesia",
             },
           },

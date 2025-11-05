@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 interface ResumeData {
   name: string;
@@ -14,14 +15,28 @@ const Footer = () => {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const currentYear = new Date().getFullYear();
 
+
+
   useEffect(() => {
     const fetchResumeData = async () => {
       try {
-        const response = await fetch('/json/AnugrahSuryaPutra_resume.json');
-        const data = await response.json();
-        setResumeData(data);
+        const { data, error } = await supabase
+          .from("resumes")
+          .select("name, linkedin, email, location")
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        const fullData = {
+          ...data,
+          portfolio: "https://itsyourboiputra.is-a.dev/",
+        };
+
+        setResumeData(fullData as ResumeData);
       } catch (error) {
-        console.error('Error fetching resume data:', error);
+        console.error("Error fetching resume data:", error);
       }
     };
 
