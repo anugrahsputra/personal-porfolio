@@ -39,7 +39,7 @@ const Hero = () => {
   const downloadResume = () => {
     // Google Drive direct download URL
     const resumeUrl =
-      "https://drive.google.com/uc?export=download&id=1JJTOB0X1pUyPNJCDEId2WRiBhEzWzKxV";
+      "https://raw.githubusercontent.com/anugrahsputra/resume/main/rendercv_output/Anugrah_Surya_Putra_CV.pdf";
 
     // Create a temporary link element
     const link = document.createElement("a");
