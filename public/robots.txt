@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://itsyourboyputra.vercel.app/sitemap.xml
+Sitemap: https://downormal.dev/sitemap.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
@@ -47,4 +47,4 @@ User-agent: MJ12bot
 Disallow: /
 
 # Additional directives
-Host: https://itsyourboyputra.vercel.app
+Host: https://downormal.dev

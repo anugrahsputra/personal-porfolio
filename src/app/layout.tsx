@@ -7,6 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://downormal.dev"),
   title: {
     default:
       "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://itsyourboiputra.is-a.dev/",
+    url: "https://downormal.dev/",
     title:
       "Anugrah Surya Putra - Mobile Engineer Portfolio | Flutter & Kotlin Expert",
     description:
@@ -93,7 +94,7 @@ export const metadata: Metadata = {
     google: "VWRpL4QRyqrjCTcPlz0gBRwBExizKCKpuYX5FCZqO0U",
   },
   alternates: {
-    canonical: "https://itsyourboiputra.is-a.dev/",
+    canonical: "https://downormal.dev/",
   },
 };
 

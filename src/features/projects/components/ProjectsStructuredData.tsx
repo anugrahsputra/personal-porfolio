@@ -114,7 +114,7 @@ const ProjectsStructuredData = () => {
             "@type": "Person",
             name: "Anugrah Surya Putra",
             jobTitle: "Mobile Engineer",
-            url: "https://itsyourboiputra.is-a.dev/",
+            url: "https://downormal.dev/",
           },
           about: [
             {

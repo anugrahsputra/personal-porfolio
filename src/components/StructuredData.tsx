@@ -61,7 +61,7 @@ const StructuredData = () => {
           name: transformedData.name,
           jobTitle: "Mobile Engineer",
           description: transformedData.summary,
-          url: "https://itsyourboiputra.is-a.dev/",
+          url: "https://downormal.dev/",
           email: transformedData.email,
           address: {
             "@type": "PostalAddress",
@@ -103,7 +103,7 @@ const StructuredData = () => {
             name: transformedData.name,
             jobTitle: "Mobile Engineer",
             description: transformedData.summary,
-            url: "https://itsyourboiputra.is-a.dev/",
+            url: "https://downormal.dev/",
             email: transformedData.email,
             address: {
               "@type": "PostalAddress",
@@ -113,7 +113,7 @@ const StructuredData = () => {
             sameAs: [transformedData.linkedin],
             knowsAbout: transformedData.skills.technologies,
           },
-          url: "https://itsyourboiputra.is-a.dev/",
+          url: "https://downormal.dev/",
           name: `${transformedData.name} - Mobile Engineer Portfolio`,
           description: transformedData.summary,
         };
@@ -123,7 +123,7 @@ const StructuredData = () => {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: `${transformedData.name} - Mobile Engineer Portfolio`,
-          url: "https://itsyourboiputra.is-a.dev/",
+          url: "https://downormal.dev/",
           description: transformedData.summary,
           author: {
             "@type": "Person",

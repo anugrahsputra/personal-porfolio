@@ -31,7 +31,7 @@ const Footer = () => {
 
         const fullData = {
           ...data,
-          portfolio: "https://itsyourboiputra.is-a.dev/",
+          portfolio: "https://downormal.dev/",
         };
 
         setResumeData(fullData as ResumeData);

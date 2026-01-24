@@ -10,13 +10,13 @@ const breadcrumbStructuredData = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://itsyourboiputra.is-a.dev/",
+      item: "https://downormal.dev/",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "Experience",
-      item: "https://itsyourboiputra.is-a.dev/experience",
+      item: "https://downormal.dev/experience",
     },
   ],
 };
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Professional Experience - Mobile Engineer at BRIK & Semesta Arus Teknologi",
     description: "💼 2+ years as Mobile Engineer at PT. Bangun Rancang Indonesia Kita (BRIK) and PT. Semesta Arus Teknologi. Specializing in Flutter, Kotlin Multiplatform, clean architecture, and CI/CD pipeline development.",
     type: "website",
-    url: "https://itsyourboiputra.is-a.dev/experience",
+    url: "https://downormal.dev/experience",
     images: [
       {
         url: "/images/photo/photo.png",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     images: ["/images/photo/photo.png"],
   },
   alternates: {
-    canonical: "https://itsyourboiputra.is-a.dev/experience",
+    canonical: "https://downormal.dev/experience",
   },
 };
 

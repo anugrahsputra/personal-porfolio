@@ -24,7 +24,7 @@ export class ResumeDataSourceImpl implements ResumeDataSource {
       const transformedData = {
         ...data,
         skills: data.skills[0],
-        portfolio: "https://itsyourboiputra.is-a.dev/",
+        portfolio: "https://downormal.dev/",
       };
 
       return transformedData as ResumeData;
