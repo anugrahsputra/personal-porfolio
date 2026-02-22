@@ -25,15 +25,19 @@ const About = ({ initialData }: AboutProps) => {
   const [resumeDataState, setResumeData] = useState<ResumeData | null>(null);
   
   // Ensure we have a consistent format for skills regardless of data source
-  const getTransformedData = (data: any): ResumeData | null => {
+  const getTransformedData = (data: ResumeData | (Omit<ResumeData, 'skills'> & { skills: Skills[] }) | null): ResumeData | null => {
     if (!data) return null;
+    
+    // If skills is an array (from Supabase), take the first one. Otherwise assume it's already the object.
+    const skills = Array.isArray(data.skills) ? data.skills[0] : data.skills;
+    
     return {
       ...data,
-      skills: Array.isArray(data.skills) ? data.skills[0] : data.skills,
-    };
+      skills,
+    } as ResumeData;
   };
 
-  const resumeData = getTransformedData(initialData || resumeDataState);
+  const resumeData = getTransformedData((initialData || resumeDataState) as ResumeData | (Omit<ResumeData, 'skills'> & { skills: Skills[] }) | null);
 
   useEffect(() => {
     if (initialData) return;
