@@ -4,19 +4,29 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useRecentExperiences, useResumeData } from "../hooks/useResume";
-import type { Experience } from "../data/domain/Experience";
+import type { ResumeData } from "../data/domain/Experience";
 
-const Experience = () => {
-  const { experiences, loading, error } = useRecentExperiences(3);
-  const { resumeData } = useResumeData();
+interface ExperienceProps {
+  initialData?: ResumeData;
+  limit?: number;
+}
 
-  if (loading) {
+const Experience = ({ initialData, limit }: ExperienceProps) => {
+  const { experiences: fetchedExperiences, loading, error } = useRecentExperiences(limit || 100);
+  const { resumeData: fetchedResumeData } = useResumeData();
+  
+  const resumeData = initialData || fetchedResumeData;
+  const experiences = initialData 
+    ? (limit ? initialData.experience.slice(0, limit) : initialData.experience)
+    : fetchedExperiences;
+
+  if (loading && !resumeData) {
     return (
       <section id="experience" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Recent Experience
+              {limit ? "Recent Experience" : "Professional Experience"}
             </h2>
             <Separator className="w-24 mx-auto" />
           </div>
@@ -38,7 +48,7 @@ const Experience = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Recent Experience
+              {limit ? "Recent Experience" : "Professional Experience"}
             </h2>
             <p className="text-foreground/60">
               Error loading experience: {error}
@@ -49,19 +59,20 @@ const Experience = () => {
     );
   }
 
-  const hasMoreExperiences = resumeData && resumeData.experience.length > 3;
+  const hasMoreExperiences = limit && resumeData && resumeData.experience.length > limit;
 
   return (
     <section id="experience" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Recent Experience
+            {limit ? "Recent Experience" : "Professional Experience"}
           </h2>
           <Separator className="w-24 mx-auto" />
           <p className="text-foreground/60 mt-6 max-w-2xl mx-auto">
-            My recent professional journey in mobile development, showcasing my
-            growth and expertise across different companies and projects.
+            {limit
+              ? "My recent professional journey in mobile development, showcasing my growth and expertise across different companies and projects."
+              : "My comprehensive professional journey in mobile development, showcasing my growth and expertise across different companies and projects since 2022."}
           </p>
         </div>
 
@@ -110,7 +121,7 @@ const Experience = () => {
           </div>
 
           {/* View Experience Button */}
-          {hasMoreExperiences && (
+          {limit && hasMoreExperiences && (
             <div className="text-center mt-12">
               <Link href="/experience">
                 <Button size="lg" className="group">

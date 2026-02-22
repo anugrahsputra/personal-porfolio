@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import ProjectsPageClient from "./ProjectsPageClient";
+import ProjectsStructuredData from "@/features/projects/components/ProjectsStructuredData";
+import projectsData from "../../../../public/json/projects.json";
+import { ProjectsData } from "@/features/projects/data/domain/Project";
 
 // Breadcrumb structured data for projects page
 const breadcrumbStructuredData = {
@@ -75,13 +78,14 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <>
+      <ProjectsStructuredData />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ProjectsPageClient />
+      <ProjectsPageClient initialData={projectsData as ProjectsData} />
     </>
   );
 }

@@ -17,10 +17,26 @@ interface ResumeData {
   skills: Skills;
 }
 
-const About = () => {
-  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
+interface AboutProps {
+  initialData?: ResumeData;
+}
+
+const About = ({ initialData }: AboutProps) => {
+  const [resumeDataState, setResumeData] = useState<ResumeData | null>(null);
+  
+  // Ensure we have a consistent format for skills regardless of data source
+  const getTransformedData = (data: any): ResumeData | null => {
+    if (!data) return null;
+    return {
+      ...data,
+      skills: Array.isArray(data.skills) ? data.skills[0] : data.skills,
+    };
+  };
+
+  const resumeData = getTransformedData(initialData || resumeDataState);
 
   useEffect(() => {
+    if (initialData) return;
     const fetchResumeData = async () => {
       try {
         const { data, error } = await supabase
@@ -39,20 +55,14 @@ const About = () => {
           throw error;
         }
 
-        // The new data structure has skills as an array
-        const transformedData = {
-          ...data,
-          skills: data.skills[0],
-        };
-
-        setResumeData(transformedData);
+        setResumeData(data);
       } catch (error) {
         console.error("Error fetching resume data:", error);
       }
     };
 
     fetchResumeData();
-  }, []);
+  }, [initialData]);
 
   if (!resumeData) {
     return (

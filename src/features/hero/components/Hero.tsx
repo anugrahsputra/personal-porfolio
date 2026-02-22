@@ -12,10 +12,16 @@ interface ResumeData {
   name: string;
   summary: string;
 }
-const Hero = () => {
-  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
+
+interface HeroProps {
+  initialData?: ResumeData;
+}
+const Hero = ({ initialData }: HeroProps) => {
+  const [resumeDataState, setResumeData] = useState<ResumeData | null>(null);
+  const resumeData = initialData || resumeDataState;
 
   useEffect(() => {
+    if (initialData) return;
     const fetchResumeData = async () => {
       try {
         const { data, error } = await supabase
@@ -34,7 +40,7 @@ const Hero = () => {
     };
 
     fetchResumeData();
-  }, []);
+  }, [initialData]);
 
   const downloadResume = () => {
     // Google Drive direct download URL

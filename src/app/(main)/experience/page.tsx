@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import ExperiencePageClient from "./ExperiencePageClient";
+import resumeData from "../../../../public/json/AnugrahSuryaPutra_resume.json";
+import { ResumeData } from "@/features/resume/data/domain/Experience";
 
 // Breadcrumb structured data for experience page
 const breadcrumbStructuredData = {
@@ -82,7 +84,7 @@ export default function ExperiencePage() {
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ExperiencePageClient />
+      <ExperiencePageClient initialData={resumeData as unknown as ResumeData} />
     </>
   );
 }

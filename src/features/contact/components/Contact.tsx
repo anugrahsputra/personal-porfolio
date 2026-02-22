@@ -18,8 +18,13 @@ interface ResumeData {
   portfolio: string;
 }
 
-const Contact = () => {
-  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
+interface ContactProps {
+  initialData?: ResumeData;
+}
+
+const Contact = ({ initialData }: ContactProps) => {
+  const [resumeDataState, setResumeData] = useState<ResumeData | null>(null);
+  const resumeData = initialData || resumeDataState;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,9 +37,8 @@ const Contact = () => {
     message: string;
   } | null>(null);
 
-
-
   useEffect(() => {
+    if (initialData) return;
     const fetchResumeData = async () => {
       try {
         const { data, error } = await supabase
@@ -53,7 +57,7 @@ const Contact = () => {
     };
 
     fetchResumeData();
-  }, []);
+  }, [initialData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

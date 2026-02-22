@@ -20,28 +20,16 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import Link from "next/link";
+import { ProjectsData, Project } from "../data/domain/Project";
 
-interface Project {
-  title: string;
-  description: string;
-  techStacks: string[];
-  liveDemo: string;
-  github: string;
-  isLive: boolean;
-  isNDA: boolean;
-  isFeatured: boolean;
-  image: string;
-  company: string;
-  period: string;
-  location: string;
+interface ProjectsProps {
+  initialData?: ProjectsData;
+  limit?: number;
 }
 
-interface ProjectsData {
-  projects: Project[];
-}
-
-const Projects = () => {
-  const [projectsData, setProjectsData] = useState<ProjectsData | null>(null);
+const Projects = ({ initialData, limit }: ProjectsProps) => {
+  const [projectsDataState, setProjectsData] = useState<ProjectsData | null>(null);
+  const projectsData = initialData || projectsDataState;
   const [ndaDialogOpen, setNdaDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(
@@ -49,6 +37,7 @@ const Projects = () => {
   );
 
   useEffect(() => {
+    if (initialData) return;
     const fetchProjectsData = async () => {
       try {
         const response = await fetch("/json/projects.json");
@@ -60,7 +49,7 @@ const Projects = () => {
     };
 
     fetchProjectsData();
-  }, []);
+  }, [initialData]);
 
   const handleButtonClick = (
     project: Project,
@@ -87,7 +76,7 @@ const Projects = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Recent Projects
+              {limit ? "Recent Projects" : "All Projects"}
             </h2>
             <Separator className="w-24 mx-auto" />
           </div>
@@ -107,7 +96,7 @@ const Projects = () => {
     );
   }
 
-  // Sort projects by date (newest first) and take the first 4
+  // Sort projects by date (newest first)
   const sortedProjects = [...projectsData.projects].sort((a, b) => {
     // Extract year and month from period string (e.g., "Oct 2024 - Feb 2025" -> 2024)
     const getYear = (period: string) => {
@@ -148,25 +137,25 @@ const Projects = () => {
     return getMonth(b.period) - getMonth(a.period);
   });
 
-  const recentProjects = sortedProjects.slice(0, 4);
+  const displayedProjects = limit ? sortedProjects.slice(0, limit) : sortedProjects;
 
   return (
     <section id="projects" className="py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Recent Projects
+            {limit ? "Recent Projects" : "All Projects"}
           </h2>
           <Separator className="w-24 mx-auto" />
           <p className="text-foreground/60 mt-6 max-w-2xl mx-auto">
-            My latest mobile development projects, showcasing recent work and
-            ongoing development in creating innovative mobile applications and
-            solutions.
+            {limit
+              ? "My latest mobile development projects, showcasing recent work and ongoing development in creating innovative mobile applications and solutions."
+              : "A comprehensive list of my mobile development projects, from KIOSK applications to mobile apps and CLI tools."}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-          {recentProjects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <Card
               key={index}
               className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
@@ -274,26 +263,28 @@ const Projects = () => {
         </div>
 
         {/* Show All Projects Button */}
-        <div className="text-center mt-12">
-          <Link href="/projects">
-            <Button size="lg" className="group">
-              View All Projects
-              <svg
-                className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </Button>
-          </Link>
-        </div>
+        {limit && (
+          <div className="text-center mt-12">
+            <Link href="/projects">
+              <Button size="lg" className="group">
+                View All Projects
+                <svg
+                  className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </Button>
+            </Link>
+          </div>
+        )}
 
         {/* NDA Dialog */}
         <Dialog open={ndaDialogOpen} onOpenChange={setNdaDialogOpen}>
