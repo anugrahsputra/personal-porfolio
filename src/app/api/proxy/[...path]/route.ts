@@ -19,20 +19,31 @@ export async function GET(
       searchParams ? `?${searchParams}` : ""
     }`;
 
-    console.log(`Proxying request to: ${apiUrl}`);
+    console.log(`[Proxy] Requesting: ${apiUrl}`);
+    console.log(`[Proxy] API Key present: ${apiKey ? "Yes" : "No"}`);
+    if (apiKey) {
+        console.log(`[Proxy] API Key length: ${apiKey.length}`);
+    }
 
     const response = await fetch(apiUrl, {
       headers: {
         "Content-Type": "application/json",
-        "X-API-KEY": apiKey,
+        "X-API-Key": apiKey, // Matching your backend's case
       },
       // Ensure we don't cache stale data on the proxy level
       next: { revalidate: 0 },
     });
 
     if (!response.ok) {
+      console.error(`[Proxy] Backend error: ${response.status} ${response.statusText}`);
+      const errorData = await response.text().catch(() => "No error body");
+      console.error(`[Proxy] Backend error body: ${errorData}`);
+      
       return NextResponse.json(
-        { error: `Backend responded with ${response.status}` },
+        { 
+            error: `Backend responded with ${response.status}`,
+            details: errorData 
+        },
         { status: response.status }
       );
     }
@@ -40,7 +51,7 @@ export async function GET(
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Proxy error:", error);
+    console.error("[Proxy] Critical error:", error);
     return NextResponse.json(
       { error: "Internal Server Error in Proxy" },
       { status: 500 }
