@@ -22,12 +22,12 @@ export async function GET(
       "Content-Type": "application/json",
     };
 
-    // Only add the API key if it's actually defined and not empty
     if (apiKey && apiKey.trim() !== "") {
       headers["X-API-Key"] = apiKey;
-      console.log(`[Proxy] API Key sent (Length: ${apiKey.length})`);
+      // Debug info: log key length and first/last char to verify matching
+      console.log(`[Proxy] API Key sent. Length: ${apiKey.length}, Starts with: ${apiKey[0]}, Ends with: ${apiKey[apiKey.length-1]}`);
     } else {
-      console.log(`[Proxy] No API Key sent`);
+      console.log(`[Proxy] No API Key found in process.env.PORTFOLIO_API_KEY`);
     }
 
     const response = await fetch(apiUrl, {
@@ -36,9 +36,10 @@ export async function GET(
     });
 
     if (!response.ok) {
-      console.error(`[Proxy] Backend error: ${response.status} ${response.statusText}`);
+      const errorText = await response.text().catch(() => "No error body");
+      console.error(`[Proxy] Backend error: ${response.status} - Body: ${errorText}`);
       return NextResponse.json(
-        { error: `Backend responded with ${response.status}` },
+        { error: `Backend responded with ${response.status}`, details: errorText },
         { status: response.status }
       );
     }
