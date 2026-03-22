@@ -3,6 +3,8 @@ import ProjectsPageClient from "./ProjectsPageClient";
 import ProjectsStructuredData from "@/features/projects/components/ProjectsStructuredData";
 import { getAllProjectsUseCase } from "@/features/projects/data/container";
 
+export const dynamic = 'force-dynamic';
+
 // Breadcrumb structured data for projects page
 const breadcrumbStructuredData = {
   "@context": "https://schema.org",

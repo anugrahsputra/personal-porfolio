@@ -7,6 +7,8 @@ import FAQStructuredData from "@/components/FAQStructuredData";
 import { getResumeDataUseCase } from "@/features/resume/data/container";
 import { getAllProjectsUseCase } from "@/features/projects/data/container";
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   // Fetch data on the server
   const resumeData = await getResumeDataUseCase.execute().catch(() => null);

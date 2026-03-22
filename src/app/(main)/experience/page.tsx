@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import ExperiencePageClient from "./ExperiencePageClient";
 import { getResumeDataUseCase } from "@/features/resume/data/container";
 
+export const dynamic = 'force-dynamic';
+
 // Breadcrumb structured data for experience page
 const breadcrumbStructuredData = {
   "@context": "https://schema.org",
