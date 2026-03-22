@@ -2,7 +2,6 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { useResumeData } from "@/features/resume/hooks/useResume";
 
 interface Skills {
   technologies: string[];
@@ -26,10 +25,7 @@ interface AboutProps {
 }
 
 const About = ({ initialData }: AboutProps) => {
-  const { resumeData: fetchedResumeData, loading } = useResumeData();
-  const data = initialData || fetchedResumeData;
-
-  if (loading && !data) {
+  if (!initialData) {
     return (
       <section id="about" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,8 +47,6 @@ const About = ({ initialData }: AboutProps) => {
     );
   }
 
-  if (!data) return null;
-
   return (
     <section id="about" className="py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,7 +64,7 @@ const About = ({ initialData }: AboutProps) => {
               Who I Am
             </h3>
             <p className="text-foreground/70 leading-relaxed mb-4 text-lg">
-              {data.summary}
+              {initialData.summary}
             </p>
             <p className="text-foreground/70 leading-relaxed">
               When I&apos;m not coding, you can find me exploring new mobile
@@ -91,7 +85,7 @@ const About = ({ initialData }: AboutProps) => {
                 Technologies
               </h4>
               <div className="flex flex-wrap gap-2">
-                {data.skills.technologies.map((tech) => (
+                {initialData.skills.technologies.map((tech) => (
                   <Badge key={tech} variant="secondary" className="text-sm">
                     {tech}
                   </Badge>
@@ -105,7 +99,7 @@ const About = ({ initialData }: AboutProps) => {
                 Tools & Platforms
               </h4>
               <div className="flex flex-wrap gap-2">
-                {data.skills.tools.map((tool) => (
+                {initialData.skills.tools.map((tool) => (
                   <Badge key={tool} variant="outline" className="text-sm">
                     {tool}
                   </Badge>
@@ -119,7 +113,7 @@ const About = ({ initialData }: AboutProps) => {
                 Soft Skills
               </h4>
               <div className="flex flex-wrap gap-2">
-                {data.skills.soft_skills.map((skill) => (
+                {initialData.skills.soft_skills.map((skill) => (
                   <Badge key={skill} variant="secondary" className="text-sm">
                     {skill}
                   </Badge>
@@ -133,7 +127,7 @@ const About = ({ initialData }: AboutProps) => {
                 Languages
               </h4>
               <div className="flex flex-wrap gap-2">
-                {data.languages.map((lang) => (
+                {initialData.languages.map((lang) => (
                   <Badge key={lang.name} variant="outline" className="text-sm">
                     {lang.name}
                   </Badge>

@@ -21,7 +21,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectsData, Project } from "../data/domain/Project";
-import { useRecentProjects } from "../hooks/useProjects";
 
 interface ProjectsProps {
   initialData?: ProjectsData;
@@ -29,14 +28,11 @@ interface ProjectsProps {
 }
 
 const Projects = ({ initialData, limit }: ProjectsProps) => {
-  const { projects: fetchedProjects, loading, error } = useRecentProjects(limit || 100);
   const [ndaDialogOpen, setNdaDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(
     {},
   );
-
-  const projects = initialData ? initialData.projects : fetchedProjects;
 
   const handleButtonClick = (
     project: Project,
@@ -57,7 +53,7 @@ const Projects = ({ initialData, limit }: ProjectsProps) => {
     setImageErrors((prev) => ({ ...prev, [projectTitle]: true }));
   };
 
-  if (loading && !projects.length) {
+  if (!initialData) {
     return (
       <section id="projects" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -83,25 +79,8 @@ const Projects = ({ initialData, limit }: ProjectsProps) => {
     );
   }
 
-  if (error && !projects.length) {
-    return (
-      <section id="projects" className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {limit ? "Recent Projects" : "All Projects"}
-            </h2>
-            <p className="text-foreground/60">
-              Error loading projects: {error}
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   // Sort projects by date (newest first)
-  const sortedProjects = [...projects].sort((a, b) => {
+  const sortedProjects = [...initialData.projects].sort((a, b) => {
     // Extract year and month from period string (e.g., "Oct 2024 - Feb 2025" -> 2024)
     const getYear = (period: string) => {
       const yearMatch = period.match(/\d{4}/);

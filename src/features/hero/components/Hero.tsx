@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 
 import React from "react";
 import Image from "next/image";
-import { useResumeData } from "@/features/resume/hooks/useResume";
 
 interface ResumeData {
   name: string;
@@ -15,8 +14,6 @@ interface HeroProps {
   initialData?: ResumeData;
 }
 const Hero = ({ initialData }: HeroProps) => {
-  const { resumeData: fetchedResumeData, loading } = useResumeData();
-  const data = initialData || fetchedResumeData;
 
   const downloadResume = () => {
     // Google Drive direct download URL
@@ -35,7 +32,7 @@ const Hero = ({ initialData }: HeroProps) => {
     document.body.removeChild(link);
   };
 
-  if (loading && !data) {
+  if (!initialData) {
     return (
       <section
         id="home"
@@ -61,18 +58,16 @@ const Hero = ({ initialData }: HeroProps) => {
 
         <div className="text-center relative z-10">
           <div className="animate-pulse">
-            <div className="h-12 bg-muted rounded mb-4 w-64 mx-auto"></div>
-            <div className="h-6 bg-muted rounded mb-2 w-48 mx-auto"></div>
-            <div className="h-6 bg-muted rounded mb-8 w-96 mx-auto"></div>
-            <div className="h-10 bg-muted rounded mb-4 w-40 mx-auto"></div>
-            <div className="h-10 bg-muted rounded w-40 mx-auto"></div>
+            <div className="h-12 bg-muted rounded mb-4"></div>
+            <div className="h-6 bg-muted rounded mb-2"></div>
+            <div className="h-6 bg-muted rounded mb-8"></div>
+            <div className="h-10 bg-muted rounded mb-4"></div>
+            <div className="h-10 bg-muted rounded"></div>
           </div>
         </div>
       </section>
     );
   }
-
-  if (!data) return null;
 
   return (
     <section
@@ -101,15 +96,71 @@ const Hero = ({ initialData }: HeroProps) => {
           {/* Name and Role */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-bold text-foreground">
-              {data.name}
+              {initialData.name}
             </h1>
             <h2 className="text-xl sm:text-2xl text-foreground/70 font-medium">
               Mobile Engineer
             </h2>
             <p className="text-lg sm:text-xl text-foreground/60 max-w-2xl mx-auto leading-relaxed">
-              {data.summary}
+              {initialData.summary}
             </p>
           </div>
+
+          {/* Call to Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button
+              size="lg"
+              className="group"
+              onClick={() => {
+                const element = document.querySelector("#contact");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
+              Get In Touch
+              <svg
+                className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={downloadResume}
+              className="group"
+            >
+              <svg
+                className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Download Resume
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
           {/* Call to Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { useRecentExperiences, useResumeData } from "../hooks/useResume";
 import type { ResumeData } from "../data/domain/Experience";
 
 interface ExperienceProps {
@@ -12,15 +11,12 @@ interface ExperienceProps {
 }
 
 const Experience = ({ initialData, limit }: ExperienceProps) => {
-  const { experiences: fetchedExperiences, loading, error } = useRecentExperiences(limit || 100);
-  const { resumeData: fetchedResumeData } = useResumeData();
-  
-  const resumeData = initialData || fetchedResumeData;
+  const resumeData = initialData;
   const experiences = initialData 
     ? (limit ? initialData.experience.slice(0, limit) : initialData.experience)
-    : fetchedExperiences;
+    : [];
 
-  if (loading && !resumeData) {
+  if (!resumeData) {
     return (
       <section id="experience" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,23 +32,6 @@ const Experience = ({ initialData, limit }: ExperienceProps) => {
             <div className="h-4 bg-muted rounded mb-4"></div>
             <div className="h-4 bg-muted rounded mb-2"></div>
             <div className="h-4 bg-muted rounded"></div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="experience" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {limit ? "Recent Experience" : "Professional Experience"}
-            </h2>
-            <p className="text-foreground/60">
-              Error loading experience: {error}
-            </p>
           </div>
         </div>
       </section>

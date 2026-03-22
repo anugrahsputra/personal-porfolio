@@ -60,15 +60,37 @@ function transformProject(apiProject: ApiProject): Project {
 }
 
 export class ApiProjectDataSourceImpl implements ProjectDataSource {
-  async fetchProjects(): Promise<ProjectsData> {
-    const profileId = process.env.NEXT_PUBLIC_PROFILE_ID;
-    if (!profileId) {
-      throw new Error('NEXT_PUBLIC_PROFILE_ID is not defined');
+  private profileId: string;
+  private baseUrl: string;
+  private apiKey: string;
+
+  constructor() {
+    this.profileId = process.env.NEXT_PUBLIC_PROFILE_ID || '';
+    
+    // Choose URL based on environment (Server vs Client)
+    if (typeof window === 'undefined') {
+      // Server-side: talk directly to Go API
+      this.baseUrl = process.env.INTERNAL_API_URL || 'https://portfolio-api.downormal.dev';
+      this.apiKey = process.env.PORTFOLIO_API_KEY || '';
+    } else {
+      // Client-side: use Next.js Proxy
+      this.baseUrl = '/api/proxy';
+      this.apiKey = ''; // Client doesn't need the key (proxy adds it)
     }
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/project/${profileId}`
-    );
+    if (!this.profileId) {
+      throw new Error('NEXT_PUBLIC_PROFILE_ID is not defined');
+    }
+  }
+
+  async fetchProjects(): Promise<ProjectsData> {
+    const url = typeof window === 'undefined' 
+      ? `${this.baseUrl}/api/v1/project/${this.profileId}`
+      : `${this.baseUrl}/project/${this.profileId}`;
+
+    const response = await fetch(url, {
+      headers: this.getHeaders()
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch projects: ${response.statusText}`);
@@ -78,5 +100,15 @@ export class ApiProjectDataSourceImpl implements ProjectDataSource {
     const projects = result.data.map(transformProject);
 
     return { projects };
+  }
+
+  private getHeaders(): HeadersInit {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (this.apiKey) {
+      headers['X-API-KEY'] = this.apiKey;
+    }
+    return headers;
   }
 }
