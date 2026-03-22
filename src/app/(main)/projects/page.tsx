@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import ProjectsPageClient from "./ProjectsPageClient";
 import ProjectsStructuredData from "@/features/projects/components/ProjectsStructuredData";
-import projectsData from "../../../../public/json/projects.json";
-import { ProjectsData } from "@/features/projects/data/domain/Project";
+import { getAllProjectsUseCase } from "@/features/projects/data/container";
 
 // Breadcrumb structured data for projects page
 const breadcrumbStructuredData = {
@@ -75,17 +74,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projectsData = await getAllProjectsUseCase.execute().catch(() => null);
+
   return (
     <>
-      <ProjectsStructuredData />
+      <ProjectsStructuredData initialData={projectsData || undefined} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ProjectsPageClient initialData={projectsData as ProjectsData} />
+      <ProjectsPageClient initialData={projectsData || undefined} />
     </>
   );
 }

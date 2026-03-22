@@ -113,18 +113,6 @@ export default function RootLayout({
           as="image"
           type="image/png"
         />
-        <link
-          rel="preload"
-          href="/json/AnugrahSuryaPutra_resume.json"
-          as="fetch"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/json/projects.json"
-          as="fetch"
-          crossOrigin="anonymous"
-        />
 
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//raw.githubusercontent.com" />

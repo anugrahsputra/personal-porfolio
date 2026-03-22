@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { sendMail } from "../data/actions";
 
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { supabase } from "@/lib/supabase";
 
 interface ResumeData {
   name: string;
@@ -23,8 +22,7 @@ interface ContactProps {
 }
 
 const Contact = ({ initialData }: ContactProps) => {
-  const [resumeDataState, setResumeData] = useState<ResumeData | null>(null);
-  const resumeData = initialData || resumeDataState;
+  const resumeData = initialData;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,28 +34,6 @@ const Contact = ({ initialData }: ContactProps) => {
     type: "success" | "error";
     message: string;
   } | null>(null);
-
-  useEffect(() => {
-    if (initialData) return;
-    const fetchResumeData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("resumes")
-          .select("email, location, linkedin")
-          .single();
-
-        if (error) {
-          throw error;
-        }
-
-        setResumeData(data as ResumeData);
-      } catch (error) {
-        console.error("Error fetching resume data:", error);
-      }
-    };
-
-    fetchResumeData();
-  }, [initialData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

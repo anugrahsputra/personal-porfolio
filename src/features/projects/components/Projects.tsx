@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,28 +28,11 @@ interface ProjectsProps {
 }
 
 const Projects = ({ initialData, limit }: ProjectsProps) => {
-  const [projectsDataState, setProjectsData] = useState<ProjectsData | null>(null);
-  const projectsData = initialData || projectsDataState;
   const [ndaDialogOpen, setNdaDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(
     {},
   );
-
-  useEffect(() => {
-    if (initialData) return;
-    const fetchProjectsData = async () => {
-      try {
-        const response = await fetch("/json/projects.json");
-        const data = await response.json();
-        setProjectsData(data);
-      } catch (error) {
-        console.error("Error fetching projects data:", error);
-      }
-    };
-
-    fetchProjectsData();
-  }, [initialData]);
 
   const handleButtonClick = (
     project: Project,
@@ -70,7 +53,7 @@ const Projects = ({ initialData, limit }: ProjectsProps) => {
     setImageErrors((prev) => ({ ...prev, [projectTitle]: true }));
   };
 
-  if (!projectsData) {
+  if (!initialData) {
     return (
       <section id="projects" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,7 +80,7 @@ const Projects = ({ initialData, limit }: ProjectsProps) => {
   }
 
   // Sort projects by date (newest first)
-  const sortedProjects = [...projectsData.projects].sort((a, b) => {
+  const sortedProjects = [...initialData.projects].sort((a, b) => {
     // Extract year and month from period string (e.g., "Oct 2024 - Feb 2025" -> 2024)
     const getYear = (period: string) => {
       const yearMatch = period.match(/\d{4}/);

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import ExperiencePageClient from "./ExperiencePageClient";
-import resumeData from "../../../../public/json/AnugrahSuryaPutra_resume.json";
-import { ResumeData } from "@/features/resume/data/domain/Experience";
+import { getResumeDataUseCase } from "@/features/resume/data/container";
 
 // Breadcrumb structured data for experience page
 const breadcrumbStructuredData = {
@@ -75,7 +74,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ExperiencePage() {
+export default async function ExperiencePage() {
+  const resumeData = await getResumeDataUseCase.execute().catch(() => null);
+
   return (
     <>
       <script
@@ -84,7 +85,7 @@ export default function ExperiencePage() {
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ExperiencePageClient initialData={resumeData as unknown as ResumeData} />
+      <ExperiencePageClient initialData={resumeData || undefined} />
     </>
   );
 }

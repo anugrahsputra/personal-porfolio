@@ -1,10 +1,10 @@
-import { ResumeDataSourceImpl } from './datasources/ResumeDataSourceImpl';
+import { ApiResumeDataSourceImpl } from './datasources/ApiResumeDataSourceImpl';
 import { ResumeRepositoryImpl } from './repositories/ResumeRepositoryImpl';
 import { GetResumeDataUseCase } from './usecases/GetResumeDataUseCase';
 import { GetRecentExperiencesUseCase } from './usecases/GetRecentExperiencesUseCase';
 
 // Data Sources
-const resumeDataSource = new ResumeDataSourceImpl();
+const resumeDataSource = new ApiResumeDataSourceImpl();
 
 // Repositories
 const resumeRepository = new ResumeRepositoryImpl(resumeDataSource);

@@ -1,12 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 import React from "react";
 import Image from "next/image";
-
-import { supabase } from "@/lib/supabase";
 
 interface ResumeData {
   name: string;
@@ -17,30 +14,6 @@ interface HeroProps {
   initialData?: ResumeData;
 }
 const Hero = ({ initialData }: HeroProps) => {
-  const [resumeDataState, setResumeData] = useState<ResumeData | null>(null);
-  const resumeData = initialData || resumeDataState;
-
-  useEffect(() => {
-    if (initialData) return;
-    const fetchResumeData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("resumes")
-          .select("name, summary")
-          .single();
-
-        if (error) {
-          throw error;
-        }
-
-        setResumeData(data);
-      } catch (error) {
-        console.error("Error fetching resume data:", error);
-      }
-    };
-
-    fetchResumeData();
-  }, [initialData]);
 
   const downloadResume = () => {
     // Google Drive direct download URL
@@ -59,7 +32,7 @@ const Hero = ({ initialData }: HeroProps) => {
     document.body.removeChild(link);
   };
 
-  if (!resumeData) {
+  if (!initialData) {
     return (
       <section
         id="home"
@@ -123,13 +96,13 @@ const Hero = ({ initialData }: HeroProps) => {
           {/* Name and Role */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-bold text-foreground">
-              {resumeData.name}
+              {initialData.name}
             </h1>
             <h2 className="text-xl sm:text-2xl text-foreground/70 font-medium">
               Mobile Engineer
             </h2>
             <p className="text-lg sm:text-xl text-foreground/60 max-w-2xl mx-auto leading-relaxed">
-              {resumeData.summary}
+              {initialData.summary}
             </p>
           </div>
 

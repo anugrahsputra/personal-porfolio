@@ -6,6 +6,20 @@ export interface Experience {
   responsibilities: string[];
 }
 
+export interface Education {
+  school: string;
+  degree: string;
+  fieldOfStudy: string;
+  gpa: number;
+  startDate: string;
+  graduationDate: string;
+}
+
+export interface Language {
+  name: string;
+  proficiency: string;
+}
+
 export interface ResumeData {
   name: string;
   summary: string;
@@ -19,6 +33,7 @@ export interface ResumeData {
     technologies: string[];
     tools: string[];
     soft_skills: string[];
-    languages: string[];
   };
+  education: Education[];
+  languages: Language[];
 }

@@ -1,63 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
-
-interface ResumeData {
-  name: string;
-  location: string;
-  email: string;
-  linkedin: string;
-  portfolio: string;
+interface FooterProps {
+  initialData?: {
+    name: string;
+    location: string;
+    email: string;
+    linkedin: string;
+    portfolio: string;
+  };
 }
 
-const Footer = () => {
-  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
+const Footer = ({ initialData }: FooterProps) => {
   const currentYear = new Date().getFullYear();
 
-
-
-  useEffect(() => {
-    const fetchResumeData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("resumes")
-          .select("name, linkedin, email, location")
-          .single();
-
-        if (error) {
-          throw error;
-        }
-
-        const fullData = {
-          ...data,
-          portfolio: "https://downormal.dev/",
-        };
-
-        setResumeData(fullData as ResumeData);
-      } catch (error) {
-        console.error("Error fetching resume data:", error);
-      }
-    };
-
-    fetchResumeData();
-  }, []);
-
-  if (!resumeData) {
-    return (
-      <footer className="bg-background border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="animate-pulse">
-            <div className="h-6 bg-muted rounded mb-4"></div>
-            <div className="h-4 bg-muted rounded mb-2"></div>
-            <div className="h-4 bg-muted rounded mb-4"></div>
-            <div className="h-4 bg-muted rounded mb-2"></div>
-            <div className="h-4 bg-muted rounded"></div>
-          </div>
-        </div>
-      </footer>
-    );
-  }
+  const resumeData = initialData || {
+    name: "Anugrah Surya Putra",
+    location: "Indonesia",
+    email: "anugrahsputra@gmail.com",
+    linkedin: "https://linkedin.com/in/anugrahsputra",
+    portfolio: "https://downormal.dev/",
+  };
 
   const socialLinks = [
     {

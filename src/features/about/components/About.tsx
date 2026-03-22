@@ -1,20 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { supabase } from "@/lib/supabase";
 
 interface Skills {
   technologies: string[];
   tools: string[];
   soft_skills: string[];
-  languages: string[];
+}
+
+interface Language {
+  name: string;
+  proficiency: string;
 }
 
 interface ResumeData {
   summary: string;
   skills: Skills;
+  languages: Language[];
 }
 
 interface AboutProps {
@@ -22,53 +25,7 @@ interface AboutProps {
 }
 
 const About = ({ initialData }: AboutProps) => {
-  const [resumeDataState, setResumeData] = useState<ResumeData | null>(null);
-  
-  // Ensure we have a consistent format for skills regardless of data source
-  const getTransformedData = (data: ResumeData | (Omit<ResumeData, 'skills'> & { skills: Skills[] }) | null): ResumeData | null => {
-    if (!data) return null;
-    
-    // If skills is an array (from Supabase), take the first one. Otherwise assume it's already the object.
-    const skills = Array.isArray(data.skills) ? data.skills[0] : data.skills;
-    
-    return {
-      ...data,
-      skills,
-    } as ResumeData;
-  };
-
-  const resumeData = getTransformedData((initialData || resumeDataState) as ResumeData | (Omit<ResumeData, 'skills'> & { skills: Skills[] }) | null);
-
-  useEffect(() => {
-    if (initialData) return;
-    const fetchResumeData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("resumes")
-          .select(
-            `
-            *,
-            experience:experiences (*),
-            projects (*),
-            skills (*)
-          `
-          )
-          .single();
-
-        if (error) {
-          throw error;
-        }
-
-        setResumeData(data);
-      } catch (error) {
-        console.error("Error fetching resume data:", error);
-      }
-    };
-
-    fetchResumeData();
-  }, [initialData]);
-
-  if (!resumeData) {
+  if (!initialData) {
     return (
       <section id="about" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,7 +64,7 @@ const About = ({ initialData }: AboutProps) => {
               Who I Am
             </h3>
             <p className="text-foreground/70 leading-relaxed mb-4 text-lg">
-              {resumeData.summary}
+              {initialData.summary}
             </p>
             <p className="text-foreground/70 leading-relaxed">
               When I&apos;m not coding, you can find me exploring new mobile
@@ -128,7 +85,7 @@ const About = ({ initialData }: AboutProps) => {
                 Technologies
               </h4>
               <div className="flex flex-wrap gap-2">
-                {resumeData.skills.technologies.map((tech) => (
+                {initialData.skills.technologies.map((tech) => (
                   <Badge key={tech} variant="secondary" className="text-sm">
                     {tech}
                   </Badge>
@@ -142,7 +99,7 @@ const About = ({ initialData }: AboutProps) => {
                 Tools & Platforms
               </h4>
               <div className="flex flex-wrap gap-2">
-                {resumeData.skills.tools.map((tool) => (
+                {initialData.skills.tools.map((tool) => (
                   <Badge key={tool} variant="outline" className="text-sm">
                     {tool}
                   </Badge>
@@ -156,7 +113,7 @@ const About = ({ initialData }: AboutProps) => {
                 Soft Skills
               </h4>
               <div className="flex flex-wrap gap-2">
-                {resumeData.skills.soft_skills.map((skill) => (
+                {initialData.skills.soft_skills.map((skill) => (
                   <Badge key={skill} variant="secondary" className="text-sm">
                     {skill}
                   </Badge>
@@ -170,9 +127,9 @@ const About = ({ initialData }: AboutProps) => {
                 Languages
               </h4>
               <div className="flex flex-wrap gap-2">
-                {resumeData.skills.languages.map((language) => (
-                  <Badge key={language} variant="outline" className="text-sm">
-                    {language}
+                {initialData.languages.map((lang) => (
+                  <Badge key={lang.name} variant="outline" className="text-sm">
+                    {lang.name}
                   </Badge>
                 ))}
               </div>

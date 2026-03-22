@@ -1,7 +1,13 @@
 import React from "react";
-import resumeData from "../../public/json/AnugrahSuryaPutra_resume.json";
+import { getResumeDataUseCase } from "@/features/resume/data/container";
 
-const StructuredData = () => {
+const StructuredData = async () => {
+  const resumeData = await getResumeDataUseCase.execute().catch(() => null);
+  
+  if (!resumeData) return null;
+
+  const education = resumeData.education[0] || {};
+
   // Person Schema
   const personSchema = {
     "@context": "https://schema.org",
@@ -20,15 +26,15 @@ const StructuredData = () => {
     knowsAbout: resumeData.skills.technologies,
     alumniOf: {
       "@type": "EducationalOrganization",
-      name: resumeData.education.institution,
+      name: education.school || "University",
     },
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
-      name: resumeData.education.degree,
+      name: education.degree || "Degree",
       credentialCategory: "degree",
       recognizedBy: {
         "@type": "Organization",
-        name: resumeData.education.institution,
+        name: education.school || "University",
       },
     },
     worksFor: resumeData.experience.map((exp) => ({

@@ -1,7 +1,15 @@
 import React from "react";
-import projectsData from "../../../../public/json/projects.json";
+import { ProjectsData } from "../data/domain/Project";
 
-const ProjectsStructuredData = () => {
+interface ProjectsStructuredDataProps {
+  initialData?: ProjectsData;
+}
+
+const ProjectsStructuredData = ({ initialData }: ProjectsStructuredDataProps) => {
+  if (!initialData) return null;
+  
+  const projectsData = initialData;
+
   // Projects Collection Schema
   const itemListSchema = {
     "@context": "https://schema.org",
