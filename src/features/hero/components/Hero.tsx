@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 
 import React from "react";
 import Image from "next/image";
+import { useResumeData } from "@/features/resume/hooks/useResume";
 
 interface ResumeData {
   name: string;
@@ -14,6 +15,8 @@ interface HeroProps {
   initialData?: ResumeData;
 }
 const Hero = ({ initialData }: HeroProps) => {
+  const { resumeData: fetchedResumeData, loading } = useResumeData();
+  const data = initialData || fetchedResumeData;
 
   const downloadResume = () => {
     // Google Drive direct download URL
@@ -32,7 +35,7 @@ const Hero = ({ initialData }: HeroProps) => {
     document.body.removeChild(link);
   };
 
-  if (!initialData) {
+  if (loading && !data) {
     return (
       <section
         id="home"
@@ -58,16 +61,18 @@ const Hero = ({ initialData }: HeroProps) => {
 
         <div className="text-center relative z-10">
           <div className="animate-pulse">
-            <div className="h-12 bg-muted rounded mb-4"></div>
-            <div className="h-6 bg-muted rounded mb-2"></div>
-            <div className="h-6 bg-muted rounded mb-8"></div>
-            <div className="h-10 bg-muted rounded mb-4"></div>
-            <div className="h-10 bg-muted rounded"></div>
+            <div className="h-12 bg-muted rounded mb-4 w-64 mx-auto"></div>
+            <div className="h-6 bg-muted rounded mb-2 w-48 mx-auto"></div>
+            <div className="h-6 bg-muted rounded mb-8 w-96 mx-auto"></div>
+            <div className="h-10 bg-muted rounded mb-4 w-40 mx-auto"></div>
+            <div className="h-10 bg-muted rounded w-40 mx-auto"></div>
           </div>
         </div>
       </section>
     );
   }
+
+  if (!data) return null;
 
   return (
     <section
@@ -96,13 +101,13 @@ const Hero = ({ initialData }: HeroProps) => {
           {/* Name and Role */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-bold text-foreground">
-              {initialData.name}
+              {data.name}
             </h1>
             <h2 className="text-xl sm:text-2xl text-foreground/70 font-medium">
               Mobile Engineer
             </h2>
             <p className="text-lg sm:text-xl text-foreground/60 max-w-2xl mx-auto leading-relaxed">
-              {initialData.summary}
+              {data.summary}
             </p>
           </div>
 

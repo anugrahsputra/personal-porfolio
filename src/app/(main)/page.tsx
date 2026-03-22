@@ -11,8 +11,14 @@ export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   // Fetch data on the server
-  const resumeData = await getResumeDataUseCase.execute().catch(() => null);
-  const projectsData = await getAllProjectsUseCase.execute().catch(() => null);
+  const resumeData = await getResumeDataUseCase.execute().catch((error) => {
+    console.error("Failed to fetch resume data on server:", error);
+    return null;
+  });
+  const projectsData = await getAllProjectsUseCase.execute().catch((error) => {
+    console.error("Failed to fetch projects data on server:", error);
+    return null;
+  });
 
   return (
     <>
