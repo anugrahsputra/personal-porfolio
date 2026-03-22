@@ -12,9 +12,11 @@ export const useAllProjects = () => {
       try {
         setLoading(true);
         setError(null);
+        // This will now use the Proxy when called on the client
         const data = await getAllProjectsUseCase.execute();
         setProjectsData(data);
       } catch (err) {
+        console.error('Error fetching projects on client:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch projects');
       } finally {
         setLoading(false);
@@ -37,9 +39,11 @@ export const useRecentProjects = (limit: number = 4) => {
       try {
         setLoading(true);
         setError(null);
+        // This will now use the Proxy when called on the client
         const data = await getRecentProjectsUseCase.execute(limit);
         setProjects(data);
       } catch (err) {
+        console.error('Error fetching recent projects on client:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch recent projects');
       } finally {
         setLoading(false);

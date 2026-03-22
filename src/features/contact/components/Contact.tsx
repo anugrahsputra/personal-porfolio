@@ -7,6 +7,7 @@ import { sendMail } from "../data/actions";
 
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useResumeData } from "@/features/resume/hooks/useResume";
 
 interface ResumeData {
   name: string;
@@ -22,7 +23,9 @@ interface ContactProps {
 }
 
 const Contact = ({ initialData }: ContactProps) => {
-  const resumeData = initialData;
+  const { resumeData: fetchedResumeData, loading: fetchingData } = useResumeData();
+  const resumeData = initialData || fetchedResumeData;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -59,7 +62,7 @@ const Contact = ({ initialData }: ContactProps) => {
     }
   };
 
-  if (!resumeData) {
+  if (fetchingData && !resumeData) {
     return (
       <section id="contact" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,6 +84,8 @@ const Contact = ({ initialData }: ContactProps) => {
     );
   }
 
+  if (!resumeData) return null;
+
   const contactInfo = [
     {
       title: "Email",
@@ -96,7 +101,7 @@ const Contact = ({ initialData }: ContactProps) => {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002 2z"
           />
         </svg>
       ),

@@ -12,9 +12,11 @@ export const useResumeData = () => {
       try {
         setLoading(true);
         setError(null);
+        // This will now use the Proxy when called on the client
         const data = await getResumeDataUseCase.execute();
         setResumeData(data);
       } catch (err) {
+        console.error('Error fetching resume data on client:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch resume data');
       } finally {
         setLoading(false);
@@ -37,9 +39,11 @@ export const useRecentExperiences = (limit: number = 3) => {
       try {
         setLoading(true);
         setError(null);
+        // This will now use the Proxy when called on the client
         const data = await getRecentExperiencesUseCase.execute(limit);
         setExperiences(data);
       } catch (err) {
+        console.error('Error fetching recent experiences on client:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch recent experiences');
       } finally {
         setLoading(false);

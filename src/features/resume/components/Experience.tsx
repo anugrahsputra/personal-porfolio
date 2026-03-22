@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { useRecentExperiences } from "../hooks/useResume";
 import type { ResumeData } from "../data/domain/Experience";
 
 interface ExperienceProps {
@@ -11,12 +12,14 @@ interface ExperienceProps {
 }
 
 const Experience = ({ initialData, limit }: ExperienceProps) => {
+  const { experiences: fetchedExperiences, loading, error } = useRecentExperiences(limit || 100);
+  
   const resumeData = initialData;
   const experiences = initialData 
     ? (limit ? initialData.experience.slice(0, limit) : initialData.experience)
-    : [];
+    : fetchedExperiences;
 
-  if (!resumeData) {
+  if (loading && !resumeData && !experiences.length) {
     return (
       <section id="experience" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,6 +40,25 @@ const Experience = ({ initialData, limit }: ExperienceProps) => {
       </section>
     );
   }
+
+  if (error && !resumeData && !experiences.length) {
+    return (
+      <section id="experience" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              {limit ? "Recent Experience" : "Professional Experience"}
+            </h2>
+            <p className="text-foreground/60">
+              Error loading experience: {error}
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!experiences.length && !resumeData) return null;
 
   const hasMoreExperiences = limit && resumeData && resumeData.experience.length > limit;
 
