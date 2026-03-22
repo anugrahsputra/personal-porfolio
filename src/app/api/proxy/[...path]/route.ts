@@ -9,41 +9,36 @@ export async function GET(
     const internalPath = path.join("/");
     const searchParams = req.nextUrl.searchParams.toString();
 
-    // These environment variables should NOT have the NEXT_PUBLIC_ prefix
-    // to ensure they are never leaked to the browser.
-    const baseUrl =
-      process.env.INTERNAL_API_URL || "https://portfolio-api.downormal.dev";
-    const apiKey = process.env.PORTFOLIO_API_KEY || "";
+    const baseUrl = process.env.INTERNAL_API_URL || "https://portfolio-api.downormal.dev";
+    const apiKey = process.env.PORTFOLIO_API_KEY;
 
     const apiUrl = `${baseUrl}/api/v1/${internalPath}${
       searchParams ? `?${searchParams}` : ""
     }`;
 
     console.log(`[Proxy] Requesting: ${apiUrl}`);
-    console.log(`[Proxy] API Key present: ${apiKey ? "Yes" : "No"}`);
-    if (apiKey) {
-        console.log(`[Proxy] API Key length: ${apiKey.length}`);
+
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+
+    // Only add the API key if it's actually defined and not empty
+    if (apiKey && apiKey.trim() !== "") {
+      headers["X-API-Key"] = apiKey;
+      console.log(`[Proxy] API Key sent (Length: ${apiKey.length})`);
+    } else {
+      console.log(`[Proxy] No API Key sent`);
     }
 
     const response = await fetch(apiUrl, {
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": apiKey, // Matching your backend's case
-      },
-      // Ensure we don't cache stale data on the proxy level
+      headers,
       next: { revalidate: 0 },
     });
 
     if (!response.ok) {
       console.error(`[Proxy] Backend error: ${response.status} ${response.statusText}`);
-      const errorData = await response.text().catch(() => "No error body");
-      console.error(`[Proxy] Backend error body: ${errorData}`);
-      
       return NextResponse.json(
-        { 
-            error: `Backend responded with ${response.status}`,
-            details: errorData 
-        },
+        { error: `Backend responded with ${response.status}` },
         { status: response.status }
       );
     }

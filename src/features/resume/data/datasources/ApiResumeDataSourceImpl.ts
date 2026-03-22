@@ -249,8 +249,8 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
-    if (this.apiKey) {
-      headers['X-API-KEY'] = this.apiKey;
+    if (this.apiKey && this.apiKey.trim() !== "") {
+      headers['X-API-Key'] = this.apiKey;
     }
     return headers;
   }
