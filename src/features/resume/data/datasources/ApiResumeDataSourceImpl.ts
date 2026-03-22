@@ -84,20 +84,15 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
 
   constructor() {
     this.profileId = process.env.NEXT_PUBLIC_PROFILE_ID || '';
-    
-    // Choose URL based on environment (Server vs Client)
-    if (typeof window === 'undefined') {
-      // Server-side: talk directly to Go API
-      this.baseUrl = process.env.INTERNAL_API_URL || 'https://portfolio-api.downormal.dev';
-      this.apiKey = process.env.PORTFOLIO_API_KEY || '';
-    } else {
-      // Client-side: use Next.js Proxy
-      this.baseUrl = '/api/proxy';
-      this.apiKey = ''; // Client doesn't need the key (proxy adds it)
-    }
+    this.baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+    // Use NEXT_PUBLIC_ prefix so it's available on both server and client
+    this.apiKey = process.env.NEXT_PUBLIC_PORTFOLIO_API_KEY || '';
 
     if (!this.profileId) {
       throw new Error('NEXT_PUBLIC_PROFILE_ID is not defined');
+    }
+    if (!this.baseUrl) {
+      throw new Error('NEXT_PUBLIC_API_BASE_URL is not defined');
     }
   }
 
@@ -159,14 +154,9 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchProfile(): Promise<ApiProfile> {
-    const url = typeof window === 'undefined' 
-      ? `${this.baseUrl}/api/v1/profile/${this.profileId}`
-      : `${this.baseUrl}/profile/${this.profileId}`;
-
-    const response = await fetch(url, {
+    const response = await fetch(`${this.baseUrl}/api/v1/profile/${this.profileId}`, {
       headers: this.getHeaders()
     });
-    
     if (!response.ok) {
       throw new Error(`Failed to fetch profile: ${response.statusText}`);
     }
@@ -175,14 +165,10 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchExperiences(): Promise<ApiExperience[]> {
-    const url = typeof window === 'undefined' 
-      ? `${this.baseUrl}/api/v1/experience/${this.profileId}`
-      : `${this.baseUrl}/experience/${this.profileId}`;
-
-    const response = await fetch(url, {
-      headers: this.getHeaders()
-    });
-
+    const response = await fetch(
+      `${this.baseUrl}/api/v1/experience/${this.profileId}`,
+      { headers: this.getHeaders() }
+    );
     if (!response.ok) {
       throw new Error(`Failed to fetch experiences: ${response.statusText}`);
     }
@@ -191,14 +177,9 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchSkills(): Promise<ApiSkill> {
-    const url = typeof window === 'undefined' 
-      ? `${this.baseUrl}/api/v1/skill/${this.profileId}`
-      : `${this.baseUrl}/skill/${this.profileId}`;
-
-    const response = await fetch(url, {
+    const response = await fetch(`${this.baseUrl}/api/v1/skill/${this.profileId}`, {
       headers: this.getHeaders()
     });
-
     if (!response.ok) {
       throw new Error(`Failed to fetch skills: ${response.statusText}`);
     }
@@ -207,14 +188,10 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchLanguages(): Promise<ApiLanguage[]> {
-    const url = typeof window === 'undefined' 
-      ? `${this.baseUrl}/api/v1/language/${this.profileId}`
-      : `${this.baseUrl}/language/${this.profileId}`;
-
-    const response = await fetch(url, {
-      headers: this.getHeaders()
-    });
-
+    const response = await fetch(
+      `${this.baseUrl}/api/v1/language/${this.profileId}`,
+      { headers: this.getHeaders() }
+    );
     if (!response.ok) {
       throw new Error(`Failed to fetch languages: ${response.statusText}`);
     }
@@ -223,21 +200,10 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchEducation(): Promise<ApiEducation[]> {
-    const url = typeof window === 'undefined' 
-      ? `${this.baseUrl}/api/v1/education/${this.profileId}`
-      : `${this.baseUrl}/experience/${this.profileId}`; // Note: This looks like a bug in original code too, fixing to education
-
-    // Actually, checking original code: it used fetch(`${this.baseUrl}/api/v1/education/${this.profileId}`)
-    // I will fix it to education.
-    
-    const finalUrl = typeof window === 'undefined' 
-      ? `${this.baseUrl}/api/v1/education/${this.profileId}`
-      : `${this.baseUrl}/education/${this.profileId}`;
-
-    const response = await fetch(finalUrl, {
-      headers: this.getHeaders()
-    });
-
+    const response = await fetch(
+      `${this.baseUrl}/api/v1/education/${this.profileId}`,
+      { headers: this.getHeaders() }
+    );
     if (!response.ok) {
       throw new Error(`Failed to fetch education: ${response.statusText}`);
     }
