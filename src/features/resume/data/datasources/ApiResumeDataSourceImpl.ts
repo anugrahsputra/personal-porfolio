@@ -80,13 +80,10 @@ function formatPeriod(startDate: string, endDate: string | null): string {
 export class ApiResumeDataSourceImpl implements ResumeDataSource {
   private profileId: string;
   private baseUrl: string;
-  private apiKey: string;
 
   constructor() {
     this.profileId = process.env.NEXT_PUBLIC_PROFILE_ID || '';
     this.baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-    // Use NEXT_PUBLIC_ prefix so it's available on both server and client
-    this.apiKey = process.env.NEXT_PUBLIC_PORTFOLIO_API_KEY || '';
 
     if (!this.profileId) {
       throw new Error('NEXT_PUBLIC_PROFILE_ID is not defined');
@@ -215,9 +212,6 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
-    if (this.apiKey && this.apiKey.trim() !== "") {
-      headers['X-API-Key'] = this.apiKey;
-    }
     return headers;
   }
 }
