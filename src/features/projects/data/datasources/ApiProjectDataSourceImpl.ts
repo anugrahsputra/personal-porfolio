@@ -1,5 +1,6 @@
 import { ProjectDataSource } from './ProjectDataSource';
 import { ProjectsData, Project } from '../domain/Project';
+import { fetchWithTimeout, retryWithBackoff, FetchError } from '@/lib/utils';
 
 interface ApiProject {
   id: string;
@@ -76,19 +77,41 @@ export class ApiProjectDataSourceImpl implements ProjectDataSource {
   }
 
   async fetchProjects(): Promise<ProjectsData> {
-    const response = await fetch(
-      `${this.baseUrl}/api/v1/project/${this.profileId}`,
-      { headers: this.getHeaders() }
-    );
+    const url = `${this.baseUrl}/api/v1/project/${this.profileId}`;
+    
+    return retryWithBackoff(async () => {
+      try {
+        const response = await fetchWithTimeout(
+          url,
+          { headers: this.getHeaders() },
+          10000 // 10 second timeout
+        );
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
-    }
+        if (!response.ok) {
+          throw new FetchError(
+            `Failed to fetch projects: ${response.statusText}`,
+            response.status,
+            response.statusText,
+            url
+          );
+        }
 
-    const result: ApiResponse = await response.json();
-    const projects = result.data.map(transformProject);
+        const result: ApiResponse = await response.json();
+        const projects = result.data.map(transformProject);
 
-    return { projects };
+        return { projects };
+      } catch (error) {
+        if (error instanceof FetchError) {
+          throw error;
+        }
+        throw new FetchError(
+          error instanceof Error ? error.message : 'Unknown error during fetch',
+          undefined,
+          undefined,
+          url
+        );
+      }
+    }, 3, 1000); // 3 retries with 1s base delay
   }
 
   private getHeaders(): HeadersInit {

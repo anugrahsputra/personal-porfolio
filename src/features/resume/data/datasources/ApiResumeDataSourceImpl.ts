@@ -1,5 +1,6 @@
-import { ResumeDataSource } from './ResumeDataSource';
-import { ResumeData, Education, Language } from '../domain/Experience';
+import { ResumeDataSource } from "./ResumeDataSource";
+import { ResumeData, Education, Language } from "../domain/Experience";
+import { fetchWithTimeout, retryWithBackoff, FetchError } from "@/lib/utils";
 
 interface ApiProfileUrl {
   id: string;
@@ -26,6 +27,7 @@ interface ApiExperience {
   start_date: string;
   end_date: string;
   description: string[];
+  location: string;
 }
 
 interface ApiSkill {
@@ -64,7 +66,10 @@ interface ApiResponse<T> {
 function formatPeriod(startDate: string, endDate: string | null): string {
   const formatMonthYear = (dateStr: string): string => {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
   };
 
   const start = formatMonthYear(startDate);
@@ -82,14 +87,14 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   private baseUrl: string;
 
   constructor() {
-    this.profileId = process.env.NEXT_PUBLIC_PROFILE_ID || '';
-    this.baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+    this.profileId = process.env.NEXT_PUBLIC_PROFILE_ID || "";
+    this.baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
     if (!this.profileId) {
-      throw new Error('NEXT_PUBLIC_PROFILE_ID is not defined');
+      throw new Error("NEXT_PUBLIC_PROFILE_ID is not defined");
     }
     if (!this.baseUrl) {
-      throw new Error('NEXT_PUBLIC_API_BASE_URL is not defined');
+      throw new Error("NEXT_PUBLIC_API_BASE_URL is not defined");
     }
   }
 
@@ -103,25 +108,20 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
         this.fetchEducation(),
       ]);
 
-    const linkedin = profileRes.url.find(
-      (u) => u.label.toLowerCase() === 'linkedin'
-    )?.url || '';
+    const linkedin =
+      profileRes.url.find(
+        (u: ApiProfileUrl) => u.label.toLowerCase() === "linkedin",
+      )?.url || "";
 
-    const experience = experiencesRes.map((exp) => ({
+    const experience = experiencesRes.map((exp: ApiExperience) => ({
       company: exp.company,
-      location: '',
+      location: exp.location,
       position: exp.position,
       period: formatPeriod(exp.start_date, exp.end_date),
       responsibilities: exp.description,
     }));
 
-    const skills = {
-      technologies: skillsRes.technologies,
-      tools: skillsRes.tools,
-      soft_skills: skillsRes.soft_skills,
-    };
-
-    const education: Education[] = educationRes.map((edu) => ({
+    const education: Education[] = educationRes.map((edu: ApiEducation) => ({
       school: edu.school,
       degree: edu.degree,
       fieldOfStudy: edu.field_of_study,
@@ -130,10 +130,16 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
       graduationDate: edu.graduation_date,
     }));
 
-    const languages: Language[] = languagesRes.map((lang) => ({
+    const languages: Language[] = languagesRes.map((lang: ApiLanguage) => ({
       name: lang.language,
       proficiency: lang.proficiency,
     }));
+
+    const skills = {
+      technologies: skillsRes.technologies,
+      tools: skillsRes.tools,
+      soft_skills: skillsRes.soft_skills,
+    };
 
     return {
       name: profileRes.name,
@@ -142,7 +148,7 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
       phone: profileRes.phone,
       location: profileRes.address,
       linkedin,
-      portfolio: 'https://downormal.dev/',
+      portfolio: "https://downormal.dev/",
       experience,
       skills,
       education,
@@ -151,66 +157,183 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchProfile(): Promise<ApiProfile> {
-    const response = await fetch(`${this.baseUrl}/api/v1/profile/${this.profileId}`, {
-      headers: this.getHeaders()
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to fetch profile: ${response.statusText}`);
-    }
-    const result: ApiResponse<ApiProfile> = await response.json();
-    return result.data;
+    const url = `${this.baseUrl}/api/v1/profile/${this.profileId}`;
+    return retryWithBackoff(
+      async () => {
+        try {
+          const response = await fetchWithTimeout(
+            url,
+            { headers: this.getHeaders() },
+            10000,
+          );
+          if (!response.ok) {
+            throw new FetchError(
+              `Failed to fetch profile: ${response.statusText}`,
+              response.status,
+              response.statusText,
+              url,
+            );
+          }
+          const result: ApiResponse<ApiProfile> = await response.json();
+          return result.data;
+        } catch (error) {
+          if (error instanceof FetchError) throw error;
+          throw new FetchError(
+            error instanceof Error ? error.message : "Unknown error",
+            undefined,
+            undefined,
+            url,
+          );
+        }
+      },
+      3,
+      1000,
+    );
   }
 
   private async fetchExperiences(): Promise<ApiExperience[]> {
-    const response = await fetch(
-      `${this.baseUrl}/api/v1/experience/${this.profileId}`,
-      { headers: this.getHeaders() }
+    const url = `${this.baseUrl}/api/v1/experience/${this.profileId}`;
+    return retryWithBackoff(
+      async () => {
+        try {
+          const response = await fetchWithTimeout(
+            url,
+            { headers: this.getHeaders() },
+            10000,
+          );
+          if (!response.ok) {
+            throw new FetchError(
+              `Failed to fetch experiences: ${response.statusText}`,
+              response.status,
+              response.statusText,
+              url,
+            );
+          }
+          const result: ApiResponse<ApiExperience[]> = await response.json();
+          return result.data;
+        } catch (error) {
+          if (error instanceof FetchError) throw error;
+          throw new FetchError(
+            error instanceof Error ? error.message : "Unknown error",
+            undefined,
+            undefined,
+            url,
+          );
+        }
+      },
+      3,
+      1000,
     );
-    if (!response.ok) {
-      throw new Error(`Failed to fetch experiences: ${response.statusText}`);
-    }
-    const result: ApiResponse<ApiExperience[]> = await response.json();
-    return result.data;
   }
 
   private async fetchSkills(): Promise<ApiSkill> {
-    const response = await fetch(`${this.baseUrl}/api/v1/skill/${this.profileId}`, {
-      headers: this.getHeaders()
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to fetch skills: ${response.statusText}`);
-    }
-    const result: ApiResponse<ApiSkill> = await response.json();
-    return result.data;
+    const url = `${this.baseUrl}/api/v1/skill/${this.profileId}`;
+    return retryWithBackoff(
+      async () => {
+        try {
+          const response = await fetchWithTimeout(
+            url,
+            { headers: this.getHeaders() },
+            10000,
+          );
+          if (!response.ok) {
+            throw new FetchError(
+              `Failed to fetch skills: ${response.statusText}`,
+              response.status,
+              response.statusText,
+              url,
+            );
+          }
+          const result: ApiResponse<ApiSkill> = await response.json();
+          return result.data;
+        } catch (error) {
+          if (error instanceof FetchError) throw error;
+          throw new FetchError(
+            error instanceof Error ? error.message : "Unknown error",
+            undefined,
+            undefined,
+            url,
+          );
+        }
+      },
+      3,
+      1000,
+    );
   }
 
   private async fetchLanguages(): Promise<ApiLanguage[]> {
-    const response = await fetch(
-      `${this.baseUrl}/api/v1/language/${this.profileId}`,
-      { headers: this.getHeaders() }
+    const url = `${this.baseUrl}/api/v1/language/${this.profileId}`;
+    return retryWithBackoff(
+      async () => {
+        try {
+          const response = await fetchWithTimeout(
+            url,
+            { headers: this.getHeaders() },
+            10000,
+          );
+          if (!response.ok) {
+            throw new FetchError(
+              `Failed to fetch languages: ${response.statusText}`,
+              response.status,
+              response.statusText,
+              url,
+            );
+          }
+          const result: ApiResponse<ApiLanguage[]> = await response.json();
+          return result.data;
+        } catch (error) {
+          if (error instanceof FetchError) throw error;
+          throw new FetchError(
+            error instanceof Error ? error.message : "Unknown error",
+            undefined,
+            undefined,
+            url,
+          );
+        }
+      },
+      3,
+      1000,
     );
-    if (!response.ok) {
-      throw new Error(`Failed to fetch languages: ${response.statusText}`);
-    }
-    const result: ApiResponse<ApiLanguage[]> = await response.json();
-    return result.data;
   }
 
   private async fetchEducation(): Promise<ApiEducation[]> {
-    const response = await fetch(
-      `${this.baseUrl}/api/v1/education/${this.profileId}`,
-      { headers: this.getHeaders() }
+    const url = `${this.baseUrl}/api/v1/education/${this.profileId}`;
+    return retryWithBackoff(
+      async () => {
+        try {
+          const response = await fetchWithTimeout(
+            url,
+            { headers: this.getHeaders() },
+            10000,
+          );
+          if (!response.ok) {
+            throw new FetchError(
+              `Failed to fetch education: ${response.statusText}`,
+              response.status,
+              response.statusText,
+              url,
+            );
+          }
+          const result: ApiResponse<ApiEducation[]> = await response.json();
+          return result.data;
+        } catch (error) {
+          if (error instanceof FetchError) throw error;
+          throw new FetchError(
+            error instanceof Error ? error.message : "Unknown error",
+            undefined,
+            undefined,
+            url,
+          );
+        }
+      },
+      3,
+      1000,
     );
-    if (!response.ok) {
-      throw new Error(`Failed to fetch education: ${response.statusText}`);
-    }
-    const result: ApiResponse<ApiEducation[]> = await response.json();
-    return result.data;
   }
 
   private getHeaders(): HeadersInit {
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
     return headers;
   }
