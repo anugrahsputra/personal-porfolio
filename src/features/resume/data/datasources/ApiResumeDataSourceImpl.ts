@@ -157,7 +157,7 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchProfile(): Promise<ApiProfile> {
-    const url = `${this.baseUrl}/api/v1/profile/${this.profileId}`;
+    const url = `${this.baseUrl}/api/v1/profile/${this.profileId}/`;
     return retryWithBackoff(
       async () => {
         try {
@@ -192,7 +192,7 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchExperiences(): Promise<ApiExperience[]> {
-    const url = `${this.baseUrl}/api/v1/experience/${this.profileId}`;
+    const url = `${this.baseUrl}/api/v1/experience/${this.profileId}/`;
     return retryWithBackoff(
       async () => {
         try {
@@ -227,7 +227,7 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchSkills(): Promise<ApiSkill> {
-    const url = `${this.baseUrl}/api/v1/skill/${this.profileId}`;
+    const url = `${this.baseUrl}/api/v1/skill/${this.profileId}/`;
     return retryWithBackoff(
       async () => {
         try {
@@ -262,7 +262,7 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchLanguages(): Promise<ApiLanguage[]> {
-    const url = `${this.baseUrl}/api/v1/language/${this.profileId}`;
+    const url = `${this.baseUrl}/api/v1/language/${this.profileId}/`;
     return retryWithBackoff(
       async () => {
         try {
@@ -297,7 +297,7 @@ export class ApiResumeDataSourceImpl implements ResumeDataSource {
   }
 
   private async fetchEducation(): Promise<ApiEducation[]> {
-    const url = `${this.baseUrl}/api/v1/education/${this.profileId}`;
+    const url = `${this.baseUrl}/api/v1/education/${this.profileId}/`;
     return retryWithBackoff(
       async () => {
         try {

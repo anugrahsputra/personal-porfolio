@@ -22,7 +22,7 @@ export async function sendMail(
     return { success: false };
   }
 
-  const url = `${baseUrl}/api/v1/send-email`;
+  const url = `${baseUrl}/api/v1/send-email/`;
   console.log("[DEBUG] Full URL:", url);
 
   try {

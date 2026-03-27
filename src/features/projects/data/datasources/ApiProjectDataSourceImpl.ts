@@ -77,7 +77,7 @@ export class ApiProjectDataSourceImpl implements ProjectDataSource {
   }
 
   async fetchProjects(): Promise<ProjectsData> {
-    const url = `${this.baseUrl}/api/v1/project/${this.profileId}`;
+    const url = `${this.baseUrl}/api/v1/project/${this.profileId}/`;
     
     return retryWithBackoff(async () => {
       try {
