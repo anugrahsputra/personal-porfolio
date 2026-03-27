@@ -31,17 +31,20 @@ export async function sendMail(
     };
 
     if (apiKey) {
-      headers["api-key"] = apiKey;
+      headers["X-API-Key"] = apiKey;
     }
 
     console.log("[DEBUG] Request headers:", headers);
-    console.log("[DEBUG] Request body:", JSON.stringify({
-      profile_id: profileId,
-      name,
-      email,
-      subject,
-      message,
-    }));
+    console.log(
+      "[DEBUG] Request body:",
+      JSON.stringify({
+        profile_id: profileId,
+        name,
+        email,
+        subject,
+        message,
+      }),
+    );
 
     const response = await fetchWithTimeout(
       url,
@@ -64,7 +67,11 @@ export async function sendMail(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error("[DEBUG] Failed to send email:", response.status, errorData);
+      console.error(
+        "[DEBUG] Failed to send email:",
+        response.status,
+        errorData,
+      );
       return { success: false };
     }
 
