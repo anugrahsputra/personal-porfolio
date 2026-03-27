@@ -25,7 +25,7 @@ export async function sendMail(
     };
 
     if (apiKey) {
-      headers["X-API-Key"] = apiKey;
+      headers["api-key"] = apiKey;
     }
 
     const response = await fetchWithTimeout(
