@@ -9,24 +9,30 @@ export async function sendMail(
   message: string,
 ) {
   const profileId = process.env.NEXT_PUBLIC_PROFILE_ID;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const apiKey = process.env.PORTFOLIO_API_KEY;
 
-  if (!profileId) {
-    console.error("Missing NEXT_PUBLIC_PROFILE_ID");
+  if (!profileId || !baseUrl) {
+    console.error("Missing NEXT_PUBLIC_PROFILE_ID or NEXT_PUBLIC_API_BASE_URL");
     return { success: false };
   }
 
-  // We use the local proxy route to hit the backend API
-  // This handles CORS and the API key on the server-side
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL || "https://www.downormal.dev"}/api/proxy/send-email`;
+  const url = `${baseUrl}/api/v1/send-email`;
 
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+
+    if (apiKey) {
+      headers["X-API-Key"] = apiKey;
+    }
+
     const response = await fetchWithTimeout(
       url,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
           profile_id: profileId,
           name,
