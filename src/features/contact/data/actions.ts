@@ -25,7 +25,7 @@ export async function sendMail(
     };
 
     if (apiKey) {
-      headers["X-API-Key"] = apiKey;
+      headers["api-key"] = apiKey;
     }
 
     const response = await fetchWithTimeout(
@@ -43,7 +43,6 @@ export async function sendMail(
       },
       10000,
     );
-
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
