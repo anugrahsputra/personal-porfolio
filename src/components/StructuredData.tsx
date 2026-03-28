@@ -1,8 +1,8 @@
 import React from "react";
-import { getResumeDataUseCase } from "@/features/resume/data/container";
+import { getResumeData } from "@/features/resume/api";
 
 const StructuredData = async () => {
-  const resumeData = await getResumeDataUseCase.execute().catch(() => null);
+  const resumeData = await getResumeData().catch(() => null);
   
   if (!resumeData) return null;
 

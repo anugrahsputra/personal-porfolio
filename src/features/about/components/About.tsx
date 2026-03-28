@@ -3,30 +3,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useResumeData } from "@/features/resume/hooks/useResume";
-
-interface Skills {
-  technologies: string[];
-  tools: string[];
-  soft_skills: string[];
-}
-
-interface Language {
-  name: string;
-  proficiency: string;
-}
-
-interface ResumeData {
-  summary: string;
-  skills: Skills;
-  languages: Language[];
-}
+import { ResumeData } from "@/features/resume/types";
 
 interface AboutProps {
   initialData?: ResumeData;
 }
 
 const About = ({ initialData }: AboutProps) => {
-  const { resumeData: fetchedResumeData, loading } = useResumeData();
+  const { resumeData: fetchedResumeData, loading } = useResumeData(initialData);
   const data = initialData || fetchedResumeData;
 
   if (loading && !data) {

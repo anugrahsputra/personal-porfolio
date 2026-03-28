@@ -5,17 +5,13 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import Image from "next/image";
 import { useResumeData } from "@/features/resume/hooks/useResume";
-
-interface ResumeData {
-  name: string;
-  summary: string;
-}
+import { ResumeData } from "@/features/resume/types";
 
 interface HeroProps {
   initialData?: ResumeData;
 }
 const Hero = ({ initialData }: HeroProps) => {
-  const { resumeData: fetchedResumeData, loading } = useResumeData();
+  const { resumeData: fetchedResumeData, loading } = useResumeData(initialData);
   const data = initialData || fetchedResumeData;
 
   const downloadResume = () => {

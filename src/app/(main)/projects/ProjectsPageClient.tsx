@@ -1,6 +1,6 @@
 "use client";
 
-import { ProjectsData } from "@/features/projects/data/domain/Project";
+import { ProjectsData } from "@/features/projects/types";
 import Projects from "@/features/projects/components/Projects";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Button } from "@/components/ui/button";

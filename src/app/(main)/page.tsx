@@ -4,18 +4,18 @@ import Experience from "@/features/resume/components/Experience";
 import Projects from "@/features/projects/components/Projects";
 import Contact from "@/features/contact/components/Contact";
 import FAQStructuredData from "@/components/FAQStructuredData";
-import { getResumeDataUseCase } from "@/features/resume/data/container";
-import { getAllProjectsUseCase } from "@/features/projects/data/container";
+import { getResumeData } from "@/features/resume/api";
+import { getAllProjects } from "@/features/projects/api";
 
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   // Fetch data on the server
-  const resumeData = await getResumeDataUseCase.execute().catch((error) => {
+  const resumeData = await getResumeData().catch((error) => {
     console.error("Failed to fetch resume data on server:", error);
     return null;
   });
-  const projectsData = await getAllProjectsUseCase.execute().catch((error) => {
+  const projectsData = await getAllProjects().catch((error) => {
     console.error("Failed to fetch projects data on server:", error);
     return null;
   });

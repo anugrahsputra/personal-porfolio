@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ProjectsPageClient from "./ProjectsPageClient";
 import ProjectsStructuredData from "@/features/projects/components/ProjectsStructuredData";
-import { getAllProjectsUseCase } from "@/features/projects/data/container";
+import { getAllProjects } from "@/features/projects/api";
 
 export const dynamic = 'force-dynamic';
 
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
-  const projectsData = await getAllProjectsUseCase.execute().catch(() => null);
+  const projectsData = await getAllProjects().catch(() => null);
 
   return (
     <>

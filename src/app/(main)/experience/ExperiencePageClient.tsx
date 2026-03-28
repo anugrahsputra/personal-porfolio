@@ -1,6 +1,6 @@
 "use client";
 
-import { ResumeData } from "@/features/resume/data/domain/Experience";
+import { ResumeData } from "@/features/resume/types";
 import Experience from "@/features/resume/components/Experience";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Button } from "@/components/ui/button";

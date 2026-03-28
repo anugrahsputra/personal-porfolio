@@ -8,22 +8,14 @@ import { sendMail } from "../data/actions";
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useResumeData } from "@/features/resume/hooks/useResume";
-
-interface ResumeData {
-  name: string;
-  location: string;
-  phone: string;
-  email: string;
-  linkedin: string;
-  portfolio: string;
-}
+import { ResumeData } from "@/features/resume/types";
 
 interface ContactProps {
   initialData?: ResumeData;
 }
 
 const Contact = ({ initialData }: ContactProps) => {
-  const { resumeData: fetchedResumeData, loading: fetchingData } = useResumeData();
+  const { resumeData: fetchedResumeData, loading: fetchingData } = useResumeData(initialData);
   const resumeData = initialData || fetchedResumeData;
 
   const [formData, setFormData] = useState({

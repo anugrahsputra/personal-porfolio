@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ExperiencePageClient from "./ExperiencePageClient";
-import { getResumeDataUseCase } from "@/features/resume/data/container";
+import { getResumeData } from "@/features/resume/api";
 
 export const dynamic = 'force-dynamic';
 
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ExperiencePage() {
-  const resumeData = await getResumeDataUseCase.execute().catch(() => null);
+  const resumeData = await getResumeData().catch(() => null);
 
   return (
     <>
