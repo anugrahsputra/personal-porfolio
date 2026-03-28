@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useRecentExperiences } from "../hooks/useResume";
-import type { ResumeData } from "../data/domain/Experience";
+import type { ResumeData } from "../types";
 
 interface ExperienceProps {
   initialData?: ResumeData;
@@ -12,7 +12,7 @@ interface ExperienceProps {
 }
 
 const Experience = ({ initialData, limit }: ExperienceProps) => {
-  const { experiences: fetchedExperiences, loading, error } = useRecentExperiences(limit || 100);
+  const { experiences: fetchedExperiences, loading, error } = useRecentExperiences(limit || 100, initialData?.experience);
   
   const resumeData = initialData;
   const experiences = initialData 

@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
-import { getResumeDataUseCase, getRecentExperiencesUseCase } from '../data/container';
-import { ResumeData, Experience } from '../data/domain/Experience';
+import { getResumeData, getRecentExperiences } from '../api';
+import { ResumeData, Experience } from '../types';
 
-export const useResumeData = () => {
-  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
-  const [loading, setLoading] = useState(true);
+export const useResumeData = (initialData?: ResumeData) => {
+  const [resumeData, setResumeData] = useState<ResumeData | null>(initialData || null);
+  const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (initialData) return; // Skip fetch if we already have data
+
     const fetchResumeData = async () => {
       try {
         setLoading(true);
         setError(null);
         // This will now use the Proxy when called on the client
-        const data = await getResumeDataUseCase.execute();
+        const data = await getResumeData();
         setResumeData(data);
       } catch (err) {
         console.error('Error fetching resume data on client:', err);
@@ -24,23 +26,25 @@ export const useResumeData = () => {
     };
 
     fetchResumeData();
-  }, []);
+  }, [initialData]);
 
   return { resumeData, loading, error };
 };
 
-export const useRecentExperiences = (limit: number = 3) => {
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [loading, setLoading] = useState(true);
+export const useRecentExperiences = (limit: number = 3, initialData?: Experience[]) => {
+  const [experiences, setExperiences] = useState<Experience[]>(initialData || []);
+  const [loading, setLoading] = useState(!initialData || initialData.length === 0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (initialData && initialData.length > 0) return; // Skip fetch if we already have data
+
     const fetchRecentExperiences = async () => {
       try {
         setLoading(true);
         setError(null);
         // This will now use the Proxy when called on the client
-        const data = await getRecentExperiencesUseCase.execute(limit);
+        const data = await getRecentExperiences(limit);
         setExperiences(data);
       } catch (err) {
         console.error('Error fetching recent experiences on client:', err);
@@ -51,7 +55,7 @@ export const useRecentExperiences = (limit: number = 3) => {
     };
 
     fetchRecentExperiences();
-  }, [limit]);
+  }, [limit, initialData]);
 
   return { experiences, loading, error };
 };
