@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import Link from "next/link";
-import { ProjectsData, Project } from "../data/domain/Project";
+import { ProjectsData, Project } from "../types";
 import { useRecentProjects } from "../hooks/useProjects";
 
 interface ProjectsProps {
@@ -29,7 +29,7 @@ interface ProjectsProps {
 }
 
 const Projects = ({ initialData, limit }: ProjectsProps) => {
-  const { projects: fetchedProjects, loading, error } = useRecentProjects(limit || 100);
+  const { projects: fetchedProjects, loading, error } = useRecentProjects(limit || 100, initialData?.projects);
   const [ndaDialogOpen, setNdaDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(

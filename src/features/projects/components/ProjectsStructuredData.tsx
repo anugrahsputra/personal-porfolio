@@ -1,5 +1,5 @@
 import React from "react";
-import { ProjectsData } from "../data/domain/Project";
+import { ProjectsData } from "../types";
 
 interface ProjectsStructuredDataProps {
   initialData?: ProjectsData;
