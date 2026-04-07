@@ -2,80 +2,34 @@
 
 import { Button } from "@/components/ui/button";
 
-import React from "react";
 import Image from "next/image";
-import { useResumeData } from "@/features/resume/hooks/useResume";
 import { ResumeData } from "@/features/resume/types";
 
 interface HeroProps {
-  initialData?: ResumeData;
+  initialData: ResumeData;
 }
 const Hero = ({ initialData }: HeroProps) => {
-  const { resumeData: fetchedResumeData, loading } = useResumeData(initialData);
-  const data = initialData || fetchedResumeData;
+  const data = initialData;
 
   const downloadResume = () => {
-    // Google Drive direct download URL
     const resumeUrl =
       "https://raw.githubusercontent.com/anugrahsputra/resume/main/rendercv_output/Anugrah_Surya_Putra_CV.pdf";
 
-    // Create a temporary link element
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = "AnugrahSuryaPutra_MobileDeveloper_Resume.pdf";
     link.target = "_blank";
 
-    // Append to body, click, and remove
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
-
-  if (loading && !data) {
-    return (
-      <section
-        id="home"
-        className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden pt-16 sm:pt-0"
-      >
-        {/* Background Portrait only */}
-        <div className="absolute inset-0 z-0">
-          {/* Left-aligned portrait */}
-          <div
-            className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[55vw] pointer-events-none z-10 mask-fade-r"
-            aria-hidden
-          >
-            <Image
-              src="/images/photo/photo.png"
-              alt="Portrait of Anugrah Surya Putra"
-              fill
-              priority
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 67vw, (max-width: 1024px) 50vw, 55vw"
-              className="object-cover object-left grayscale"
-            />
-          </div>
-        </div>
-
-        <div className="text-center relative z-10">
-          <div className="animate-pulse">
-            <div className="h-12 bg-muted rounded mb-4 w-64 mx-auto"></div>
-            <div className="h-6 bg-muted rounded mb-2 w-48 mx-auto"></div>
-            <div className="h-6 bg-muted rounded mb-8 w-96 mx-auto"></div>
-            <div className="h-10 bg-muted rounded mb-4 w-40 mx-auto"></div>
-            <div className="h-10 bg-muted rounded w-40 mx-auto"></div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!data) return null;
 
   return (
     <section
       id="home"
       className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden pt-16 sm:pt-0"
     >
-      {/* Background Portrait only */}
       <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[50vw] pointer-events-none z-10 mask-fade-r"
@@ -94,7 +48,6 @@ const Hero = ({ initialData }: HeroProps) => {
 
       <div className="text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-outline">
         <div className="space-y-8">
-          {/* Name and Role */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-bold text-foreground">
               {data.name}
@@ -107,7 +60,6 @@ const Hero = ({ initialData }: HeroProps) => {
             </p>
           </div>
 
-          {/* Call to Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"

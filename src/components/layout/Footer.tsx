@@ -1,5 +1,3 @@
-"use client";
-
 interface FooterProps {
   initialData?: {
     name: string;
@@ -10,7 +8,7 @@ interface FooterProps {
   };
 }
 
-const Footer = ({ initialData }: FooterProps) => {
+export default function Footer({ initialData }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const resumeData = initialData || {
@@ -61,25 +59,17 @@ const Footer = ({ initialData }: FooterProps) => {
   ];
 
   const quickLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" }
+    { name: "Home", href: "/#home" },
+    { name: "About", href: "/#about" },
+    { name: "Experience", href: "/#experience" },
+    { name: "Projects", href: "/#projects" },
+    { name: "Contact", href: "/#contact" }
   ];
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <footer className="bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-foreground">{resumeData.name}</h3>
             <p className="text-foreground/60 leading-relaxed">
@@ -102,24 +92,22 @@ const Footer = ({ initialData }: FooterProps) => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-foreground/60 hover:text-foreground transition-colors text-left"
+                  <a
+                    href={link.href}
+                    className="text-foreground/60 hover:text-foreground transition-colors"
                   >
                     {link.name}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-foreground">Contact</h4>
             <div className="space-y-2 text-foreground/60">
@@ -130,10 +118,9 @@ const Footer = ({ initialData }: FooterProps) => {
           </div>
         </div>
 
-        {/* Bottom Section */}
         <div className="border-t border-border mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
           <p className="text-foreground/60 text-sm">
-            © {currentYear} {resumeData.name}. All rights reserved.
+            &copy; {currentYear} {resumeData.name}. All rights reserved.
           </p>
           <p className="text-foreground/60 text-sm">
             Built with Next.js, React, and Tailwind CSS
@@ -142,6 +129,4 @@ const Footer = ({ initialData }: FooterProps) => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

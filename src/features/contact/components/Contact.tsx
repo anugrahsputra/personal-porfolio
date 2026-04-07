@@ -7,16 +7,14 @@ import { sendMail } from "../data/actions";
 
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useResumeData } from "@/features/resume/hooks/useResume";
 import { ResumeData } from "@/features/resume/types";
 
 interface ContactProps {
-  initialData?: ResumeData;
+  initialData: ResumeData;
 }
 
 const Contact = ({ initialData }: ContactProps) => {
-  const { resumeData: fetchedResumeData, loading: fetchingData } = useResumeData(initialData);
-  const resumeData = initialData || fetchedResumeData;
+  const resumeData = initialData;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -53,30 +51,6 @@ const Contact = ({ initialData }: ContactProps) => {
       setAlert({ type: "error", message: "Failed to send email." });
     }
   };
-
-  if (fetchingData && !resumeData) {
-    return (
-      <section id="contact" className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Get In Touch
-            </h2>
-            <Separator className="w-24 mx-auto" />
-          </div>
-          <div className="animate-pulse">
-            <div className="h-6 bg-muted rounded mb-4"></div>
-            <div className="h-4 bg-muted rounded mb-2"></div>
-            <div className="h-4 bg-muted rounded mb-4"></div>
-            <div className="h-4 bg-muted rounded mb-2"></div>
-            <div className="h-4 bg-muted rounded"></div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!resumeData) return null;
 
   const contactInfo = [
     {

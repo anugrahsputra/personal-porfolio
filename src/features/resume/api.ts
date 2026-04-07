@@ -1,5 +1,6 @@
 import { ResumeData, Education, Language, Experience } from "./types";
 import { fetchWithTimeout, retryWithBackoff, FetchError } from "@/lib/utils";
+import { unstable_cache } from "next/cache";
 
 interface ApiProfileUrl {
   id: string;
@@ -212,63 +213,67 @@ async function fetchEducation(): Promise<ApiEducation[]> {
   );
 }
 
-export async function getResumeData(): Promise<ResumeData> {
-  const [profileRes, experiencesRes, skillsRes, languagesRes, educationRes] =
-    await Promise.all([
-      fetchProfile(),
-      fetchExperiences(),
-      fetchSkills(),
-      fetchLanguages(),
-      fetchEducation(),
-    ]);
+export const getResumeData = unstable_cache(
+  async (): Promise<ResumeData> => {
+    const [profileRes, experiencesRes, skillsRes, languagesRes, educationRes] =
+      await Promise.all([
+        fetchProfile(),
+        fetchExperiences(),
+        fetchSkills(),
+        fetchLanguages(),
+        fetchEducation(),
+      ]);
 
-  const linkedin =
-    profileRes.url.find(
-      (u: ApiProfileUrl) => u.label.toLowerCase() === "linkedin",
-    )?.url || "";
+    const linkedin =
+      profileRes.url.find(
+        (u: ApiProfileUrl) => u.label.toLowerCase() === "linkedin",
+      )?.url || "";
 
-  const experience: Experience[] = experiencesRes.map((exp: ApiExperience) => ({
-    company: exp.company,
-    location: exp.location,
-    position: exp.position,
-    period: formatPeriod(exp.start_date, exp.end_date),
-    responsibilities: exp.description,
-  }));
+    const experience: Experience[] = experiencesRes.map((exp: ApiExperience) => ({
+      company: exp.company,
+      location: exp.location,
+      position: exp.position,
+      period: formatPeriod(exp.start_date, exp.end_date),
+      responsibilities: exp.description,
+    }));
 
-  const education: Education[] = educationRes.map((edu: ApiEducation) => ({
-    school: edu.school,
-    degree: edu.degree,
-    fieldOfStudy: edu.field_of_study,
-    gpa: edu.gpa,
-    startDate: edu.start_date,
-    graduationDate: edu.graduation_date,
-  }));
+    const education: Education[] = educationRes.map((edu: ApiEducation) => ({
+      school: edu.school,
+      degree: edu.degree,
+      fieldOfStudy: edu.field_of_study,
+      gpa: edu.gpa,
+      startDate: edu.start_date,
+      graduationDate: edu.graduation_date,
+    }));
 
-  const languages: Language[] = languagesRes.map((lang: ApiLanguage) => ({
-    name: lang.language,
-    proficiency: lang.proficiency,
-  }));
+    const languages: Language[] = languagesRes.map((lang: ApiLanguage) => ({
+      name: lang.language,
+      proficiency: lang.proficiency,
+    }));
 
-  const skills = {
-    technologies: skillsRes.technologies,
-    tools: skillsRes.tools,
-    soft_skills: skillsRes.soft_skills,
-  };
+    const skills = {
+      technologies: skillsRes.technologies,
+      tools: skillsRes.tools,
+      soft_skills: skillsRes.soft_skills,
+    };
 
-  return {
-    name: profileRes.name,
-    summary: profileRes.about,
-    email: profileRes.email,
-    phone: profileRes.phone,
-    location: profileRes.address,
-    linkedin,
-    portfolio: "https://downormal.dev/",
-    experience,
-    skills,
-    education,
-    languages,
-  };
-}
+    return {
+      name: profileRes.name,
+      summary: profileRes.about,
+      email: profileRes.email,
+      phone: profileRes.phone,
+      location: profileRes.address,
+      linkedin,
+      portfolio: "https://downormal.dev/",
+      experience,
+      skills,
+      education,
+      languages,
+    };
+  },
+  ["resume-data"],
+  { revalidate: 3600, tags: ["resume"] }
+);
 
 export async function getRecentExperiences(limit: number = 3): Promise<Experience[]> {
   const data = await getResumeData();

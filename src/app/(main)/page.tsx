@@ -7,27 +7,22 @@ import FAQStructuredData from "@/components/FAQStructuredData";
 import { getResumeData } from "@/features/resume/api";
 import { getAllProjects } from "@/features/projects/api";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export default async function HomePage() {
-  // Fetch data on the server
-  const resumeData = await getResumeData().catch((error) => {
-    console.error("Failed to fetch resume data on server:", error);
-    return null;
-  });
-  const projectsData = await getAllProjects().catch((error) => {
-    console.error("Failed to fetch projects data on server:", error);
-    return null;
-  });
+  const [resumeData, projectsData] = await Promise.all([
+    getResumeData(),
+    getAllProjects(),
+  ]);
 
   return (
     <>
       <FAQStructuredData />
-      <Hero initialData={resumeData || undefined} />
-      <About initialData={resumeData || undefined} />
-      <Experience initialData={resumeData || undefined} limit={3} />
-      <Projects initialData={projectsData || undefined} limit={4} />
-      <Contact initialData={resumeData || undefined} />
+      <Hero initialData={resumeData} />
+      <About initialData={resumeData} />
+      <Experience initialData={resumeData} limit={3} />
+      <Projects initialData={projectsData} limit={4} />
+      <Contact initialData={resumeData} />
     </>
   );
 }

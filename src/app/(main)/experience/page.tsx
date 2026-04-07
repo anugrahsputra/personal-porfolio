@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ExperiencePageClient from "./ExperiencePageClient";
 import { getResumeData } from "@/features/resume/api";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 // Breadcrumb structured data for experience page
 const breadcrumbStructuredData = {
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ExperiencePage() {
-  const resumeData = await getResumeData().catch(() => null);
+  const resumeData = await getResumeData();
 
   return (
     <>
@@ -87,7 +87,7 @@ export default async function ExperiencePage() {
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ExperiencePageClient initialData={resumeData || undefined} />
+      <ExperiencePageClient initialData={resumeData} />
     </>
   );
 }

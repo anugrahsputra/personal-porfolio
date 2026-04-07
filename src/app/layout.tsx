@@ -4,7 +4,11 @@ import { Inter } from "next/font/google";
 import StructuredData from "@/components/StructuredData";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://downormal.dev"),
@@ -138,7 +142,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#000000" />
       </head>
       <body
-        className={`${inter.className} bg-background text-foreground antialiased`}
+        className={`${inter.variable} ${inter.className} bg-background text-foreground antialiased`}
       >
         <StructuredData />
         {children}

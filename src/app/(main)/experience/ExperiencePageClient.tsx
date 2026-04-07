@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface ExperiencePageClientProps {
-  initialData?: ResumeData;
+  initialData: ResumeData;
 }
 
 export default function ExperiencePageClient({ initialData }: ExperiencePageClientProps) {

@@ -2,9 +2,7 @@ import React from "react";
 import { getResumeData } from "@/features/resume/api";
 
 const StructuredData = async () => {
-  const resumeData = await getResumeData().catch(() => null);
-  
-  if (!resumeData) return null;
+  const resumeData = await getResumeData();
 
   const education = resumeData.education[0] || {};
 

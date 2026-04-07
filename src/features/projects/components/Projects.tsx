@@ -21,22 +21,20 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectsData, Project } from "../types";
-import { useRecentProjects } from "../hooks/useProjects";
 
 interface ProjectsProps {
-  initialData?: ProjectsData;
+  initialData: ProjectsData;
   limit?: number;
 }
 
 const Projects = ({ initialData, limit }: ProjectsProps) => {
-  const { projects: fetchedProjects, loading, error } = useRecentProjects(limit || 100, initialData?.projects);
   const [ndaDialogOpen, setNdaDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(
     {},
   );
 
-  const projects = initialData ? initialData.projects : fetchedProjects;
+  const projects = initialData.projects;
 
   const handleButtonClick = (
     project: Project,
@@ -56,51 +54,6 @@ const Projects = ({ initialData, limit }: ProjectsProps) => {
   const handleImageError = (projectTitle: string) => {
     setImageErrors((prev) => ({ ...prev, [projectTitle]: true }));
   };
-
-  if (loading && !projects.length) {
-    return (
-      <section id="projects" className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {limit ? "Recent Projects" : "All Projects"}
-            </h2>
-            <Separator className="w-24 mx-auto" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="animate-pulse">
-                <div className="h-48 bg-muted rounded-t-lg mb-4"></div>
-                <div className="h-6 bg-muted rounded mb-2"></div>
-                <div className="h-4 bg-muted rounded mb-2"></div>
-                <div className="h-4 bg-muted rounded mb-4"></div>
-                <div className="h-8 bg-muted rounded"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error && !projects.length) {
-    return (
-      <section id="projects" className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {limit ? "Recent Projects" : "All Projects"}
-            </h2>
-            <p className="text-foreground/60">
-              Error loading projects: {error}
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!projects.length) return null;
 
   // Sort projects by date (newest first)
   const sortedProjects = [...projects].sort((a, b) => {

@@ -1,41 +1,57 @@
 # Personal Portfolio Website
 
-A modern, responsive personal portfolio website built with Next.js, React, shadcn/ui, and Tailwind CSS. Features a clean monochrome black and white theme with smooth animations and excellent user experience.
+A modern, responsive personal portfolio website built with Next.js, React, shadcn/ui, and Tailwind CSS.
 
-## 🚀 Features
+## Features
 
 - **Responsive Design**: Optimized for all screen sizes (mobile, tablet, desktop)
-- **Modern UI**: Clean monochrome theme using shadcn/ui components
+- **Modern UI**: Clean dark theme using shadcn/ui components
 - **Smooth Navigation**: Smooth scrolling between sections
-- **Contact Form**: Functional contact form with validation
-- **Project Showcase**: Beautiful project cards with technology badges
-- **SEO Optimized**: Proper meta tags and semantic HTML
-- **Performance**: Fast loading with Next.js optimization
+- **Contact Form**: Functional contact form with server actions
+- **Project Showcase**: Project cards with technology badges
+- **SEO Optimized**: Meta tags, structured data, sitemap, and robots.txt
+- **Performance**: Server-first rendering with ISR caching
 
-## 📋 Sections
+## Architecture
 
-1. **Navbar**: Fixed navigation with mobile menu
-2. **Hero**: Compelling introduction with call-to-action buttons
-3. **About**: Personal information, skills, and experience
-4. **Projects**: Portfolio showcase with project details
-5. **Contact**: Contact form and contact information
-6. **Footer**: Social links and additional navigation
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── layout.tsx          # Root layout with metadata, fonts, analytics
+│   ├── (main)/             # Route group (shared Navbar + Footer)
+│   │   ├── page.tsx        # Landing page (Hero, About, Experience, Projects, Contact)
+│   │   ├── projects/       # Full projects listing
+│   │   └── experience/     # Full experience listing
+│   ├── sitemap.ts          # Dynamic sitemap generation
+│   └── robots.ts           # Dynamic robots.txt generation
+├── components/
+│   ├── ui/                 # shadcn/ui primitives
+│   └── layout/             # Navbar, Footer, Breadcrumbs
+├── features/               # Feature-based modules
+│   ├── about/              # About section
+│   ├── contact/            # Contact form + server action
+│   ├── projects/           # Projects data, components, types
+│   └── resume/             # Resume data, components, hooks, types
+└── lib/
+    └── utils.ts            # Shared utilities (cn, fetch helpers)
+```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
-- **Icons**: SVG icons (built-in)
-- **Font**: Inter (Google Fonts)
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **Icons**: Lucide React
+- **Font**: Inter (Google Fonts via next/font)
+- **Analytics**: Vercel Analytics
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18+
+- npm
 
 ### Installation
 
@@ -50,94 +66,72 @@ cd portfolio
 npm install
 ```
 
-3. Run the development server:
+3. Copy `.env.local.example` to `.env.local` and fill in required variables:
+```bash
+cp .env.local.example .env.local
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 🎨 Customization
+## Environment Variables
+
+Required variables in `.env.local`:
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_API_BASE_URL` | Base URL for the portfolio API |
+| `NEXT_PUBLIC_PROFILE_ID` | Profile ID for API requests |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
+| `EMAILJS_SERVICE_ID` | EmailJS service ID |
+| `EMAILJS_TEMPLATE_ID` | EmailJS template ID |
+| `EMAILJS_PUBLIC_KEY` | EmailJS public key |
+| `PORTFOLIO_API_KEY` | API key for the portfolio backend |
+
+## Customization
 
 ### Personal Information
 
-Update the following files with your personal information:
-
-1. **Hero Section** (`src/components/Hero.tsx`):
-   - Change "Your Name" to your actual name
-   - Update the job title and description
-
-2. **About Section** (`src/components/About.tsx`):
-   - Update the personal description
-   - Modify skills array with your skills
-   - Update experience array with your work history
-
-3. **Projects Section** (`src/components/Projects.tsx`):
-   - Replace project data with your actual projects
-   - Update project descriptions, technologies, and links
-   - Add your project images
-
-4. **Contact Section** (`src/components/Contact.tsx`):
-   - Update email address
-   - Change location
-   - Update LinkedIn profile URL
-
-5. **Footer** (`src/components/Footer.tsx`):
-   - Update social media links
-   - Change contact information
-   - Update copyright name
+Update data through the external API or modify the API endpoints in:
+- `src/features/resume/api.ts` — Resume data fetching
+- `src/features/projects/api.ts` — Projects data fetching
 
 ### Styling
 
-The portfolio uses a monochrome theme with shadcn/ui. To customize colors:
-
-1. **Theme Colors**: Modify CSS variables in `src/app/globals.css`
-2. **Component Styling**: Update Tailwind classes in component files
-3. **Dark Mode**: The theme supports dark mode automatically
+- **Theme Colors**: Modify CSS variables in `src/app/globals.css`
+- **Component Styling**: Update Tailwind classes in component files
+- **Font**: Change in `src/app/layout.tsx`
 
 ### Adding New Sections
 
-To add new sections:
+1. Create a new component in `src/features/<feature>/components/`
+2. Import and add it to `src/app/(main)/page.tsx`
+3. Add navigation link in `src/components/layout/Navbar.tsx`
 
-1. Create a new component in `src/components/`
-2. Import and add it to `src/app/page.tsx`
-3. Add navigation link in `src/components/Navbar.tsx`
+## Responsive Design
 
-## 📱 Responsive Design
-
-The portfolio is fully responsive with breakpoints:
 - Mobile: < 768px
 - Tablet: 768px - 1024px
 - Desktop: > 1024px
 
-## 🚀 Deployment
+## Deployment
 
 ### Vercel (Recommended)
 
 1. Push your code to GitHub
 2. Connect your repository to Vercel
-3. Deploy automatically
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
 
-### Other Platforms
-
-The portfolio can be deployed to any platform that supports Next.js:
-- Netlify
-- Railway
-- DigitalOcean App Platform
-- AWS Amplify
-
-## 📝 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📞 Support
-
-If you have any questions or need help customizing the portfolio, feel free to open an issue on GitHub.
-
 ---
 
-Built with ❤️ using Next.js, React, and Tailwind CSS
+Built with Next.js, React, and Tailwind CSS

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface ProjectsPageClientProps {
-  initialData?: ProjectsData;
+  initialData: ProjectsData;
 }
 
 export default function ProjectsPageClient({ initialData }: ProjectsPageClientProps) {

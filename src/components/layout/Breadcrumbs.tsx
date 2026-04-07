@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 
@@ -13,7 +11,7 @@ interface BreadcrumbsProps {
   items: BreadcrumbItem[];
 }
 
-const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
+export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <nav aria-label="Breadcrumb" className="mb-8">
       <ol className="flex items-center space-x-2 text-sm text-foreground/60">
@@ -50,7 +48,4 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
       </ol>
     </nav>
   );
-};
-
-export default Breadcrumbs;
-
+}

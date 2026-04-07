@@ -1,66 +1,19 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { useRecentExperiences } from "../hooks/useResume";
 import type { ResumeData } from "../types";
 
 interface ExperienceProps {
-  initialData?: ResumeData;
+  initialData: ResumeData;
   limit?: number;
 }
 
-const Experience = ({ initialData, limit }: ExperienceProps) => {
-  const { experiences: fetchedExperiences, loading, error } = useRecentExperiences(limit || 100, initialData?.experience);
-  
-  const resumeData = initialData;
-  const experiences = initialData 
-    ? (limit ? initialData.experience.slice(0, limit) : initialData.experience)
-    : fetchedExperiences;
+export default function Experience({ initialData, limit }: ExperienceProps) {
+  const experiences = limit
+    ? initialData.experience.slice(0, limit)
+    : initialData.experience;
 
-  if (loading && !resumeData && !experiences.length) {
-    return (
-      <section id="experience" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {limit ? "Recent Experience" : "Professional Experience"}
-            </h2>
-            <Separator className="w-24 mx-auto" />
-          </div>
-          <div className="animate-pulse">
-            <div className="h-6 bg-muted rounded mb-4"></div>
-            <div className="h-4 bg-muted rounded mb-2"></div>
-            <div className="h-4 bg-muted rounded mb-4"></div>
-            <div className="h-4 bg-muted rounded mb-2"></div>
-            <div className="h-4 bg-muted rounded"></div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error && !resumeData && !experiences.length) {
-    return (
-      <section id="experience" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {limit ? "Recent Experience" : "Professional Experience"}
-            </h2>
-            <p className="text-foreground/60">
-              Error loading experience: {error}
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!experiences.length && !resumeData) return null;
-
-  const hasMoreExperiences = limit && resumeData && resumeData.experience.length > limit;
+  const hasMoreExperiences =
+    limit && initialData.experience.length > limit;
 
   return (
     <section id="experience" className="py-20">
@@ -69,7 +22,7 @@ const Experience = ({ initialData, limit }: ExperienceProps) => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             {limit ? "Recent Experience" : "Professional Experience"}
           </h2>
-          <Separator className="w-24 mx-auto" />
+          <div className="w-24 mx-auto my-4 h-px bg-border" />
           <p className="text-foreground/60 mt-6 max-w-2xl mx-auto">
             {limit
               ? "My recent professional journey in mobile development, showcasing my growth and expertise across different companies and projects."
@@ -84,7 +37,6 @@ const Experience = ({ initialData, limit }: ExperienceProps) => {
                 key={index}
                 className="border-l-2 border-foreground/20 pl-6 relative"
               >
-                {/* Timeline dot */}
                 <div className="absolute -left-3 top-0 w-6 h-6 bg-background border-2 border-foreground/20 rounded-full flex items-center justify-center">
                   <div className="w-2 h-2 bg-foreground/40 rounded-full"></div>
                 </div>
@@ -121,7 +73,6 @@ const Experience = ({ initialData, limit }: ExperienceProps) => {
             ))}
           </div>
 
-          {/* View Experience Button */}
           {limit && hasMoreExperiences && (
             <div className="text-center mt-12">
               <Link href="/experience">
@@ -148,6 +99,4 @@ const Experience = ({ initialData, limit }: ExperienceProps) => {
       </div>
     </section>
   );
-};
-
-export default Experience;
+}

@@ -3,7 +3,7 @@ import ProjectsPageClient from "./ProjectsPageClient";
 import ProjectsStructuredData from "@/features/projects/components/ProjectsStructuredData";
 import { getAllProjects } from "@/features/projects/api";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 // Breadcrumb structured data for projects page
 const breadcrumbStructuredData = {
@@ -77,18 +77,18 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
-  const projectsData = await getAllProjects().catch(() => null);
+  const projectsData = await getAllProjects();
 
   return (
     <>
-      <ProjectsStructuredData initialData={projectsData || undefined} />
+      <ProjectsStructuredData initialData={projectsData} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ProjectsPageClient initialData={projectsData || undefined} />
+      <ProjectsPageClient initialData={projectsData} />
     </>
   );
 }
