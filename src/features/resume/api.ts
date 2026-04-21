@@ -1,6 +1,5 @@
 import { ResumeData, Education, Language, Experience } from "./types";
 import { fetchWithTimeout, retryWithBackoff, FetchError } from "@/lib/utils";
-import { unstable_cache } from "next/cache";
 
 interface ApiProfileUrl {
   id: string;
@@ -103,13 +102,17 @@ const getHeaders = (): HeadersInit => {
   };
 };
 
+const getNextOptions = (tag: string) => ({
+  next: { revalidate: 60, tags: [tag] }
+});
+
 async function fetchProfile(): Promise<ApiProfile> {
   const { baseUrl, profileId } = getBaseUrlAndProfileId();
   const url = `${baseUrl}/api/v1/profile/${profileId}/`;
   return retryWithBackoff(
     async () => {
       try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders() }, 10000);
+        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('profile') }, 10000);
         if (!response.ok) {
           throw new FetchError(`Failed to fetch profile: ${response.statusText}`, response.status, response.statusText, url);
         }
@@ -131,7 +134,7 @@ async function fetchExperiences(): Promise<ApiExperience[]> {
   return retryWithBackoff(
     async () => {
       try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders() }, 10000);
+        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('experiences') }, 10000);
         if (!response.ok) {
           throw new FetchError(`Failed to fetch experiences: ${response.statusText}`, response.status, response.statusText, url);
         }
@@ -153,7 +156,7 @@ async function fetchSkills(): Promise<ApiSkill> {
   return retryWithBackoff(
     async () => {
       try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders() }, 10000);
+        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('skills') }, 10000);
         if (!response.ok) {
           throw new FetchError(`Failed to fetch skills: ${response.statusText}`, response.status, response.statusText, url);
         }
@@ -175,7 +178,7 @@ async function fetchLanguages(): Promise<ApiLanguage[]> {
   return retryWithBackoff(
     async () => {
       try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders() }, 10000);
+        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('languages') }, 10000);
         if (!response.ok) {
           throw new FetchError(`Failed to fetch languages: ${response.statusText}`, response.status, response.statusText, url);
         }
@@ -197,7 +200,7 @@ async function fetchEducation(): Promise<ApiEducation[]> {
   return retryWithBackoff(
     async () => {
       try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders() }, 10000);
+        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('education') }, 10000);
         if (!response.ok) {
           throw new FetchError(`Failed to fetch education: ${response.statusText}`, response.status, response.statusText, url);
         }
@@ -213,67 +216,63 @@ async function fetchEducation(): Promise<ApiEducation[]> {
   );
 }
 
-export const getResumeData = unstable_cache(
-  async (): Promise<ResumeData> => {
-    const [profileRes, experiencesRes, skillsRes, languagesRes, educationRes] =
-      await Promise.all([
-        fetchProfile(),
-        fetchExperiences(),
-        fetchSkills(),
-        fetchLanguages(),
-        fetchEducation(),
-      ]);
+export async function getResumeData(): Promise<ResumeData> {
+  const [profileRes, experiencesRes, skillsRes, languagesRes, educationRes] =
+    await Promise.all([
+      fetchProfile(),
+      fetchExperiences(),
+      fetchSkills(),
+      fetchLanguages(),
+      fetchEducation(),
+    ]);
 
-    const linkedin =
-      profileRes.url.find(
-        (u: ApiProfileUrl) => u.label.toLowerCase() === "linkedin",
-      )?.url || "";
+  const linkedin =
+    profileRes.url.find(
+      (u: ApiProfileUrl) => u.label.toLowerCase() === "linkedin",
+    )?.url || "";
 
-    const experience: Experience[] = experiencesRes.map((exp: ApiExperience) => ({
-      company: exp.company,
-      location: exp.location,
-      position: exp.position,
-      period: formatPeriod(exp.start_date, exp.end_date),
-      responsibilities: exp.description,
-    }));
+  const experience: Experience[] = experiencesRes.map((exp: ApiExperience) => ({
+    company: exp.company,
+    location: exp.location,
+    position: exp.position,
+    period: formatPeriod(exp.start_date, exp.end_date),
+    responsibilities: exp.description,
+  }));
 
-    const education: Education[] = educationRes.map((edu: ApiEducation) => ({
-      school: edu.school,
-      degree: edu.degree,
-      fieldOfStudy: edu.field_of_study,
-      gpa: edu.gpa,
-      startDate: edu.start_date,
-      graduationDate: edu.graduation_date,
-    }));
+  const education: Education[] = educationRes.map((edu: ApiEducation) => ({
+    school: edu.school,
+    degree: edu.degree,
+    fieldOfStudy: edu.field_of_study,
+    gpa: edu.gpa,
+    startDate: edu.start_date,
+    graduationDate: edu.graduation_date,
+  }));
 
-    const languages: Language[] = languagesRes.map((lang: ApiLanguage) => ({
-      name: lang.language,
-      proficiency: lang.proficiency,
-    }));
+  const languages: Language[] = languagesRes.map((lang: ApiLanguage) => ({
+    name: lang.language,
+    proficiency: lang.proficiency,
+  }));
 
-    const skills = {
-      technologies: skillsRes.technologies,
-      tools: skillsRes.tools,
-      soft_skills: skillsRes.soft_skills,
-    };
+  const skills = {
+    technologies: skillsRes.technologies,
+    tools: skillsRes.tools,
+    soft_skills: skillsRes.soft_skills,
+  };
 
-    return {
-      name: profileRes.name,
-      summary: profileRes.about,
-      email: profileRes.email,
-      phone: profileRes.phone,
-      location: profileRes.address,
-      linkedin,
-      portfolio: "https://downormal.dev/",
-      experience,
-      skills,
-      education,
-      languages,
-    };
-  },
-  ["resume-data"],
-  { revalidate: 3600, tags: ["resume"] }
-);
+  return {
+    name: profileRes.name,
+    summary: profileRes.about,
+    email: profileRes.email,
+    phone: profileRes.phone,
+    location: profileRes.address,
+    linkedin,
+    portfolio: "https://downormal.dev/",
+    experience,
+    skills,
+    education,
+    languages,
+  };
+}
 
 export async function getRecentExperiences(limit: number = 3): Promise<Experience[]> {
   const data = await getResumeData();

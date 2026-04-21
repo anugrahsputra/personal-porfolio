@@ -22,10 +22,11 @@ export class FetchError extends Error {
 
 /**
  * Performs a fetch with a timeout using AbortController
+ * Supports Next.js fetch options for caching and revalidation
  */
 export async function fetchWithTimeout(
   url: string,
-  options: RequestInit = {},
+  options: RequestInit & { next?: { revalidate?: number; tags?: string[] } } = {},
   timeoutMs: number = 5000
 ): Promise<Response> {
   const controller = new AbortController();

@@ -74,53 +74,50 @@ function getBaseUrlAndProfileId() {
   return { baseUrl, profileId };
 }
 
-export const getAllProjects = unstable_cache(
-  async (): Promise<ProjectsData> => {
-    const { baseUrl, profileId } = getBaseUrlAndProfileId();
-    const url = `${baseUrl}/api/v1/project/${profileId}/`;
-    
-    return retryWithBackoff(async () => {
-      try {
-        const response = await fetchWithTimeout(
-          url,
-          { 
-            headers: { 
-              'Content-Type': 'application/json',
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Next.js/Server'
-            } 
+export async function getAllProjects(): Promise<ProjectsData> {
+  const { baseUrl, profileId } = getBaseUrlAndProfileId();
+  const url = `${baseUrl}/api/v1/project/${profileId}/`;
+
+  return retryWithBackoff(async () => {
+    try {
+      const response = await fetchWithTimeout(
+        url,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Next.js/Server'
           },
-          10000
-        );
+          next: { revalidate: 60, tags: ['projects'] }
+        },
+        10000
+      );
 
-        if (!response.ok) {
-          throw new FetchError(
-            `Failed to fetch projects: ${response.statusText}`,
-            response.status,
-            response.statusText,
-            url
-          );
-        }
-
-        const result: ApiResponse = await response.json();
-        const projects = result.data.map(transformProject);
-
-        return { projects };
-      } catch (error) {
-        if (error instanceof FetchError) {
-          throw error;
-        }
+      if (!response.ok) {
         throw new FetchError(
-          error instanceof Error ? error.message : 'Unknown error during fetch',
-          undefined,
-          undefined,
+          `Failed to fetch projects: ${response.statusText}`,
+          response.status,
+          response.statusText,
           url
         );
       }
-    }, 3, 1000);
-  },
-  ["projects-data"],
-  { revalidate: 3600, tags: ["projects"] }
-);
+
+      const result: ApiResponse = await response.json();
+      const projects = result.data.map(transformProject);
+
+      return { projects };
+    } catch (error) {
+      if (error instanceof FetchError) {
+        throw error;
+      }
+      throw new FetchError(
+        error instanceof Error ? error.message : 'Unknown error during fetch',
+        undefined,
+        undefined,
+        url
+      );
+    }
+  }, 3, 1000);
+}
 
 export async function getRecentProjects(limit: number = 4): Promise<Project[]> {
   const data = await getAllProjects();
