@@ -1,6 +1,5 @@
 import { ProjectsData, Project } from './types';
 import { fetchWithTimeout, retryWithBackoff, FetchError } from '@/lib/utils';
-import { unstable_cache } from 'next/cache';
 
 interface ApiProject {
   id: string;

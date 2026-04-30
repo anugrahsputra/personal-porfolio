@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ExperiencePageClient from "./ExperiencePageClient";
-import { getResumeData } from "@/features/resume/api";
+import { getAllExperiences } from "@/features/resume/api";
 
 export const revalidate = 3600;
 
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ExperiencePage() {
-  const resumeData = await getResumeData();
+  const experiences = await getAllExperiences();
 
   return (
     <>
@@ -87,7 +87,7 @@ export default async function ExperiencePage() {
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ExperiencePageClient initialData={resumeData} />
+      <ExperiencePageClient initialData={experiences} />
     </>
   );
 }

@@ -1,13 +1,13 @@
 "use client";
 
-import { ResumeData } from "@/features/resume/types";
-import Experience from "@/features/resume/components/Experience";
+import { Experience } from "@/features/resume/types";
+import ExperiencePageContent from "@/features/resume/components/ExperiencePageContent";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface ExperiencePageClientProps {
-  initialData: ResumeData;
+  initialData: Experience[];
 }
 
 export default function ExperiencePageClient({ initialData }: ExperiencePageClientProps) {
@@ -39,8 +39,8 @@ export default function ExperiencePageClient({ initialData }: ExperiencePageClie
             </Button>
           </Link>
         </div>
+        <ExperiencePageContent experiences={initialData} />
       </div>
-      <Experience initialData={initialData} />
     </div>
   );
 }

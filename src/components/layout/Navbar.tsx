@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-// ThemeToggle removed to enforce constant dark mode
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

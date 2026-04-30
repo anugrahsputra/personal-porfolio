@@ -1,21 +1,46 @@
 import { ResumeData, Education, Language, Experience } from "./types";
 import { fetchWithTimeout, retryWithBackoff, FetchError } from "@/lib/utils";
 
-interface ApiProfileUrl {
-  id: string;
-  profile_id: string;
-  label: string;
-  url: string;
-}
-
-interface ApiProfile {
+interface ApiResume {
   id: string;
   name: string;
+  title: string;
   about: string;
+  address: string;
   email: string;
   phone: string;
-  address: string;
-  url: ApiProfileUrl[];
+  urls: { id: string; profile_id: string; label: string; url: string }[];
+  skills: {
+    id: string;
+    profile_id: string;
+    tools: string[];
+    technologies: string[];
+    hard_skills: string[];
+    soft_skills: string[];
+  }[];
+  languages: { id: string; profile_id: string; language: string; proficiency: string }[];
+  experiences: {
+    id: string;
+    profile_id: string;
+    company: string;
+    position: string;
+    description: string[];
+    location: string;
+    start_date: string;
+    end_date: string | null;
+    is_present: boolean;
+  }[];
+  educations: {
+    id: string;
+    profile_id: string;
+    school: string;
+    degree: string;
+    field_of_study: string;
+    gpa: number;
+    start_date: string;
+    graduation_date: string;
+    is_present: boolean;
+  }[];
 }
 
 interface ApiExperience {
@@ -27,33 +52,6 @@ interface ApiExperience {
   end_date: string;
   description: string[];
   location: string;
-}
-
-interface ApiSkill {
-  id: string;
-  profile_id: string;
-  technologies: string[];
-  tools: string[];
-  soft_skills: string[];
-  hard_skills: string[];
-}
-
-interface ApiLanguage {
-  id: string;
-  profile_id: string;
-  language: string;
-  proficiency: string;
-}
-
-interface ApiEducation {
-  id: string;
-  profile_id: string;
-  school: string;
-  degree: string;
-  field_of_study: string;
-  gpa: number;
-  start_date: string;
-  graduation_date: string;
 }
 
 interface ApiResponse<T> {
@@ -106,17 +104,17 @@ const getNextOptions = (tag: string) => ({
   next: { revalidate: 60, tags: [tag] }
 });
 
-async function fetchProfile(): Promise<ApiProfile> {
+async function fetchResume(): Promise<ApiResume> {
   const { baseUrl, profileId } = getBaseUrlAndProfileId();
-  const url = `${baseUrl}/api/v1/profile/${profileId}/`;
+  const url = `${baseUrl}/api/v1/resume/${profileId}`;
   return retryWithBackoff(
     async () => {
       try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('profile') }, 10000);
+        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('resume') }, 10000);
         if (!response.ok) {
-          throw new FetchError(`Failed to fetch profile: ${response.statusText}`, response.status, response.statusText, url);
+          throw new FetchError(`Failed to fetch resume: ${response.statusText}`, response.status, response.statusText, url);
         }
-        const result: ApiResponse<ApiProfile> = await response.json();
+        const result: ApiResponse<ApiResume> = await response.json();
         return result.data;
       } catch (error) {
         if (error instanceof FetchError) throw error;
@@ -150,88 +148,15 @@ async function fetchExperiences(): Promise<ApiExperience[]> {
   );
 }
 
-async function fetchSkills(): Promise<ApiSkill> {
-  const { baseUrl, profileId } = getBaseUrlAndProfileId();
-  const url = `${baseUrl}/api/v1/skill/${profileId}/`;
-  return retryWithBackoff(
-    async () => {
-      try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('skills') }, 10000);
-        if (!response.ok) {
-          throw new FetchError(`Failed to fetch skills: ${response.statusText}`, response.status, response.statusText, url);
-        }
-        const result: ApiResponse<ApiSkill> = await response.json();
-        return result.data;
-      } catch (error) {
-        if (error instanceof FetchError) throw error;
-        throw new FetchError(error instanceof Error ? error.message : "Unknown error", undefined, undefined, url);
-      }
-    },
-    3,
-    1000,
-  );
-}
-
-async function fetchLanguages(): Promise<ApiLanguage[]> {
-  const { baseUrl, profileId } = getBaseUrlAndProfileId();
-  const url = `${baseUrl}/api/v1/language/${profileId}/`;
-  return retryWithBackoff(
-    async () => {
-      try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('languages') }, 10000);
-        if (!response.ok) {
-          throw new FetchError(`Failed to fetch languages: ${response.statusText}`, response.status, response.statusText, url);
-        }
-        const result: ApiResponse<ApiLanguage[]> = await response.json();
-        return result.data;
-      } catch (error) {
-        if (error instanceof FetchError) throw error;
-        throw new FetchError(error instanceof Error ? error.message : "Unknown error", undefined, undefined, url);
-      }
-    },
-    3,
-    1000,
-  );
-}
-
-async function fetchEducation(): Promise<ApiEducation[]> {
-  const { baseUrl, profileId } = getBaseUrlAndProfileId();
-  const url = `${baseUrl}/api/v1/education/${profileId}/`;
-  return retryWithBackoff(
-    async () => {
-      try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('education') }, 10000);
-        if (!response.ok) {
-          throw new FetchError(`Failed to fetch education: ${response.statusText}`, response.status, response.statusText, url);
-        }
-        const result: ApiResponse<ApiEducation[]> = await response.json();
-        return result.data;
-      } catch (error) {
-        if (error instanceof FetchError) throw error;
-        throw new FetchError(error instanceof Error ? error.message : "Unknown error", undefined, undefined, url);
-      }
-    },
-    3,
-    1000,
-  );
-}
-
 export async function getResumeData(): Promise<ResumeData> {
-  const [profileRes, experiencesRes, skillsRes, languagesRes, educationRes] =
-    await Promise.all([
-      fetchProfile(),
-      fetchExperiences(),
-      fetchSkills(),
-      fetchLanguages(),
-      fetchEducation(),
-    ]);
+  const resume = await fetchResume();
 
   const linkedin =
-    profileRes.url.find(
-      (u: ApiProfileUrl) => u.label.toLowerCase() === "linkedin",
+    resume.urls.find(
+      (u) => u.label.toLowerCase() === "linkedin",
     )?.url || "";
 
-  const experience: Experience[] = experiencesRes.map((exp: ApiExperience) => ({
+  const experience: Experience[] = resume.experiences.map((exp) => ({
     company: exp.company,
     location: exp.location,
     position: exp.position,
@@ -239,7 +164,7 @@ export async function getResumeData(): Promise<ResumeData> {
     responsibilities: exp.description,
   }));
 
-  const education: Education[] = educationRes.map((edu: ApiEducation) => ({
+  const education: Education[] = resume.educations.map((edu) => ({
     school: edu.school,
     degree: edu.degree,
     fieldOfStudy: edu.field_of_study,
@@ -248,23 +173,24 @@ export async function getResumeData(): Promise<ResumeData> {
     graduationDate: edu.graduation_date,
   }));
 
-  const languages: Language[] = languagesRes.map((lang: ApiLanguage) => ({
+  const languages: Language[] = resume.languages.map((lang) => ({
     name: lang.language,
     proficiency: lang.proficiency,
   }));
 
+  const skillsData = resume.skills[0];
   const skills = {
-    technologies: skillsRes.technologies,
-    tools: skillsRes.tools,
-    soft_skills: skillsRes.soft_skills,
+    technologies: skillsData?.technologies || [],
+    tools: skillsData?.tools || [],
+    soft_skills: skillsData?.soft_skills || [],
   };
 
   return {
-    name: profileRes.name,
-    summary: profileRes.about,
-    email: profileRes.email,
-    phone: profileRes.phone,
-    location: profileRes.address,
+    name: resume.name,
+    summary: resume.about,
+    email: resume.email,
+    phone: resume.phone,
+    location: resume.address,
     linkedin,
     portfolio: "https://downormal.dev/",
     experience,
@@ -274,7 +200,15 @@ export async function getResumeData(): Promise<ResumeData> {
   };
 }
 
-export async function getRecentExperiences(limit: number = 3): Promise<Experience[]> {
-  const data = await getResumeData();
-  return data.experience.slice(0, limit);
+export async function getAllExperiences(): Promise<Experience[]> {
+  const experiencesRes = await fetchExperiences();
+
+  return experiencesRes.map((exp: ApiExperience) => ({
+    company: exp.company,
+    location: exp.location,
+    position: exp.position,
+    period: formatPeriod(exp.start_date, exp.end_date),
+    responsibilities: exp.description,
+  }));
 }
+
