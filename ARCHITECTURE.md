@@ -81,16 +81,16 @@ src/
 
 ```bash
 # Install dependencies
-npm install
+bun install
 
 # Run development server
-npm run dev
+bun dev
 
 # Build for production
-npm run build
+bun build
 
 # Start production server
-npm start
+bun start
 ```
 
 ## Technologies Used

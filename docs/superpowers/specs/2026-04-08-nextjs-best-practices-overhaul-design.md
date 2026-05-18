@@ -6,7 +6,7 @@
 
 ## Overview
 
-Refactor the portfolio project to follow Next.js 15 best practices, delivered as 7 independent, incremental PRs. Each PR is self-contained, reversible, and verifiable via `npm run build`.
+Refactor the portfolio project to follow Next.js 15 best practices, delivered as 7 independent, incremental PRs. Each PR is self-contained, reversible, and verifiable via `bun build`.
 
 ## Current State
 
@@ -36,7 +36,7 @@ Refactor the portfolio project to follow Next.js 15 best practices, delivered as
   - Update any imports referencing `@/lib/utils/utils` to `@/lib/utils`
 - Update `README.md` to reflect actual architecture (remove references to non-existent `domain/`, `data/`, `application/`, `presentation/` directories)
 
-**Verification:** `npm run build` passes, no visual or behavioral changes.
+**Verification:** `bun build` passes, no visual or behavioral changes.
 
 **Risk:** None.
 
@@ -111,7 +111,7 @@ Refactor the portfolio project to follow Next.js 15 best practices, delivered as
 - Remove `useProjects` hook if no longer used after Projects page conversion
 - Delete unused hook files
 
-**Verification:** `npm run build` passes. Verify all sections render correctly. Check client bundle size reduction.
+**Verification:** `bun build` passes. Verify all sections render correctly. Check client bundle size reduction.
 
 **Risk:** Medium. Converting client components to server components requires ensuring no client-only APIs are used.
 
@@ -152,7 +152,7 @@ Refactor the portfolio project to follow Next.js 15 best practices, delivered as
   - Remove complex loading/error state management for the happy path
   - Keep fallback fetch for edge cases (client-side navigation without server data)
 
-**Verification:** `npm run build` passes. Verify data is cached (check response headers). Verify data refreshes within 1 hour.
+**Verification:** `bun build` passes. Verify data is cached (check response headers). Verify data refreshes within 1 hour.
 
 **Risk:** Medium. Removing `force-dynamic` changes caching behavior. Need to verify data freshness is acceptable.
 
@@ -192,7 +192,7 @@ Refactor the portfolio project to follow Next.js 15 best practices, delivered as
 
 **Note:** Since all data is fetched at the page level (Phase 4), Suspense here provides streaming for the HTML shell rather than per-section data fetching. This is simpler and avoids duplicate API calls while still improving perceived performance.
 
-**Verification:** `npm run build` passes. Verify page shell streams before Projects section is ready.
+**Verification:** `bun build` passes. Verify page shell streams before Projects section is ready.
 
 **Risk:** Low. Suspense boundaries are additive and don't change data flow.
 
@@ -207,7 +207,7 @@ Refactor the portfolio project to follow Next.js 15 best practices, delivered as
 **Unused component audit:**
 - Check usage of `alert.tsx`, `badge.tsx`, `card.tsx`, `separator.tsx` in `src/components/ui/`
 - Remove any unused components
-- Run `npm run build` to verify no import errors
+- Run `bun build` to verify no import errors
 
 **Font optimization:**
 - Verify `Inter` font from `next/font/google` is properly configured:
@@ -228,7 +228,7 @@ Refactor the portfolio project to follow Next.js 15 best practices, delivered as
 - Document baseline bundle size
 - Identify optimization opportunities
 
-**Verification:** `npm run build` passes. Bundle size reduced or unchanged.
+**Verification:** `bun build` passes. Bundle size reduced or unchanged.
 
 **Risk:** Low. Removing unused code and optimizing existing code.
 
@@ -272,8 +272,8 @@ Phases must be executed in order (1 → 7) because later phases depend on earlie
 
 ## Success Criteria
 
-1. `npm run build` passes with no errors or warnings
-2. `npm run lint` passes with no errors
+1. `bun build` passes with no errors or warnings
+2. `bun lint` passes with no errors
 3. All 3 routes render correctly with no visual regressions
 4. Client bundle size reduced (measurable via bundle analysis)
 5. Error boundaries catch and display errors gracefully

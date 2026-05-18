@@ -101,11 +101,11 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ```bash
 # Development
-npm run dev                    # Start dev server with Turbopack
-npm run build                  # Production build with Turbopack
-npm run start                  # Start production server
-npm run lint                   # Run ESLint
-npm run lint -- --fix          # Auto-fix lint issues
+bun dev                    # Start dev server with Turbopack
+bun build                  # Production build with Turbopack
+bun start                  # Start production server
+bun lint                   # Run ESLint
+bun lint --fix             # Auto-fix lint issues
 ```
 
 **No test framework is currently configured.** Do not add tests unless explicitly requested.

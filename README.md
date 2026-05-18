@@ -50,8 +50,7 @@ src/
 
 ### Prerequisites
 
-- Node.js 18+
-- npm
+- Bun 1.0+
 
 ### Installation
 
@@ -63,7 +62,7 @@ cd portfolio
 
 2. Install dependencies:
 ```bash
-npm install
+bun install
 ```
 
 3. Copy `.env.local.example` to `.env.local` and fill in required variables:
@@ -73,7 +72,7 @@ cp .env.local.example .env.local
 
 4. Run the development server:
 ```bash
-npm run dev
+bun dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
