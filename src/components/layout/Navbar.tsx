@@ -101,7 +101,7 @@ export default function Navbar({ counts = {} }: NavbarProps) {
             <DialogPrimitive.Overlay className="fixed inset-0 z-50 md:hidden" />
             <DialogPrimitive.Content
               aria-describedby={undefined}
-              className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background ease-[cubic-bezier(0.18,0.66,0.18,1)] motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=closed]:slide-out-to-right motion-safe:data-[state=closed]:duration-500 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=open]:slide-in-from-right motion-safe:data-[state=open]:duration-700 md:hidden"
+              className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=closed]:slide-out-to-right motion-safe:data-[state=closed]:duration-400 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=open]:slide-in-from-right motion-safe:data-[state=open]:duration-600 md:hidden"
             >
               <DialogPrimitive.Title className="sr-only">Menu</DialogPrimitive.Title>
 
@@ -137,7 +137,7 @@ export default function Navbar({ counts = {} }: NavbarProps) {
                             animate={{ y: 0 }}
                             transition={{
                               delay: 0.15 + 0.05 * index,
-                              duration: 0.8,
+                              duration: 0.6,
                               ease: EASE_OUT,
                             }}
                           >
@@ -146,7 +146,7 @@ export default function Navbar({ counts = {} }: NavbarProps) {
                               aria-current={isCurrent ? "page" : undefined}
                               onClick={closeMenu}
                               className={cn(
-                                "flex items-start rounded-sm text-[clamp(1.5rem,15vw,4rem)] leading-[1.1] tracking-[-0.04em]",
+                                "flex items-start rounded-sm text-[clamp(2.5rem,13vw,3.75rem)] leading-[1.1] tracking-[-0.04em]",
                                 isCurrent ? "text-foreground" : "text-muted-foreground",
                               )}
                             >

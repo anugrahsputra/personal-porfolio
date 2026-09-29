@@ -17,7 +17,7 @@ const CONTEXT_LABELS: Record<ProjectContext, string> = {
   academic: "Academic",
 };
 
-const COLUMNS = "md:grid-cols-[2fr_1fr_1fr] md:items-baseline md:gap-x-6";
+const COLUMNS = "md:grid-cols-[minmax(0,5fr)_minmax(0,3fr)_minmax(11rem,2fr)] md:items-baseline md:gap-x-6";
 const ROW_TEXT =
   "md:text-[clamp(1.125rem,1.4vw,1.375rem)] md:leading-tight md:tracking-[-0.02em] md:text-foreground";
 const META_TEXT = cn("text-sm/5 text-foreground/60", ROW_TEXT);

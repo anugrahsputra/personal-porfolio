@@ -74,7 +74,7 @@ export default function About({ initialData }: AboutProps) {
 
           <div className="min-w-0">
             {lead && (
-              <MaskText as="p" text={lead} className="type-lead max-w-[32ch] indent-[clamp(2.5rem,4vw,3.5rem)]" />
+              <MaskText as="p" text={lead} className="type-lead max-w-[32ch] indent-[clamp(2.5rem,3.5vw,3rem)]" />
             )}
 
             <dl className="mt-[clamp(2.5rem,4vw,3.5rem)]">

@@ -20,9 +20,20 @@ export default function Footer() {
     <footer className="page-container pt-10 pb-14">
       <RevealLine />
       <div className="grid gap-10 pt-6 md:grid-cols-2 md:gap-x-[clamp(2rem,4vw,4rem)]">
-        <p className="text-sm/5">
-          © {new Date().getFullYear()} Anugrah Surya Putra
-        </p>
+        <div className="space-y-2 text-sm/5">
+          <p>© {new Date().getFullYear()} Anugrah Surya Putra</p>
+          <p className="text-foreground/60">
+            Design inspired by{" "}
+            <a
+              href="https://matthieugivelet.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-sm text-foreground underline decoration-input-border underline-offset-4 hover:decoration-foreground"
+            >
+              Matthieu Givelet
+            </a>
+          </p>
+        </div>
 
         <div className="grid grid-cols-2 gap-8">
           <nav aria-label="Pages">

@@ -99,7 +99,7 @@ export default function Contact({ initialData }: ContactProps) {
         <div className="grid gap-y-10 pt-6 md:grid-cols-2 md:gap-x-[clamp(2rem,4vw,4rem)]">
           <Reveal className="md:sticky md:top-24 md:self-start">
             <SectionLabel>Contact</SectionLabel>
-            <p className="mt-8 max-w-[22ch] indent-[clamp(2.5rem,4vw,3.5rem)] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.2] tracking-[-0.025em]">
+            <p className="mt-8 max-w-[22ch] indent-[clamp(2.5rem,3.5vw,3rem)] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.2] tracking-[-0.025em]">
               Available for freelance mobile work and full-time roles.
             </p>
             <ul className="mt-6 space-y-3 text-sm/5">
