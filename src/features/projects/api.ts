@@ -122,3 +122,12 @@ export async function getRecentProjects(limit: number = 4): Promise<Project[]> {
   const data = await getAllProjects();
   return data.projects.slice(0, limit);
 }
+
+export type ProjectContext = 'work' | 'personal' | 'academic';
+
+// The API has no context field; the company name carries it
+export function getProjectContext(project: Project): ProjectContext {
+  if (project.company === 'Personal Project') return 'personal';
+  if (project.company === 'Academic Project') return 'academic';
+  return 'work';
+}

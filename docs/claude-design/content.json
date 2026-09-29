@@ -1,0 +1,351 @@
+{
+  "_note": "Real content from portfolio-api.downormal.dev and youtube.com/@downormal on 2026-09-28. Use only this content. Placeholder project \"Change Project Name\" removed.",
+  "profile": {
+    "name": "Anugrah Surya Putra",
+    "title": "Mobile Engineer",
+    "about": "Mobile Engineer with 2+ years of experience building cross-platform applications using Flutter and Kotlin Multiplatform. Skilled in scalable architecture design, CI/CD automation, and production stability. Collaborative team player with a track record of delivering business-critical solutions.",
+    "location": "South Jakarta, Jakarta, Indonesia",
+    "email": "anugrahsputra@gmail.com",
+    "links": [
+      {
+        "label": "LinkedIn",
+        "url": "https://linkedin.com/in/anugrahsputra"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/anugrahsputra"
+      },
+      {
+        "label": "Website",
+        "url": "https://downormal.dev/"
+      }
+    ],
+    "resumePdf": "https://raw.githubusercontent.com/anugrahsputra/resume/main/rendercv_output/Anugrah_Surya_Putra_CV.pdf"
+  },
+  "experience": [
+    {
+      "position": "Mobile Engineer",
+      "company": "PT Bangun Rancang Indonesia Kita (BRIK)",
+      "location": "South Jakarta, Jakarta, Indonesia",
+      "start": "2025-08",
+      "end": "present",
+      "bullets": [
+        "Built a local-first sync engine that automatically saves and uploads data in the background, eliminating the need for drivers to manually refresh the app.",
+        "Designed an offline caching system for driver checklists that prevents progress loss and step-skipping in areas with no internet connection.",
+        "Improved camera speed and app stability by offloading photo and video processing to background tasks using FFmpeg.",
+        "Created a flexible notification routing system using the Strategy Pattern to direct users to specific pages based on their role and context.",
+        "Developed a unified check-in flow for field visits that dynamically adjusts steps depending on whether the user is online or offline.",
+        "Automated testing and over-the-air (OTA) hotfixes using Bitbucket Pipelines and Shorebird, reducing hotfix delivery time from days to minutes."
+      ]
+    },
+    {
+      "position": "Mobile Engineer",
+      "company": "PT. Semesta Arus Teknologi",
+      "location": "South Jakarta, Jakarta, Indonesia",
+      "start": "2024-06",
+      "end": "2025-07",
+      "bullets": [
+        "Developed cross-platform mobile applications using Flutter and Compose Multiplatform, delivering unified experiences for iOS and Android.",
+        "Implemented Clean Architecture and SOLID principles, creating modular codebases that improved testability and reduced feature development time.",
+        "Partnered with backend teams to integrate RESTful APIs, ensuring reliable data synchronization for business-critical operations.",
+        "Profiled and resolved memory leaks and performance bottlenecks, reducing app crash rates by 15% and improving overall stability.",
+        "Set up automated build and testing pipelines, reducing deployment preparation time and ensuring consistent release quality.",
+        "Mentored junior developers on Flutter best practices and code review processes, improving team code quality and knowledge sharing."
+      ]
+    },
+    {
+      "position": "Mobile Developer Apprenticeship",
+      "company": "PT. Inovasi Karya Mahendra (INKARA)",
+      "location": "Kota Bandung, West Java, Indonesia",
+      "start": "2023-03",
+      "end": "2023-05",
+      "bullets": [
+        "Developed app prototype 'Kantin Virtual' for the Faculty of Engineering at Universitas Pasundan.",
+        "Designed and implemented user interface using Flutter Framework.",
+        "Completed the project independently within a three-month apprenticeship."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "Universitas Pasundan",
+      "degree": "Bachelor of Engineering",
+      "field": "Informatics Engineering",
+      "gpa": 4,
+      "start": "2018-09",
+      "graduation": "2023-06"
+    }
+  ],
+  "skills": {
+    "technologies": [
+      "Dart",
+      "Kotlin",
+      "Go",
+      "Java",
+      "Swift",
+      "Flutter",
+      "Compose Multiplatform",
+      "Jetpack Compose",
+      "SwiftUI",
+      "Android",
+      "REST API",
+      "PostgreSQL",
+      "Redis"
+    ],
+    "tools": [
+      "Firebase",
+      "Git",
+      "Shorebird",
+      "Figma",
+      "Android Studio",
+      "VS Code",
+      "Neovim",
+      "Docker",
+      "Bitbucket Pipelines"
+    ],
+    "hardSkills": [
+      "Clean Architecture",
+      "SOLID",
+      "CI/CD",
+      "TDD",
+      "Agile Methodology",
+      "Third-party API Integration",
+      "Performance Optimization"
+    ],
+    "softSkills": [
+      "Problem Solving",
+      "Adaptability",
+      "Communication",
+      "Mentoring"
+    ]
+  },
+  "languages": [
+    {
+      "language": "English",
+      "proficiency": "professional"
+    },
+    {
+      "language": "Bahasa Indonesia",
+      "proficiency": "native"
+    }
+  ],
+  "projects": [
+    {
+      "title": "ZFG App",
+      "context": "Personal Project",
+      "featured": false,
+      "nda": false,
+      "live": true,
+      "liveUrl": "https://zfgaap.downormal.dev/",
+      "githubUrl": "https://github.com/anugrahsputra/zero-fucks-given-app",
+      "imageUrl": "https://raw.githubusercontent.com/anugrahsputra/zero-fucks-given-as-a-service/refs/heads/main/zfgass%20banner.png",
+      "start": "2026-04",
+      "end": "present",
+      "location": "South Jakarta, Indonesia",
+      "techStack": [
+        "NextJS",
+        "Typescript",
+        "bun",
+        "REST API"
+      ],
+      "description": "A Next.js app that generates professionally indifferent apologies. Perfect for when you need to say sorry, but don't really mean it."
+    },
+    {
+      "title": "Portfolio Backend",
+      "context": "Personal Project",
+      "featured": true,
+      "nda": false,
+      "live": true,
+      "liveUrl": null,
+      "githubUrl": "https://github.com/anugrahsputra/portfolio-backend",
+      "imageUrl": null,
+      "start": "2026-03",
+      "end": "present",
+      "location": "South Jakarta, Indonesia",
+      "techStack": [
+        "Go",
+        "Gin",
+        "PostgreSQL",
+        "SQLC",
+        "REST API",
+        "Docker"
+      ],
+      "description": "Go-based REST API backend for a personal portfolio system using Clean Architecture, Gin, PostgreSQL, and SQLC. Architected a modular system using Clean (Hexagonal) Architecture to decouple business logic, database operations, and the HTTP presentation layer. Designed a LATERAL JOIN query using PostgreSQL JSON aggregation (jsonb_agg) to retrieve nested resume hierarchies in a single database roundtrip. Used SQLC for type-safe database queries and schema-first code generation, reducing boilerplate and improving performance with pgx/v5 connection pooling. Developed a pointer-based fetch-and-merge strategy to safely handle partial updates (PATCH/PUT) of domain resources without overwriting unset fields. Implemented table-driven unit tests using Testify and mock interfaces to validate use cases and HTTP endpoints."
+    },
+    {
+      "title": "ZFGaaS",
+      "context": "Personal Project",
+      "featured": false,
+      "nda": false,
+      "live": true,
+      "liveUrl": "https://zfgaas.downormal.dev/sorry",
+      "githubUrl": "https://github.com/anugrahsputra/zero-fucks-given-as-a-service",
+      "imageUrl": "https://raw.githubusercontent.com/anugrahsputra/zero-fucks-given-as-a-service/refs/heads/main/zfgass%20banner.png",
+      "start": "2026-01",
+      "end": "present",
+      "location": "South Jakarta, Indonesia",
+      "techStack": [
+        "Go",
+        "Gin",
+        "REST API",
+        "Docker"
+      ],
+      "description": "Zero Fucks Given as a Service (ZFGaas) is a tiny API that returns random, unnecessarily verbose, and aggressively indifferent apologies for scenarios where you need to formally apologize for not caring."
+    },
+    {
+      "title": "Quran API",
+      "context": "Personal Project",
+      "featured": true,
+      "nda": false,
+      "live": true,
+      "liveUrl": "https://quran-api.downormal.dev/api",
+      "githubUrl": "https://github.com/anugrahsputra/go-quran-api",
+      "imageUrl": "https://raw.githubusercontent.com/anugrahsputra/quran-api/refs/heads/main/asset/banner.png",
+      "start": "2025-10",
+      "end": "2026-03",
+      "location": "South Jakarta, Indonesia",
+      "techStack": [
+        "Go",
+        "Gin",
+        "Bleve",
+        "Redis",
+        "REST API",
+        "Docker"
+      ],
+      "description": "Go-based REST API for retrieving Quranic texts, Tafsir (exegesis), and prayer times, featuring full-text search using Bleve and Redis caching. Architected a Clean Architecture backend in Go using the Gin framework, decoupling handlers, business services, and repository layers to ensure modularity. Engineered a high-performance full-text search engine using Bleve, configuring a custom N-gram text analyzer and Unicode tokenizer to enable fuzzy matches on transliterated queries. Optimized API response latency by integrating Redis as a cache layer with a 24-hour TTL for external upstream APIs, reducing downstream request overhead. Developed a custom IP-based fixed-window rate limiter middleware with Redis, using a fail-open design to maintain API availability during database or cache disruptions. Streamlined container deployments by building a multi-stage Docker pipeline that pre-builds and bundles search indexes to eliminate cold-start initialization latency."
+    },
+    {
+      "title": "Cosmic App KIOSK Touchscreen",
+      "context": "PT. Semesta Arus Teknologi",
+      "featured": true,
+      "nda": true,
+      "live": false,
+      "liveUrl": null,
+      "githubUrl": "https://github.com/anugrahsputra/cosmic-kiosk",
+      "imageUrl": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=450&fit=crop&crop=center",
+      "start": "2024-10",
+      "end": "2025-02",
+      "location": "South Jakarta, Indonesia",
+      "techStack": [
+        "Kotlin",
+        "Jetpack Compose",
+        "Android",
+        "WebView",
+        "WebSocket",
+        "AlarmManager"
+      ],
+      "description": "Interactive KIOSK information display app for DPR RI built with Kotlin and Jetpack Compose. Developed automated power-scheduling and WebView reset mechanisms for reliable unattended operation. Built real-time bidirectional communication using WebSockets with heartbeat monitoring for remote status tracking. Designed touch-based UI optimized for large-screen KIOSK displays with accessibility considerations. Implemented offline-first data caching to ensure continuous operation during network interruptions."
+    },
+    {
+      "title": "Quraani - Quran Mobile App",
+      "context": "Personal Project",
+      "featured": true,
+      "nda": false,
+      "live": true,
+      "liveUrl": "https://github.com/anugrahsputra/qurani-app/releases",
+      "githubUrl": "https://github.com/anugrahsputra/quraani",
+      "imageUrl": "https://raw.githubusercontent.com/anugrahsputra/qurani-app/main/shots/Frame%201.png",
+      "start": "2024-04",
+      "end": "2024-05",
+      "location": "Lebak, Indonesia",
+      "techStack": [
+        "Flutter",
+        "Dio",
+        "Bloc",
+        "SQLite"
+      ],
+      "description": "Simple and easy-to-use Quran app for Android built with Flutter."
+    },
+    {
+      "title": "Get Wallpaper",
+      "context": "Personal Project",
+      "featured": false,
+      "nda": false,
+      "live": true,
+      "liveUrl": "https://weather-app-demo.web.app",
+      "githubUrl": "https://github.com/anugrahsputra/get_wallpaper.git",
+      "imageUrl": "https://raw.githubusercontent.com/anugrahsputra/get_wallpaper/refs/heads/main/screenshot/Frame%207.png",
+      "start": "2023-12",
+      "end": "2024-02",
+      "location": "Jakarta, Indonesia",
+      "techStack": [
+        "Flutter",
+        "Pexels API",
+        "Bloc"
+      ],
+      "description": "Allows users to browse, download, and set wallpapers from the internet."
+    },
+    {
+      "title": "E-Market Buyer Mobile Applications",
+      "context": "Academic Project",
+      "featured": false,
+      "nda": false,
+      "live": false,
+      "liveUrl": null,
+      "githubUrl": "https://github.com/anugrahsputra/emarket-buyer.git",
+      "imageUrl": "https://raw.githubusercontent.com/anugrahsputra/emarket-buyer/refs/heads/main/assets/screenshot/shots.png",
+      "start": "2022-12",
+      "end": "2023-06",
+      "location": "Bandung, Indonesia",
+      "techStack": [
+        "Flutter",
+        "Firebase",
+        "Google Maps API"
+      ],
+      "description": "Dual-sided e-commerce platform (Seller & Buyer) for regional MSMEs built with Flutter and Firebase. Developed full-stack mobile experience with Flutter, Firebase, and Google Maps API for location-based services. Conducted blackbox testing, achieving a 95%+ test pass rate before production deployment. Integrated Firebase Authentication and Cloud Firestore for real-time inventory management and order tracking. Designed responsive UI components supporting both seller and buyer workflows within a unified codebase."
+    },
+    {
+      "title": "E-Market Seller Mobile Applications",
+      "context": "Academic Project",
+      "featured": false,
+      "nda": false,
+      "live": false,
+      "liveUrl": null,
+      "githubUrl": "https://github.com/anugrahsputra/emarket-seller.git",
+      "imageUrl": "https://raw.githubusercontent.com/anugrahsputra/emarket-seller/refs/heads/main/shots-seller.png",
+      "start": "2022-12",
+      "end": "2023-06",
+      "location": "Bandung, Indonesia",
+      "techStack": [
+        "Flutter",
+        "Firebase",
+        "Google Maps API"
+      ],
+      "description": "Designed for sellers to sell products online, specifically for UMKM in Kecamatan Malingping."
+    }
+  ],
+  "youtube": {
+    "channel": {
+      "name": "downormal",
+      "handle": "@downormal",
+      "url": "https://www.youtube.com/@downormal"
+    },
+    "_note": "All videos on the channel as of 2026-09-28, newest first. No descriptions. View counts left out on purpose.",
+    "videos": [
+      {
+        "id": "f-fXbrXVAtc",
+        "title": "Late night coding.. | Part 3",
+        "published": "2026-09-27",
+        "duration": "1:20:38",
+        "url": "https://www.youtube.com/watch?v=f-fXbrXVAtc",
+        "thumbnail": "https://i.ytimg.com/vi/f-fXbrXVAtc/hqdefault.jpg"
+      },
+      {
+        "id": "dVJFtC1Mcqw",
+        "title": "Late night short coding | Part 2",
+        "published": "2026-09-25",
+        "duration": "50:36",
+        "url": "https://www.youtube.com/watch?v=dVJFtC1Mcqw",
+        "thumbnail": "https://i.ytimg.com/vi/dVJFtC1Mcqw/hqdefault.jpg"
+      },
+      {
+        "id": "Bbbh1ufCr7A",
+        "title": "Late night short coding | Part 1",
+        "published": "2026-09-20",
+        "duration": "53:42",
+        "url": "https://www.youtube.com/watch?v=Bbbh1ufCr7A",
+        "thumbnail": "https://i.ytimg.com/vi/Bbbh1ufCr7A/hqdefault.jpg"
+      }
+    ]
+  }
+}

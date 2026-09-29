@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import ProjectsPageClient from "./ProjectsPageClient";
+import PageHeader from "@/components/layout/PageHeader";
+import SectionLabel from "@/components/SectionLabel";
+import { Reveal, RevealLine } from "@/components/motion";
+import ProjectCard from "@/features/projects/components/ProjectCard";
 import ProjectsStructuredData from "@/features/projects/components/ProjectsStructuredData";
-import { getAllProjects } from "@/features/projects/api";
+import {
+  getAllProjects,
+  getProjectContext,
+  type ProjectContext,
+} from "@/features/projects/api";
 
 export const revalidate = 3600;
 
@@ -76,6 +83,24 @@ export const metadata: Metadata = {
   },
 };
 
+const GROUPS: { context: ProjectContext; title: string; spacing: string }[] = [
+  {
+    context: "work",
+    title: "Work",
+    spacing: "pt-[clamp(2rem,3.5vw,3rem)] pb-[clamp(3rem,5vw,4.5rem)]",
+  },
+  {
+    context: "personal",
+    title: "Personal",
+    spacing: "pt-[clamp(3rem,5vw,4.5rem)] pb-[clamp(3.5rem,6vw,5.5rem)]",
+  },
+  {
+    context: "academic",
+    title: "Academic",
+    spacing: "pt-[clamp(2.5rem,4.5vw,4rem)] pb-[clamp(3.5rem,6vw,5.5rem)]",
+  },
+];
+
 export default async function ProjectsPage() {
   const projectsData = await getAllProjects();
 
@@ -88,7 +113,38 @@ export default async function ProjectsPage() {
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-      <ProjectsPageClient initialData={projectsData} />
+      <PageHeader
+        title="Projects"
+        intro="What I've built at work, on my own, and at university."
+      />
+      {GROUPS.map(({ context, title, spacing }) => {
+        // Featured projects first, API order (newest first) otherwise
+        const projects = projectsData.projects
+          .filter((project) => getProjectContext(project) === context)
+          .sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured));
+        if (!projects.length) return null;
+
+        return (
+          <section key={context} className={spacing}>
+            <div className="page-container">
+              <RevealLine />
+              <Reveal className="flex items-baseline justify-between pt-6">
+                <SectionLabel>{title}</SectionLabel>
+                <p className="text-xs/4 font-medium text-foreground/60">
+                  {projects.length} {projects.length === 1 ? "project" : "projects"}
+                </p>
+              </Reveal>
+              <div className="mt-8 grid gap-x-3 gap-y-12 md:grid-cols-2">
+                {projects.map((project, index) => (
+                  <Reveal key={project.title} delay={(index % 2) * 0.1}>
+                    <ProjectCard project={project} index={index} />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })}
     </>
   );
 }

@@ -108,7 +108,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark">
+    <html
+      lang="en"
+      className="dark scroll-pt-16 motion-safe:scroll-smooth"
+    >
       <head>
         {/* Preload critical resources */}
         <link

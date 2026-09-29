@@ -43,17 +43,6 @@ interface ApiResume {
   }[];
 }
 
-interface ApiExperience {
-  id: string;
-  profile_id: string;
-  company: string;
-  position: string;
-  start_date: string;
-  end_date: string;
-  description: string[];
-  location: string;
-}
-
 interface ApiResponse<T> {
   data: T;
   message: string;
@@ -126,28 +115,6 @@ async function fetchResume(): Promise<ApiResume> {
   );
 }
 
-async function fetchExperiences(): Promise<ApiExperience[]> {
-  const { baseUrl, profileId } = getBaseUrlAndProfileId();
-  const url = `${baseUrl}/api/v1/experience/${profileId}/`;
-  return retryWithBackoff(
-    async () => {
-      try {
-        const response = await fetchWithTimeout(url, { headers: getHeaders(), ...getNextOptions('experiences') }, 10000);
-        if (!response.ok) {
-          throw new FetchError(`Failed to fetch experiences: ${response.statusText}`, response.status, response.statusText, url);
-        }
-        const result: ApiResponse<ApiExperience[]> = await response.json();
-        return result.data;
-      } catch (error) {
-        if (error instanceof FetchError) throw error;
-        throw new FetchError(error instanceof Error ? error.message : "Unknown error", undefined, undefined, url);
-      }
-    },
-    3,
-    1000,
-  );
-}
-
 export async function getResumeData(): Promise<ResumeData> {
   const resume = await fetchResume();
 
@@ -199,16 +166,3 @@ export async function getResumeData(): Promise<ResumeData> {
     languages,
   };
 }
-
-export async function getAllExperiences(): Promise<Experience[]> {
-  const experiencesRes = await fetchExperiences();
-
-  return experiencesRes.map((exp: ApiExperience) => ({
-    company: exp.company,
-    location: exp.location,
-    position: exp.position,
-    period: formatPeriod(exp.start_date, exp.end_date),
-    responsibilities: exp.description,
-  }));
-}
-

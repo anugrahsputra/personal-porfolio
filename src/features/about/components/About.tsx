@@ -1,105 +1,95 @@
+import { Badge } from "@/components/ui/badge";
+import SectionLabel from "@/components/SectionLabel";
+import { MaskText, Reveal, RevealLine } from "@/components/motion";
 import { ResumeData } from "@/features/resume/types";
 
 interface AboutProps {
   initialData: ResumeData;
 }
 
+function Chips({ items }: { items: string[] }) {
+  return (
+    <ul className="flex flex-wrap gap-1.5">
+      {items.map((item) => (
+        <li key={item}>
+          <Badge variant="secondary">{item}</Badge>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function About({ initialData }: AboutProps) {
   const data = initialData;
+  // Hero shows the first sentence of the summary, so it isn't repeated here
+  const lead = data.summary.split(/(?<=\.)\s+/).slice(1).join(" ");
+
+  const rows = [
+    {
+      label: "Technologies",
+      value: <Chips items={data.skills.technologies} />,
+      show: data.skills.technologies.length > 0,
+    },
+    {
+      label: "Tools",
+      value: <Chips items={data.skills.tools} />,
+      show: data.skills.tools.length > 0,
+    },
+    {
+      label: "Languages",
+      value: data.languages.map((lang) => (
+        <p key={lang.name}>
+          {lang.name}, {lang.proficiency.toLowerCase()}
+        </p>
+      )),
+      show: data.languages.length > 0,
+    },
+    {
+      label: "Education",
+      value: data.education.map((edu) => (
+        <p key={edu.school}>
+          {edu.degree}, {edu.fieldOfStudy}
+          <br />
+          <span className="text-foreground/60">
+            {edu.school}, {new Date(edu.startDate).getFullYear()} to{" "}
+            {new Date(edu.graduationDate).getFullYear()}
+          </span>
+        </p>
+      )),
+      show: data.education.length > 0,
+    },
+  ].filter((row) => row.show);
 
   return (
-    <section id="about" className="py-20 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            About Me
-          </h2>
-          <div className="w-24 mx-auto my-4 h-px bg-border" />
-        </div>
+    <section
+      id="about"
+      className="pt-[clamp(4.5rem,8.5vw,8.5rem)] pb-[clamp(4rem,7vw,7rem)]"
+    >
+      <div className="page-container">
+        <RevealLine />
+        <div className="grid gap-y-8 pt-6 md:grid-cols-2 md:gap-x-[clamp(2rem,4vw,4rem)]">
+          <Reveal className="md:sticky md:top-24 md:self-start">
+            <SectionLabel>About</SectionLabel>
+          </Reveal>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold text-foreground mb-6">
-              Who I Am
-            </h3>
-            <p className="text-foreground/70 leading-relaxed mb-4 text-lg">
-              {data.summary}
-            </p>
-            <p className="text-foreground/70 leading-relaxed">
-              When I&apos;m not coding, you can find me exploring new mobile
-              technologies, contributing to open-source projects, or sharing
-              knowledge with the developer community.
-            </p>
-          </div>
+          <div className="min-w-0">
+            {lead && (
+              <MaskText as="p" text={lead} className="type-lead max-w-[32ch]" />
+            )}
 
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold text-foreground mb-6">
-              Skills & Technologies
-            </h3>
-
-            <div>
-              <h4 className="text-lg font-semibold text-foreground mb-3">
-                Technologies
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {data.skills.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-semibold text-foreground mb-3">
-                Tools & Platforms
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {data.skills.tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground hover:bg-accent hover:text-accent-foreground"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-semibold text-foreground mb-3">
-                Soft Skills
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {data.skills.soft_skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-semibold text-foreground mb-3">
-                Languages
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {data.languages.map((lang) => (
-                  <span
-                    key={lang.name}
-                    className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground hover:bg-accent hover:text-accent-foreground"
-                  >
-                    {lang.name}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <dl className="mt-[clamp(2.5rem,4vw,3.5rem)]">
+              {rows.map((row) => (
+                <Reveal
+                  key={row.label}
+                  className="grid gap-2 border-t py-5 first:border-t-0 sm:grid-cols-[160px_minmax(0,1fr)] sm:gap-6"
+                >
+                  <dt className="text-sm/[22px] font-medium">{row.label}</dt>
+                  <dd className="space-y-1 text-sm/[22px] text-foreground/70">
+                    {row.value}
+                  </dd>
+                </Reveal>
+              ))}
+            </dl>
           </div>
         </div>
       </div>

@@ -32,6 +32,11 @@ const nextConfig: NextConfig = {
         hostname: "pub.dev",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/vi/**",
+      },
     ],
   },
   

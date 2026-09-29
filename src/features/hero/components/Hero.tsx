@@ -1,118 +1,116 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-
+import { useRef } from "react";
 import Image from "next/image";
+import { Download } from "lucide-react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
+
+import { Button } from "@/components/ui/button";
+import { EASE_OUT, MaskText, Reveal } from "@/components/motion";
+import { RESUME_PDF_URL } from "@/lib/site";
 import { ResumeData } from "@/features/resume/types";
 
 interface HeroProps {
   initialData: ResumeData;
 }
-const Hero = ({ initialData }: HeroProps) => {
-  const data = initialData;
 
-  const downloadResume = () => {
-    const resumeUrl =
-      "https://raw.githubusercontent.com/anugrahsputra/resume/main/rendercv_output/Anugrah_Surya_Putra_CV.pdf";
+export default function Hero({ initialData }: HeroProps) {
+  // The first sentence of the summary goes here, About gets the rest
+  const intro = initialData.summary.split(/(?<=\.)\s+/)[0];
 
-    const link = document.createElement("a");
-    link.href = resumeUrl;
-    link.download = "AnugrahSuryaPutra_MobileDeveloper_Resume.pdf";
-    link.target = "_blank";
+  // 0 at the top of the page, 1 once the hero has scrolled out
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  // The spring smooths the photo so the parallax doesn't feel glued to the wheel
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  const photoY = useTransform(smoothProgress, [0, 1], ["0%", "25%"]);
+  const photoOpacity = useTransform(smoothProgress, [0, 1], [1, 0.2]);
+  const textY = useTransform(scrollYProgress, [0, 0.6], [0, -48]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // Static values keep the server and reduced-motion renders identical
+  const reduceMotion = useReducedMotion();
 
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden pt-16 sm:pt-0"
-    >
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-y-0 left-0 w-full sm:w-2/3 md:w-1/2 lg:w-[50vw] pointer-events-none z-10 mask-fade-r"
-          aria-hidden
+    // -mt-16 runs the photo up under the translucent header
+    <section id="home" ref={ref} className="relative -mt-16 overflow-hidden">
+      {/* Mobile: full width, fading out at the bottom by 84% of its height.
+          Desktop: right half of the viewport, fading out to the left, so the text column sits on solid black */}
+      <motion.div
+        style={{
+          y: reduceMotion ? 0 : photoY,
+          opacity: reduceMotion ? 1 : photoOpacity,
+        }}
+        className="absolute inset-x-0 top-0 aspect-[4/5] mask-b-from-45% mask-b-to-84% md:inset-y-0 md:left-auto md:aspect-auto md:w-1/2 md:mask-l-from-50% md:mask-b-from-80% md:mask-b-to-100%"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.4, ease: EASE_OUT }}
+          className="absolute inset-0"
         >
           <Image
             src="/images/photo/photo.png"
-            alt="Portrait of Anugrah Surya Putra"
+            alt={`Portrait of ${initialData.name}`}
             fill
             priority
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 67vw, (max-width: 1024px) 50vw, 55vw"
-            className="object-cover object-left grayscale"
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-cover object-top grayscale"
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <div className="text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-outline">
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <h1 className="text-4xl sm:text-6xl font-bold text-foreground">
-              {data.name}
-            </h1>
-            <h2 className="text-xl sm:text-2xl text-foreground/70 font-medium">
-              Mobile Engineer
-            </h2>
-            <p className="text-lg sm:text-xl text-foreground/60 max-w-2xl mx-auto leading-relaxed">
-              {data.summary}
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              size="lg"
-              className="group"
-              onClick={() => {
-                const element = document.querySelector("#contact");
-                if (element) {
-                  element.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-            >
-              Get In Touch
-              <svg
-                className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
+      {/* pt-[105vw] starts the text at the photo's 84% line on mobile (4:5 photo, 1.25 x 0.84).
+          On desktop the name sits low, across the photo's darker lower half, clear of the face. */}
+      <motion.div
+        style={{
+          y: reduceMotion ? 0 : textY,
+          opacity: reduceMotion ? 1 : textOpacity,
+        }}
+        className="page-container relative flex flex-col pt-[105vw] pb-[clamp(2.5rem,5vw,4.5rem)] md:min-h-svh md:justify-end md:pt-32"
+      >
+        <MaskText
+          as="h1"
+          by="letter"
+          text={initialData.name}
+          immediate
+          delay={0.3}
+          className="type-hero-name md:whitespace-nowrap"
+        />
+        <div className="mt-[clamp(1.5rem,3vw,2.5rem)] flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <MaskText
+            as="p"
+            text={intro}
+            immediate
+            delay={0.8}
+            className="max-w-[36ch] text-[clamp(1.125rem,1.6vw,1.5rem)] leading-[1.3] font-medium tracking-[-0.02em] text-foreground/80"
+          />
+          <Reveal immediate delay={1.1} className="flex shrink-0 flex-wrap gap-3">
+            <Button size="lg" asChild>
+              <a href={`mailto:${initialData.email}`}>Email me</a>
             </Button>
-
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={downloadResume}
-              className="group"
-            >
-              <svg
-                className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-              Download Resume
+            <Button size="lg" variant="outline" asChild>
+              <a href={RESUME_PDF_URL} target="_blank" rel="noopener noreferrer">
+                <Download />
+                Download resume
+              </a>
             </Button>
-          </div>
+          </Reveal>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
-};
-
-export default Hero;
+}
