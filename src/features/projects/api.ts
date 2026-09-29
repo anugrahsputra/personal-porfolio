@@ -131,3 +131,8 @@ export function getProjectContext(project: Project): ProjectContext {
   if (project.company === 'Academic Project') return 'academic';
   return 'work';
 }
+
+// NDA projects get no image, since the only one on file is a stock photo
+export function hasMedia(project: Project): boolean {
+  return Boolean(project.image) && !project.isNDA;
+}
