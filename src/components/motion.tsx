@@ -100,7 +100,7 @@ export function MaskText({
       {text.split(" ").map((word, w) => (
         <Fragment key={w}>
           {w > 0 && " "}
-          <span aria-hidden className="inline-block whitespace-nowrap">
+          <span aria-hidden className="inline-block indent-0 whitespace-nowrap">
             {(by === "letter" ? [...word] : [word]).map((part, p) => (
               // pb/-mb leave room for descenders inside the mask
               <span

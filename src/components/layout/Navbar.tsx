@@ -153,7 +153,7 @@ export default function Navbar({ counts = {} }: NavbarProps) {
                               {item.name}
                               <Count
                                 value={counts[item.href]}
-                                className="mt-[0.35em] ml-1 text-[0.35em]"
+                                className="static mt-[0.35em] ml-1 text-[0.35em] leading-none"
                               />
                             </Link>
                           </motion.div>
