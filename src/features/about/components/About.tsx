@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Badge } from "@/components/ui/badge";
 import SectionLabel from "@/components/SectionLabel";
 import { MaskText, Reveal, RevealLine } from "@/components/motion";
@@ -70,6 +72,14 @@ export default function About({ initialData }: AboutProps) {
         <div className="grid gap-y-8 pt-6 md:grid-cols-2 md:gap-x-[clamp(2rem,4vw,4rem)]">
           <Reveal className="md:sticky md:top-24 md:self-start">
             <SectionLabel>About</SectionLabel>
+            <Image
+              src="/images/photo/about.jpg"
+              alt={`${data.name} sitting on a ledge in the city`}
+              width={1500}
+              height={2000}
+              sizes="(min-width: 768px) 416px, 100vw"
+              className="mt-6 h-auto w-full max-w-[26rem]"
+            />
           </Reveal>
 
           <div className="min-w-0">
