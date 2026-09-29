@@ -42,6 +42,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# agent handoff reports
+/.handoff/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
