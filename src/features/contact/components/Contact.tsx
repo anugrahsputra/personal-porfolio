@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CircleAlert, CircleCheck, Loader2, Mail, MapPin } from "lucide-react";
+import { CircleAlert, CircleCheck, Linkedin, Loader2, Mail, MapPin } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -99,7 +99,7 @@ export default function Contact({ initialData }: ContactProps) {
         <div className="grid gap-y-10 pt-6 md:grid-cols-2 md:gap-x-[clamp(2rem,4vw,4rem)]">
           <Reveal className="md:sticky md:top-24 md:self-start">
             <SectionLabel>Contact</SectionLabel>
-            <p className="mt-8 max-w-[22ch] indent-[2.5em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.2] tracking-[-0.025em]">
+            <p className="mt-8 max-w-[22ch] indent-[clamp(2.5rem,4vw,3.5rem)] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.2] tracking-[-0.025em]">
               Available for freelance mobile work and full-time roles.
             </p>
             <ul className="mt-6 space-y-3 text-sm/5">
@@ -114,7 +114,8 @@ export default function Contact({ initialData }: ContactProps) {
                 {location}
               </li>
               {linkedin && (
-                <li className="pl-6">
+                <li className="flex items-center gap-2">
+                  <Linkedin className="size-4 text-foreground/60" aria-hidden />
                   <a
                     href={linkedin}
                     target="_blank"
