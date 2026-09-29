@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Lock } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -62,7 +62,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 ) : (
                   <span />
                 )}
-                <span className="line-clamp-4 max-w-[28ch] text-[clamp(1.25rem,2vw,1.75rem)] leading-[1.25] font-medium tracking-[-0.02em] text-foreground/90">
+                <span className="line-clamp-4 max-w-[28ch] text-[clamp(1.25rem,2vw,1.75rem)] leading-[1.25] tracking-[-0.02em] text-foreground/90">
                   {firstSentence}
                 </span>
               </span>
@@ -70,10 +70,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </span>
 
           <span className="mt-3 flex items-baseline gap-2">
-            <span className="text-xs/4 font-medium text-foreground/60">{number}</span>
-            <span className="text-[clamp(1.125rem,1.4vw,1.375rem)] leading-tight font-medium tracking-[-0.02em]">
+            <span className="text-xs/4 text-foreground/60">{number}</span>
+            <span className="text-[clamp(1.125rem,1.4vw,1.375rem)] leading-tight tracking-[-0.02em]">
               {project.title}
             </span>
+            <ArrowRight
+              aria-hidden
+              className="size-4 shrink-0 self-center -translate-x-1 opacity-0 transition duration-700 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 motion-reduce:transition-none"
+            />
           </span>
           <span className="mt-1 block text-sm/5 text-foreground/60">
             {project.period} · {project.techStacks.slice(0, 3).join(", ")}
@@ -83,10 +87,10 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
       <DialogContent className="max-h-[85svh] overflow-y-auto">
         <DialogHeader className="pr-10 text-left">
-          <DialogTitle className="text-2xl/[30px] font-semibold tracking-[-0.02em]">
+          <DialogTitle className="text-2xl/[30px] tracking-[-0.02em]">
             {project.title}
           </DialogTitle>
-          <DialogDescription className="text-xs/4 font-medium text-foreground/60">
+          <DialogDescription className="text-xs/4 text-foreground/60">
             {isWork ? `${project.company} · ${project.period}` : project.period}
           </DialogDescription>
         </DialogHeader>

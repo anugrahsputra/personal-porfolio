@@ -38,7 +38,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   return (
     <p
       id={id}
-      className="mt-2 flex gap-2 rounded-sm bg-destructive px-2 py-1.5 text-sm/5 font-medium text-foreground"
+      className="mt-2 flex gap-2 rounded-sm bg-destructive px-2 py-1.5 text-sm/5 text-foreground"
     >
       <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden />
       {message}
@@ -46,9 +46,8 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-const labelClass = "mb-2 block text-sm/5 font-medium";
-const linkClass =
-  "rounded-sm underline decoration-input-border underline-offset-4 hover:decoration-foreground";
+const labelClass = "mb-2 block text-sm/5";
+const linkClass = "rounded-sm link-line";
 
 export default function Contact({ initialData }: ContactProps) {
   const { email, location, linkedin } = initialData;
@@ -100,7 +99,7 @@ export default function Contact({ initialData }: ContactProps) {
         <div className="grid gap-y-10 pt-6 md:grid-cols-2 md:gap-x-[clamp(2rem,4vw,4rem)]">
           <Reveal className="md:sticky md:top-24 md:self-start">
             <SectionLabel>Contact</SectionLabel>
-            <p className="mt-8 max-w-[22ch] indent-[2.5em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.2] font-medium tracking-[-0.025em]">
+            <p className="mt-8 max-w-[22ch] indent-[2.5em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.2] tracking-[-0.025em]">
               Available for freelance mobile work and full-time roles.
             </p>
             <ul className="mt-6 space-y-3 text-sm/5">

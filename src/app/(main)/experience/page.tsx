@@ -111,8 +111,8 @@ export default async function ExperiencePage() {
                 }`}
               >
                 <div className="shrink-0 md:basis-[240px] lg:basis-[300px]">
-                  <p className="text-sm/5 font-medium">{role.period}</p>
-                  <p className="mt-1 text-xs/4 font-medium text-foreground/60">
+                  <p className="text-sm/5">{role.period}</p>
+                  <p className="mt-1 text-xs/4 text-foreground/60">
                     {role.location}
                   </p>
                 </div>
@@ -120,7 +120,7 @@ export default async function ExperiencePage() {
                   <h2
                     className={
                       isCurrent
-                        ? "text-2xl/[30px] font-semibold tracking-[-0.02em]"
+                        ? "text-2xl/[30px] tracking-[-0.02em]"
                         : "type-h3"
                     }
                   >

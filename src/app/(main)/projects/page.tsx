@@ -130,7 +130,7 @@ export default async function ProjectsPage() {
               <RevealLine />
               <Reveal className="flex items-baseline justify-between pt-6">
                 <SectionLabel>{title}</SectionLabel>
-                <p className="text-xs/4 font-medium text-foreground/60">
+                <p className="text-xs/4 text-foreground/60">
                   {projects.length} {projects.length === 1 ? "project" : "projects"}
                 </p>
               </Reveal>

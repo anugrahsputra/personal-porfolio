@@ -20,7 +20,7 @@ export default function PageHeader({ title, intro }: PageHeaderProps) {
         className="type-hero-name mt-6"
       />
       <Reveal immediate delay={0.4}>
-        <p className="mt-4 max-w-[40ch] text-[clamp(1.125rem,1.6vw,1.5rem)] leading-[1.3] font-medium tracking-[-0.02em] text-foreground/70">
+        <p className="mt-4 max-w-[40ch] text-[clamp(1.125rem,1.6vw,1.5rem)] leading-[1.3] tracking-[-0.02em] text-foreground/70">
           {intro}
         </p>
       </Reveal>

@@ -28,7 +28,7 @@ export default function Experience({ initialData }: ExperienceProps) {
                   key={`${experience.company}-${experience.period}`}
                   className="grid grid-cols-[2.5rem_minmax(0,1fr)] border-t py-8 first:border-t-0 first:pt-0"
                 >
-                  <span className="pt-2 text-xs/4 font-medium text-foreground/60">
+                  <span className="pt-2 text-xs/4 text-foreground/60">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
@@ -36,13 +36,13 @@ export default function Experience({ initialData }: ExperienceProps) {
                       <h3
                         className={
                           isCurrent
-                            ? "text-2xl/[30px] font-semibold tracking-[-0.02em]"
+                            ? "text-2xl/[30px] tracking-[-0.02em]"
                             : "type-h3"
                         }
                       >
                         {experience.position}
                       </h3>
-                      <p className="shrink-0 text-xs/4 font-medium text-foreground/60">
+                      <p className="shrink-0 text-xs/4 text-foreground/60">
                         {experience.period}
                       </p>
                     </div>

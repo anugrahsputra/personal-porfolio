@@ -74,7 +74,7 @@ export default function About({ initialData }: AboutProps) {
 
           <div className="min-w-0">
             {lead && (
-              <MaskText as="p" text={lead} className="type-lead max-w-[32ch]" />
+              <MaskText as="p" text={lead} className="type-lead max-w-[32ch] indent-[2.5em]" />
             )}
 
             <dl className="mt-[clamp(2.5rem,4vw,3.5rem)]">
@@ -83,7 +83,7 @@ export default function About({ initialData }: AboutProps) {
                   key={row.label}
                   className="grid gap-2 border-t py-5 first:border-t-0 sm:grid-cols-[160px_minmax(0,1fr)] sm:gap-6"
                 >
-                  <dt className="text-sm/[22px] font-medium">{row.label}</dt>
+                  <dt className="text-sm/[22px]">{row.label}</dt>
                   <dd className="space-y-1 text-sm/[22px] text-foreground/70">
                     {row.value}
                   </dd>

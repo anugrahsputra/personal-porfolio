@@ -115,7 +115,7 @@ export default function Videos({ videos }: VideosProps) {
               )}
             </div>
             <h3 className="type-h4 mt-4">{active.title}</h3>
-            <p className="mt-1 text-xs/4 font-medium text-foreground/60">
+            <p className="mt-1 text-xs/4 text-foreground/60">
               {formatDate(active.published)}
             </p>
           </Reveal>
@@ -147,10 +147,10 @@ export default function Videos({ videos }: VideosProps) {
                     />
                   </span>
                   <span className="min-w-0">
-                    <span className="line-clamp-2 text-sm/5 font-medium">
+                    <span className="line-clamp-2 text-sm/5">
                       {video.title}
                     </span>
-                    <span className="mt-1 block text-xs/4 font-medium text-foreground/60">
+                    <span className="mt-1 block text-xs/4 text-foreground/60">
                       {formatDate(video.published)}
                     </span>
                   </span>

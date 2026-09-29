@@ -13,7 +13,7 @@ export default function SectionLabel({
   className,
 }: SectionLabelProps) {
   return (
-    <Tag className={cn("text-sm/5 font-medium", className)}>
+    <Tag className={cn("text-sm/5", className)}>
       <span aria-hidden className="text-foreground/60">
         [{" "}
       </span>

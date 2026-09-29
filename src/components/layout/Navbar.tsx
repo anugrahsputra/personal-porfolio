@@ -24,7 +24,7 @@ const zone = "rounded-sm bg-background px-2 py-1";
 function Count({ value }: { value?: number }) {
   if (value === undefined) return null;
   return (
-    <sup className="ml-0.5 text-[0.65em] font-medium text-foreground/60">
+    <sup className="ml-0.5 text-[0.65em] text-foreground/60">
       ({value})
     </sup>
   );
@@ -54,7 +54,7 @@ export default function Navbar({ counts = {} }: NavbarProps) {
       >
         <Link
           href="/"
-          className={cn(zone, "-ml-2 text-base font-semibold tracking-[-0.02em]")}
+          className={cn(zone, "-ml-2 text-base tracking-[-0.02em]")}
         >
           Anugrah Surya Putra
         </Link>
@@ -73,11 +73,11 @@ export default function Navbar({ counts = {} }: NavbarProps) {
                   href={item.href}
                   aria-current={isCurrent ? "page" : undefined}
                   className={cn(
-                    "rounded-sm text-sm/5 font-medium transition-colors hover:text-foreground",
+                    "group rounded-sm text-sm/5 transition-colors hover:text-foreground",
                     isCurrent ? "text-foreground" : "text-muted-foreground",
                   )}
                 >
-                  {item.name}
+                  <span className="link-line">{item.name}</span>
                   <Count value={counts[item.href]} />
                 </Link>
               </li>
@@ -87,15 +87,15 @@ export default function Navbar({ counts = {} }: NavbarProps) {
 
         <Link
           href="/#contact"
-          className={cn(zone, "-mr-2 hidden text-sm/5 font-medium md:block")}
+          className={cn(zone, "group -mr-2 hidden text-sm/5 md:block")}
         >
-          Get in touch
+          <span className="link-line">Get in touch</span>
         </Link>
 
         <button
           ref={triggerRef}
           type="button"
-          className={cn(zone, "-mr-2 min-h-11 text-sm/5 font-medium md:hidden")}
+          className={cn(zone, "-mr-2 min-h-11 text-sm/5 md:hidden")}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-nav"
           onClick={() => setIsMenuOpen((open) => !open)}
@@ -129,7 +129,7 @@ export default function Navbar({ counts = {} }: NavbarProps) {
                       aria-current={isCurrent ? "page" : undefined}
                       onClick={() => setIsMenuOpen(false)}
                       className={cn(
-                        "flex min-h-12 items-center rounded-sm text-2xl font-medium tracking-[-0.02em]",
+                        "flex min-h-12 items-center rounded-sm text-2xl tracking-[-0.02em]",
                         isCurrent ? "text-foreground" : "text-muted-foreground",
                       )}
                     >

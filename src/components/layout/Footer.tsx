@@ -13,14 +13,14 @@ const EXTERNAL_LINKS = [
 ];
 
 const linkClass =
-  "inline-block rounded-sm py-1 text-base/6 font-medium tracking-[-0.01em] text-foreground/70 transition-colors hover:text-foreground";
+  "group inline-block rounded-sm py-1 text-base/6 tracking-[-0.01em] text-foreground/70 transition-colors hover:text-foreground";
 
 export default function Footer() {
   return (
     <footer className="page-container pt-10 pb-14">
       <RevealLine />
       <div className="grid gap-10 pt-6 md:grid-cols-2 md:gap-x-[clamp(2rem,4vw,4rem)]">
-        <p className="text-sm/5 font-medium">
+        <p className="text-sm/5">
           © {new Date().getFullYear()} Anugrah Surya Putra
         </p>
 
@@ -33,7 +33,7 @@ export default function Footer() {
               {NAV_ITEMS.map((item) => (
                 <li key={item.name}>
                   <Link href={item.href} className={linkClass}>
-                    {item.name}
+                    <span className="link-line">{item.name}</span>
                   </Link>
                 </li>
               ))}
@@ -54,7 +54,7 @@ export default function Footer() {
                       rel: "noopener noreferrer",
                     })}
                   >
-                    {item.name}
+                    <span className="link-line">{item.name}</span>
                   </a>
                 </li>
               ))}

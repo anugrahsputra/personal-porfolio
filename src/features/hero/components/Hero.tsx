@@ -96,7 +96,7 @@ export default function Hero({ initialData }: HeroProps) {
             text={intro}
             immediate
             delay={0.8}
-            className="max-w-[36ch] text-[clamp(1.125rem,1.6vw,1.5rem)] leading-[1.3] font-medium tracking-[-0.02em] text-foreground/80"
+            className="max-w-[36ch] indent-[2.5em] text-[clamp(1.125rem,1.6vw,1.5rem)] leading-[1.3] tracking-[-0.02em] text-foreground/80"
           />
           <Reveal immediate delay={1.1} className="flex shrink-0 flex-wrap gap-3">
             <Button size="lg" asChild>
