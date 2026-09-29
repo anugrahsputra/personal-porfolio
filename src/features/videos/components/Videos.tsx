@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
-import { motion } from "motion/react";
 
 import ArrowLink from "@/components/ArrowLink";
 import { MaskText, Reveal } from "@/components/motion";
@@ -18,6 +17,9 @@ const MAX_VIDEOS = 6;
 
 const thumbnail = (id: string): string =>
   `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+const indexLabel = (index: number): string =>
+  String(index + 1).padStart(2, "0");
 
 // UTC so the server and browser render the same date
 const formatDate = (iso: string): string =>
@@ -59,7 +61,11 @@ export default function Videos({ videos }: VideosProps) {
     );
   }
 
-  const active = shown.find((video) => video.id === activeId) ?? shown[0];
+  const activeIndex = Math.max(
+    0,
+    shown.findIndex((video) => video.id === activeId),
+  );
+  const active = shown[activeIndex];
   const play = (id: string) => {
     setActiveId(id);
     setIsPlaying(true);
@@ -82,7 +88,7 @@ export default function Videos({ videos }: VideosProps) {
 
         <div className="mt-[clamp(2rem,4vw,3.5rem)] grid gap-x-8 gap-y-6 lg:grid-cols-[minmax(0,1fr)_360px]">
           <Reveal delay={0.08}>
-            <div className="relative aspect-video overflow-hidden rounded-xl border bg-card">
+            <div className="relative aspect-video overflow-hidden rounded-md bg-card">
               {isPlaying ? (
                 // Mounted only after a click, so no YouTube code loads before that
                 <iframe
@@ -114,43 +120,41 @@ export default function Videos({ videos }: VideosProps) {
                 </button>
               )}
             </div>
-            <h3 className="type-h4 mt-4">{active.title}</h3>
-            <p className="mt-1 text-xs/4 text-foreground/60">
+            <h3 className="mt-3 flex items-baseline gap-2">
+              <span className="text-xs/4 text-foreground/60">
+                {indexLabel(activeIndex)}
+              </span>
+              <span className="text-[clamp(1.125rem,1.4vw,1.375rem)] leading-tight tracking-[-0.02em]">
+                {active.title}
+              </span>
+            </h3>
+            <p className="mt-1 text-sm/5 text-foreground/60">
               {formatDate(active.published)}
             </p>
           </Reveal>
 
-          <ol className="space-y-1">
+          <ol className="lg:-mt-4">
             {shown.map((video, index) => (
-              <Reveal as="li" key={video.id} delay={0.16 + index * 0.06}>
+              <Reveal
+                as="li"
+                key={video.id}
+                delay={0.16 + index * 0.06}
+                className="border-t first:border-t-0"
+              >
                 <button
                   type="button"
                   onClick={() => play(video.id)}
                   aria-current={video.id === active.id ? "true" : undefined}
-                  className="relative isolate flex w-full gap-3 rounded-md p-2 text-left transition-colors hover:bg-accent/60"
+                  className="grid w-full grid-cols-[2.5rem_minmax(0,1fr)] rounded-sm py-4 text-left text-foreground/60 transition-colors duration-300 hover:text-foreground aria-[current=true]:text-foreground"
                 >
-                  {video.id === active.id && (
-                    // Slides between rows when the active video changes
-                    <motion.span
-                      layoutId="video-active"
-                      transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                      className="absolute inset-0 -z-10 rounded-md bg-accent"
-                    />
-                  )}
-                  <span className="relative aspect-video w-32 shrink-0 overflow-hidden rounded-sm bg-card">
-                    <Image
-                      src={thumbnail(video.id)}
-                      alt=""
-                      fill
-                      sizes="128px"
-                      className="object-cover"
-                    />
+                  <span className="pt-1 text-xs/4 text-foreground/60">
+                    {indexLabel(index)}
                   </span>
                   <span className="min-w-0">
-                    <span className="line-clamp-2 text-sm/5">
+                    <span className="line-clamp-2 text-base/6">
                       {video.title}
                     </span>
-                    <span className="mt-1 block text-xs/4 text-foreground/60">
+                    <span className="mt-1 block text-sm/5 text-foreground/60">
                       {formatDate(video.published)}
                     </span>
                   </span>
