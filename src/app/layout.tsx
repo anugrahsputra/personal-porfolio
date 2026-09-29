@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { Inter } from "next/font/google";
+import { Instrument_Sans } from "next/font/google";
 import StructuredData from "@/components/StructuredData";
 import "./globals.css";
 
-const inter = Inter({
+const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-instrument-sans",
 });
 
 export const metadata: Metadata = {
@@ -145,7 +145,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#000000" />
       </head>
       <body
-        className={`${inter.variable} ${inter.className} bg-background text-foreground antialiased`}
+        className={`${instrumentSans.variable} ${instrumentSans.className} bg-background text-foreground antialiased`}
       >
         <StructuredData />
         {children}
