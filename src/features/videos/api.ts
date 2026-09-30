@@ -1,4 +1,4 @@
-import { fetchWithTimeout } from "@/lib/utils";
+import { FetchError, fetchWithTimeout } from "@/lib/utils";
 
 export interface Video {
   id: string;
@@ -24,28 +24,27 @@ const decodeXml = (text: string): string =>
 // ponytail: regex over the channel's Atom feed, no API key or XML parser.
 // The feed only has the newest 15 videos and no durations; the YouTube Data API has both if ever needed.
 export async function getVideos(): Promise<Video[]> {
-  try {
-    const response = await fetchWithTimeout(
+  const response = await fetchWithTimeout(
+    FEED_URL,
+    { next: { revalidate: 3600, tags: ["videos"] } },
+    5000,
+  );
+  // Throwing fails the ISR rebuild, so Next keeps serving the last page that had videos
+  if (!response.ok) {
+    throw new FetchError(
+      `Failed to fetch YouTube feed: ${response.status}`,
+      response.status,
+      response.statusText,
       FEED_URL,
-      { next: { revalidate: 3600, tags: ["videos"] } },
-      5000,
     );
-    if (!response.ok) {
-      console.error("Failed to fetch YouTube feed:", response.status);
-      return [];
-    }
-
-    const xml = await response.text();
-    return [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)]
-      .map(([, entry]) => ({
-        id: entry.match(/<yt:videoId>([^<]+)</)?.[1] ?? "",
-        title: decodeXml(entry.match(/<title>([^<]*)</)?.[1] ?? ""),
-        published: entry.match(/<published>([^<]+)</)?.[1] ?? "",
-      }))
-      .filter((video) => video.id);
-  } catch (error) {
-    // The home page still renders; the section falls back to a channel link
-    console.error("Failed to fetch YouTube feed:", error);
-    return [];
   }
+
+  const xml = await response.text();
+  return [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)]
+    .map(([, entry]) => ({
+      id: entry.match(/<yt:videoId>([^<]+)</)?.[1] ?? "",
+      title: decodeXml(entry.match(/<title>([^<]*)</)?.[1] ?? ""),
+      published: entry.match(/<published>([^<]+)</)?.[1] ?? "",
+    }))
+    .filter((video) => video.id);
 }
