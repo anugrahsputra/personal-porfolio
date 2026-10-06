@@ -1,0 +1,62 @@
+{
+  "projectId": "b3c78bce-4710-4b80-91bb-2c6962a6d299",
+  "shape": "package",
+  "pkg": "downormal-ui",
+  "globalName": "Downormal",
+  "entry": ".design-sync/pkg/entry.tsx",
+  "buildCmd": "node .ds-sync/node_modules/@tailwindcss/cli/dist/index.mjs -i .design-sync/pkg/tailwind.css -o .design-sync/pkg/styles.css",
+  "srcDir": "../../src",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": "styles.css",
+  "extraFonts": [
+    "fonts/fonts.css"
+  ],
+  "docsDir": "../docs",
+  "guidelinesGlob": "../../docs/design-system.md",
+  "provider": {
+    "component": "SiteRoot"
+  },
+  "componentSrcMap": {
+    "SectionLabel": "../../src/components/SectionLabel.tsx",
+    "ArrowLink": "../../src/components/ArrowLink.tsx",
+    "Breadcrumbs": "../../src/components/layout/Breadcrumbs.tsx",
+    "PageHeader": "../../src/components/layout/PageHeader.tsx",
+    "Reveal": "../../src/components/motion.tsx",
+    "MaskText": "../../src/components/motion.tsx",
+    "RevealLine": "../../src/components/motion.tsx",
+    "RevealImage": "../../src/components/motion.tsx",
+    "CardHeader": null,
+    "CardTitle": null,
+    "CardDescription": null,
+    "CardAction": null,
+    "CardContent": null,
+    "CardFooter": null,
+    "DialogClose": null,
+    "DialogContent": null,
+    "DialogDescription": null,
+    "DialogFooter": null,
+    "DialogHeader": null,
+    "DialogOverlay": null,
+    "DialogPortal": null,
+    "DialogTitle": null,
+    "DialogTrigger": null,
+    "AlertTitle": null,
+    "AlertDescription": null,
+    "MotionProvider": null,
+    "SiteRoot": null,
+    "MotionGlobalConfig": null
+  },
+  "overrides": {
+    "Dialog": {
+      "cardMode": "single",
+      "viewport": "720x560"
+    },
+    "PageHeader": {
+      "cardMode": "column"
+    },
+    "MaskText": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

@@ -1,0 +1,18 @@
+@import "../../src/app/globals.css";
+
+:root {
+  --font-instrument-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@source inline("type-{hero-name,section,display,h1,h2,h3,h4,lead,featured} page-container link-line group sr-only");
+@source inline("{sm:,md:,lg:,}{flex,inline-flex,grid,block,inline-block,hidden}");
+@source inline("{sm:,md:,lg:,}{flex-col,flex-row,flex-wrap,flex-1,shrink-0,items-start,items-center,items-end,items-baseline,justify-start,justify-center,justify-end,justify-between,self-start,self-end}");
+@source inline("{sm:,md:,lg:,}grid-cols-{1,2,3,4,6,12} {md:,lg:,}col-span-{1,2,3,4,6,12,full}");
+@source inline("{md:,}{p,px,py,pt,pb,pl,pr,m,mx,my,mt,mb,ml,mr,gap,gap-x,gap-y,space-y,space-x}-{0,1,1.5,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("text-{xs,sm,base,lg,xl,2xl}/{4,5,6,7} text-{left,center,right,pretty,balance} whitespace-nowrap truncate line-clamp-{2,3,4}");
+@source inline("text-foreground{,/90,/80,/70,/60,/40} text-muted-foreground text-primary-foreground hover:text-foreground marker:text-foreground/40");
+@source inline("bg-{background,card,muted,accent,secondary,primary,destructive,input} hover:bg-accent");
+@source inline("border border-{t,b,l,r,x,y} border-{border,input-border} {first:,}border-t-0 rounded-{sm,md,lg,xl,full}");
+@source inline("w-full h-full min-w-0 min-h-screen max-w-{xs,sm,md,lg,xl,2xl,3xl} max-w-[{22,32,36,40,52,65}ch] size-{4,5,6,8,10,12,16}");
+@source inline("aspect-video aspect-square aspect-[16/10] aspect-[3/4] object-cover overflow-hidden relative absolute sticky inset-0 top-{0,16,24} z-{10,50}");
+@source inline("list-disc pl-5 indent-[clamp(2.5rem,3.5vw,3rem)] transition-colors opacity-{0,50,60,100}");
