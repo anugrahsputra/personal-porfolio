@@ -6,6 +6,7 @@ export interface Project {
   github: string;
   isLive: boolean;
   isNDA: boolean;
+  isComingSoon: boolean;
   isFeatured: boolean;
   image: string;
   company: string;

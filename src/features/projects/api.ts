@@ -11,6 +11,7 @@ interface ApiProject {
   github_repo_url: string;
   is_live: boolean;
   is_nda: boolean;
+  is_coming_soon?: boolean;
   is_featured: boolean;
   image_url: string;
   company: string;
@@ -51,6 +52,7 @@ function transformProject(apiProject: ApiProject): Project {
     github: apiProject.github_repo_url,
     isLive: apiProject.is_live,
     isNDA: apiProject.is_nda,
+    isComingSoon: apiProject.is_coming_soon ?? false,
     isFeatured: apiProject.is_featured,
     image: apiProject.image_url,
     company: apiProject.company,

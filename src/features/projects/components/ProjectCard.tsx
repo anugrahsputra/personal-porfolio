@@ -64,6 +64,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <span className="mt-1 block text-sm/5 text-foreground/60">
           {project.period} · {project.techStacks.slice(0, 3).join(", ")}
         </span>
+        {project.isComingSoon && (
+          <span className="mt-1 block text-xs/4 text-foreground/60">
+            Coming soon to Play Store and App Store
+          </span>
+        )}
       </button>
     </ProjectDialog>
   );

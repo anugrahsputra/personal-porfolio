@@ -47,6 +47,11 @@ export default function ProjectDialog({ project, children }: ProjectDialogProps)
         <p className="text-sm/[22px] text-pretty text-foreground/70">
           {project.description}
         </p>
+        {project.isComingSoon && (
+          <p className="text-xs/4 text-foreground/60">
+            Coming soon to Play Store and App Store
+          </p>
+        )}
         <ul className="flex flex-wrap gap-1.5" aria-label="Tech stack">
           {project.techStacks.map((tech) => (
             <li key={tech}>
