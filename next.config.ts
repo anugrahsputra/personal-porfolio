@@ -37,6 +37,11 @@ const nextConfig: NextConfig = {
         hostname: "i.ytimg.com",
         pathname: "/vi/**",
       },
+      {
+        protocol: "https",
+        hostname: "wlwhglhlpoqar1cd.public.blob.vercel-storage.com",
+        pathname: "/**",
+      },
     ],
   },
   
